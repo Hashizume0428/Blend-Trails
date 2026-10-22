@@ -25,13 +25,16 @@ namespace AdjustSdk
         [UnityEditor.InitializeOnLoadMethod]
         private static void CreateIfNeeded()
         {
-            if (Load() != null)
+            const string resourcesDirectory = "Assets/Adjust/Resources";
+            const string assetPath = resourcesDirectory + "/AdjustAppSettings.asset";
+
+            // Resources.Load can return null before existing assets finish their first import.
+            // Never replace the checked-in settings (and app token) in that case.
+            if (Load() != null || System.IO.File.Exists(assetPath))
             {
                 return;
             }
 
-            const string resourcesDirectory = "Assets/Adjust/Resources";
-            const string assetPath = resourcesDirectory + "/AdjustAppSettings.asset";
             System.IO.Directory.CreateDirectory(resourcesDirectory);
 
             var instance = CreateInstance<AdjustAppSettings>();
