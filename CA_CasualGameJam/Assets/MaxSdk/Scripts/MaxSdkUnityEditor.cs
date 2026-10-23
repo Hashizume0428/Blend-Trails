@@ -35,6 +35,13 @@ public class MaxSdkUnityEditor : MaxSdkBase
     private static readonly Dictionary<string, object> BannerPlacements = new Dictionary<string, object>();
     private static readonly Dictionary<string, object> MRecPlacements = new Dictionary<string, object>();
 
+    // A new Play session must initialize again even when Domain Reload is disabled.
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetInitializationState()
+    {
+        _isInitialized = false;
+    }
+
     [RuntimeInitializeOnLoadMethod]
     public static void InitializeMaxSdkUnityEditorOnLoad()
     {
