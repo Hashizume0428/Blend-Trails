@@ -9,7 +9,7 @@ Unity 6000.3.24f1で `Assets/Scenes/SampleScene.unity` を開き、Playで開始
 - 指を離すと、開始マスからなぞった順に1マスずつ着色します。着色演出中は次の線入力と色別リロードを待ちます。
 - 色別のRESETボタンで、その色の線と構成色だけを除去します。混色マスは残った単色へ戻ります。
 - 線が同じ辺を通る部分と交点は混色で表示します。描画中の線も対象で、キャンセルやリロード後は残った線の色に戻ります。
-- 禁止マークはマスの中央に表示します。赤・青両方の線を確定すると、未着色を含む全ての不正解マスの枠を2秒間点滅させます。禁止マスではバツも同じタイミングで点滅し、終了後は通常表示に戻ります。色別リロードでは点滅を止め、引き直しを確定した時に再判定します。
+- 禁止マークはマスの中央に表示します。赤・青両方の線を確定すると、未着色を含む全ての不正解マスの枠と面を2秒間点滅させます。禁止マスではバツも同じタイミングで点滅し、終了後は通常表示に戻ります。面の単色・混色は保ち、透明度を変えて点滅します。色別リロードでは点滅を止め、引き直しを確定した時に再判定します。
 - 全16マスの条件を満たすとクリアです。PLAY AGAINで初期状態に戻ります。
 
 ## 判定
@@ -40,7 +40,7 @@ Color Puzzle/Build Prototypeは初回の生成用で、生成済み盤面の上�
 Unity Test RunnerからColorPuzzle.EditModeTestsとColorPuzzle.PlayModeTestsを実行できます。
 EditModeは色禁止・混色・完全一致・リロード後の表示・経路・空盤面を検証します。
 PlayModeは解答経路、他色開始点、色別リロード、巻き戻し、接触判定、キャンセル、なぞった順の着色、不正解マスの実際の面表示、演出中リスタートを検証します。
-PuzzleVisualTestsでは、重なった辺・交点の混色、キャンセル・リロード後の線表示、禁止マークの中央配置、全開始色の確定後の未着色マスを含む同期点滅、2秒での停止、リロード・再確定・初期化を検証します。
+PuzzleVisualTestsでは、重なった辺・交点の混色、キャンセル・リロード後の線表示、禁止マークの中央配置、全開始色の確定後の未着色マスを含む枠・面・禁止マークの同期点滅、2秒での停止、リロード・再確定・初期化時の色の復元を検証します。
 
 ### 解答例
 
@@ -56,9 +56,9 @@ PuzzleVisualTestsでは、重なった辺・交点の混色、キャンセル・
 
 Unity Editor compilation: 0 errors / 0 warnings.
 EditMode: 12 / 12 passed. PlayMode: 11 / 11 passed (including sequential painting, mixed lines and error indicators).
-Error feedback: all start lines committed, empty incorrect tiles, synchronized markers, two-second stop, and reload/recommit verified.
+Error feedback: all start lines committed, empty incorrect tiles, synchronized frames/faces/markers, two-second stop, restored face colors, and reload/recommit verified.
 Sequential painting: draw order, separate display frames, actual face colors on incorrect tiles, blocked input during painting, and cancellation on restart verified.
-Test results: Logs/SequentialPaint-EditMode.json and Logs/SequentialPaint-PlayMode.json.
+Test results: Logs/FaceBlink-EditMode.json and Logs/FaceBlink-PlayMode.json.
 Manual runtime check: frame advancement, 16 / 16 clear, and restart verified.
 Screenshots: Logs/Prototype-Portrait.png and Logs/Prototype-Clear.png.
 Visual improvements: Logs/VisualImprovements.png (mixed lines, centered forbidden markers and error indicators).

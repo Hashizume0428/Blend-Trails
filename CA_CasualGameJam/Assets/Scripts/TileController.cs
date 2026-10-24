@@ -27,6 +27,7 @@ public class TileController : MonoBehaviour
     private Tween _feedback;
     private Vector3 _faceScale;
     private Tween _invalidBlink;
+    private float _errorBlinkAlpha = 1f;
     private Color _frameBaseColor = Color.white;
     private Color _forbiddenBaseColor = Color.white;
     private bool _indicatorColorsCached;
@@ -94,8 +95,6 @@ public class TileController : MonoBehaviour
     public void RefreshVisuals()
     {
         bool correct = IsTileCorrect();
-        if (_faceRenderer != null)
-            _faceRenderer.color = DisplayColor;
         if (_frameRenderer != null)
             _frameRenderer.sprite = GlobalScripts.GetFrameImage(_hasRequiredColors ? PuzzleRules.Mix(_requiredColors) : TileColor.None);
         if (_startMarker != null) _startMarker.gameObject.SetActive(_isStartTile);
@@ -106,6 +105,7 @@ public class TileController : MonoBehaviour
         }
         if (_line != null) _line.gameObject.SetActive(_isStartTile);
         if (correct) StopErrorBlink();
+        else SetErrorBlinkAlpha(_errorBlinkAlpha);
     }
     public void ResetRuntimeState()
     {
@@ -144,18 +144,25 @@ public class TileController : MonoBehaviour
         StopErrorBlink();
         if (!Application.isPlaying || !isActiveAndEnabled || IsTileCorrect()) return;
         CacheIndicatorColors();
-        SetIndicatorAlpha(1);
-        _invalidBlink = DOTween.To(() => 1f, SetIndicatorAlpha, 0.2f, ErrorBlinkDuration / ErrorBlinkLoops)
+        SetErrorBlinkAlpha(1);
+        _invalidBlink = DOTween.To(() => 1f, SetErrorBlinkAlpha, 0.2f, ErrorBlinkDuration / ErrorBlinkLoops)
             .SetEase(Ease.InOutSine).SetLoops(ErrorBlinkLoops, LoopType.Yoyo)
             .SetUpdate(true).SetLink(gameObject)
             .OnComplete(() =>
             {
                 _invalidBlink = null;
-                SetIndicatorAlpha(1);
+                SetErrorBlinkAlpha(1);
             });
     }
-    private void SetIndicatorAlpha(float alpha)
+    private void SetErrorBlinkAlpha(float alpha)
     {
+        CacheIndicatorColors();
+        _errorBlinkAlpha = alpha;
+        if (_faceRenderer != null)
+        {
+            Color color = DisplayColor; color.a *= alpha;
+            _faceRenderer.color = color;
+        }
         if (_frameRenderer != null)
         {
             Color color = _frameBaseColor; color.a *= alpha;
@@ -171,7 +178,7 @@ public class TileController : MonoBehaviour
     {
         _invalidBlink?.Kill();
         _invalidBlink = null;
-        if (_indicatorColorsCached) SetIndicatorAlpha(1);
+        SetErrorBlinkAlpha(1);
     }
     private void OnDisable() { StopErrorBlink(); StopFeedback(); }
     private void OnDestroy() { StopErrorBlink(); StopFeedback(); }

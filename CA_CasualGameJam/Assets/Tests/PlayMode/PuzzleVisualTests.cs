@@ -76,14 +76,14 @@ public class PuzzleVisualTests
         TileController forbidden = Tile(1, 3);
         var marker = forbidden.transform.Find("ForbiddenMarker").GetComponent<SpriteRenderer>();
         var frame = forbidden.transform.Find("TileFlame").GetComponent<SpriteRenderer>();
+        var face = forbidden.transform.Find("TileFace").GetComponent<SpriteRenderer>();
         Assert.That(marker.transform.localPosition, Is.EqualTo(Vector3.zero));
         AssertNoErrorBlinks();
         Begin(0, 0); Extend(0, 3); Extend(1, 3);
         yield return _game.CommitLineAsync().ToCoroutine();
         Assert.That(forbidden.IsTileCorrect(), Is.False);
         Assert.That(forbidden.DisplayColor, Is.EqualTo(GlobalScripts.RedFaceColor));
-        Assert.That(forbidden.transform.Find("TileFace").GetComponent<SpriteRenderer>().color,
-            Is.EqualTo(GlobalScripts.RedFaceColor));
+        Assert.That(face.color, Is.EqualTo(GlobalScripts.RedFaceColor));
         AssertNoErrorBlinks();
         Begin(0, 3);
         AssertNoErrorBlinks();
@@ -101,6 +101,17 @@ public class PuzzleVisualTests
             minimum = Mathf.Min(minimum, frame.color.a);
             maximum = Mathf.Max(maximum, frame.color.a);
             Assert.That(marker.color.a, Is.EqualTo(frame.color.a).Within(0.001f));
+            Assert.That(face.color.r, Is.EqualTo(GlobalScripts.RedFaceColor.r));
+            Assert.That(face.color.g, Is.EqualTo(GlobalScripts.RedFaceColor.g));
+            Assert.That(face.color.b, Is.EqualTo(GlobalScripts.RedFaceColor.b));
+            foreach (TileController tile in _game.TilesList)
+            {
+                var tileFace = tile.transform.Find("TileFace").GetComponent<SpriteRenderer>();
+                var tileFrame = tile.transform.Find("TileFlame").GetComponent<SpriteRenderer>();
+                Assert.That(tileFace.color.a, Is.EqualTo(tileFrame.color.a).Within(0.001f));
+            }
+            forbidden.RefreshVisuals();
+            Assert.That(face.color.a, Is.EqualTo(frame.color.a).Within(0.001f));
             yield return null;
         }
         Assert.That(maximum - minimum, Is.GreaterThan(0.4f));
@@ -125,8 +136,10 @@ public class PuzzleVisualTests
         {
             var frame = tile.transform.Find("TileFlame").GetComponent<SpriteRenderer>();
             var marker = tile.transform.Find("ForbiddenMarker").GetComponent<SpriteRenderer>();
+            var face = tile.transform.Find("TileFace").GetComponent<SpriteRenderer>();
             Assert.That(frame.color.a, Is.EqualTo(1));
             Assert.That(marker.color.a, Is.EqualTo(1));
+            Assert.That(face.color, Is.EqualTo(tile.DisplayColor));
             tile.RefreshVisuals();
         }
         AssertNoErrorBlinks();
@@ -137,6 +150,7 @@ public class PuzzleVisualTests
     {
         TileController required = Tile(3, 1);
         var frame = required.transform.Find("TileFlame").GetComponent<SpriteRenderer>();
+        var face = required.transform.Find("TileFace").GetComponent<SpriteRenderer>();
         Begin(0, 0); Extend(3, 0); Extend(3, 1);
         yield return _game.CommitLineAsync().ToCoroutine();
         AssertNoErrorBlinks();
@@ -145,21 +159,30 @@ public class PuzzleVisualTests
         Assert.That(required.CurrentColor, Is.EqualTo(TileColor.Purple));
         Assert.That(required.IsErrorBlinking, Is.False);
         Assert.That(frame.color.a, Is.EqualTo(1));
+        Assert.That(face.color, Is.EqualTo(GlobalScripts.PurpleFaceColor));
         Assert.That(Tile(2, 2).IsErrorBlinking, Is.True);
+        yield return new WaitForSecondsRealtime(0.125f);
+        Assert.That(Tile(2, 2).transform.Find("TileFace").GetComponent<SpriteRenderer>().color.a, Is.LessThan(0.9f));
         Assert.That(_game.ReloadColor(BaseColor.Blue), Is.True);
         Assert.That(required.IsTileCorrect(), Is.False);
         AssertNoErrorBlinks();
+        foreach (TileController tile in _game.TilesList)
+            Assert.That(tile.transform.Find("TileFace").GetComponent<SpriteRenderer>().color, Is.EqualTo(tile.DisplayColor));
         Begin(0, 3);
         AssertNoErrorBlinks();
         yield return _game.CommitLineAsync().ToCoroutine();
         Assert.That(required.IsErrorBlinking, Is.True);
+        yield return new WaitForSecondsRealtime(0.125f);
+        Assert.That(face.color.a, Is.LessThan(0.9f));
         required.gameObject.SetActive(false);
         Assert.That(required.IsErrorBlinking, Is.False);
         Assert.That(frame.color.a, Is.EqualTo(1));
+        Assert.That(face.color, Is.EqualTo(GlobalScripts.RedFaceColor));
         required.gameObject.SetActive(true);
         Assert.That(required.IsErrorBlinking, Is.False);
         _game.RestartStage();
         AssertNoErrorBlinks();
         Assert.That(frame.color.a, Is.EqualTo(1));
+        Assert.That(face.color, Is.EqualTo(GlobalScripts.NormalFaceColor));
     }
 }
