@@ -58,9 +58,10 @@ public static class MenuSceneBuilder
         next.name = "NextStageButton";
         StyleButton(next, new Vector2(195, -155), new Vector2(350, 120), new Color32(75, 142, 229, 255));
         Label(next.transform, "Label", "NEXT STAGE", 32, Vector2.zero, new Vector2(330, 100));
-        RectTransform homeRect = Rect(card, "ClearHomeButton", new Vector2(-195, -155), new Vector2(350, 120));
-        var home = GetOrAdd<UnityEngine.UI.Button>(homeRect.gameObject);
-        StyleButton(home, homeRect.anchoredPosition, homeRect.sizeDelta, new Color32(104, 104, 104, 255));
+        var home = serializedHud.FindProperty("_clearHome").objectReferenceValue as UnityEngine.UI.Button;
+        RectTransform homeRect = home != null ? (RectTransform)home.transform : Rect(card, "ClearHomeButton", new Vector2(-195, -155), new Vector2(350, 120));
+        if (home == null) home = GetOrAdd<UnityEngine.UI.Button>(homeRect.gameObject);
+        StyleButton(home, new Vector2(-195, -155), new Vector2(350, 120), new Color32(104, 104, 104, 255));
         Label(homeRect, "Label", "HOME", 32, Vector2.zero, new Vector2(330, 100));
         TMP_Text stageLabel = hud.GetComponentsInChildren<TMP_Text>(true).First(text => text.name == "Level");
         stageLabel.text = $"-Stage{stageNumber}-";
@@ -70,6 +71,7 @@ public static class MenuSceneBuilder
         SetReference(hud, "_stageLabel", stageLabel); SetReference(hud, "_clearMessage", message);
         panel.gameObject.SetActive(false);
         EditorUtility.SetDirty(hud); EditorUtility.SetDirty(navigation);
+        ClearScreenBuilder.Apply(manager, hud);
     }
 
     private static void UpdateTitle()

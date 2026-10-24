@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
 
-/// <summary>Next stage to play, retained across scene changes for the current play session.</summary>
+/// <summary>Next stage to play, saved locally so it survives an application restart.</summary>
 public static class StageProgress
 {
+    private const string ProgressKey = "ColorPuzzle.CurrentStageNumber";
     public static int CurrentStageNumber { get; private set; } = 1;
     public static string CurrentScene => GetSceneName(CurrentStageNumber);
     public static bool CanPlayCurrentStage => !string.IsNullOrEmpty(CurrentScene);
@@ -12,21 +13,28 @@ public static class StageProgress
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     public static void ResetSession()
     {
-        CurrentStageNumber = 1;
+        CurrentStageNumber = Mathf.Clamp(PlayerPrefs.GetInt(ProgressKey, 1), 1, StageCatalog.Count + 1);
         Changed = null;
     }
 
     public static void RecordClear(int stageNumber)
     {
-        if (stageNumber < CurrentStageNumber) return;
-        CurrentStageNumber = stageNumber + 1;
-        Changed?.Invoke();
+        if (stageNumber < CurrentStageNumber || string.IsNullOrEmpty(GetSceneName(stageNumber))) return;
+        SetCurrentStage(stageNumber + 1);
     }
 
     public static void EnterStage(int stageNumber)
     {
         if (string.IsNullOrEmpty(GetSceneName(stageNumber)) || stageNumber == CurrentStageNumber) return;
+        SetCurrentStage(stageNumber);
+    }
+
+    private static void SetCurrentStage(int stageNumber)
+    {
         CurrentStageNumber = stageNumber;
+        PlayerPrefs.SetInt(ProgressKey, stageNumber);
+        // Mobile task termination need not call OnApplicationQuit, so flush at each change.
+        PlayerPrefs.Save();
         Changed?.Invoke();
     }
 

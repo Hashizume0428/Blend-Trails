@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
-public class StageHudTests
+public class StageHudTests : StageProgressTestFixture
 {
     private GameManager _game;
     private static UnityEngine.UI.Button Button(string name) => GameObject.Find(name).GetComponent<UnityEngine.UI.Button>();

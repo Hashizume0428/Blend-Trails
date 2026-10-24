@@ -1,6 +1,5 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -20,7 +19,9 @@ public class GameHud : MonoBehaviour
     [SerializeField] private TMP_Text _progress;
     [SerializeField] private TMP_Text _status;
     [SerializeField] private CanvasGroup _clearPanel;
-    private Tween _clearTween;
+    [SerializeField] private StageClearPresentation _clearPresentation;
+    [SerializeField] private TMP_Text _nextStageLabel;
+    public StageClearPresentation ClearPresentation => _clearPresentation;
     private bool _leavingScene;
     private StageClearNavigation _stageNavigation;
     private void Awake()
@@ -36,7 +37,8 @@ public class GameHud : MonoBehaviour
         SceneNavigator.LoadingChanged += Refresh;
         Refresh();
     }
-    private bool CanOperate => !_leavingScene && !SceneNavigator.IsLoading;
+    private bool CanOperate => !_leavingScene && !SceneNavigator.IsLoading &&
+        (_clearPresentation == null || !_clearPresentation.IsPlaying);
     private void ReloadRed() { if (CanOperate) _gameManager.ReloadColor(BaseColor.Red); }
     private void ReloadBlue() { if (CanOperate) _gameManager.ReloadColor(BaseColor.Blue); }
     private void ReloadAll() { if (CanOperate) _gameManager.ReloadAll(); }
@@ -67,6 +69,11 @@ public class GameHud : MonoBehaviour
     }
     private void Refresh()
     {
+        if (_gameManager.State == GameState.Idle)
+        {
+            if (_clearPresentation != null) _clearPresentation.ResetPresentation();
+            _clearPanel.gameObject.SetActive(false);
+        }
         _redReload.interactable = CanOperate && _gameManager.CanReloadColor(BaseColor.Red);
         _blueReload.interactable = CanOperate && _gameManager.CanReloadColor(BaseColor.Blue);
         if (_allReload != null) _allReload.interactable = CanOperate && _gameManager.CanReloadAll;
@@ -74,30 +81,26 @@ public class GameHud : MonoBehaviour
         bool cleared = CanOperate && _gameManager.State == GameState.Cleared;
         if (_clearHome != null) _clearHome.interactable = cleared;
         if (_nextStage != null) _nextStage.interactable = cleared && _stageNavigation != null && _stageNavigation.HasNextStage;
+        if (_nextStageLabel != null) _nextStageLabel.text = $"Stage{(_stageNavigation != null ? _stageNavigation.StageNumber + 1 : 2)}";
         if (_stageLabel != null) _stageLabel.text = $"-Stage{(_stageNavigation != null ? _stageNavigation.StageNumber : 1)}-";
         if (_clearMessage != null) _clearMessage.text = _stageNavigation != null && !_stageNavigation.HasNextStage
             ? "ALL STAGES CLEAR" : "Every color in its place.";
         if (_progress != null) _progress.text = $"{_gameManager.CorrectTileCount:00} / {_gameManager.TilesList.Count:00}";
         if (_status != null) _status.text = _gameManager.State == GameState.Drawing ? "Release to paint" :
             _gameManager.State == GameState.Resolving ? "Checking colors..." : "Trace from a colored dot";
-        if (_gameManager.State == GameState.Idle)
-        {
-            _clearTween?.Kill();
-            _clearPanel.gameObject.SetActive(false);
-        }
     }
     public async UniTask PlayClearAsync(CancellationToken token)
     {
-        _clearPanel.gameObject.SetActive(true); _clearPanel.alpha = 0;
-        if (_nextStage != null) _nextStage.interactable = false;
-        if (_clearHome != null) _clearHome.interactable = false;
-        _clearTween = DOTween.To(() => _clearPanel.alpha, value => _clearPanel.alpha = value, 1f, 0.3f).SetLink(gameObject);
-        try { await UniTask.Delay(300, cancellationToken: token); }
-        finally { _clearTween?.Kill(); _clearTween = null; }
+        if (_clearPresentation != null)
+        {
+            UniTask presentation = _clearPresentation.PlayAsync(token);
+            Refresh();
+            await presentation;
+        }
+        else { _clearPanel.gameObject.SetActive(true); _clearPanel.alpha = 1; }
     }
     private void OnDestroy()
     {
-        _clearTween?.Kill();
         SceneNavigator.LoadingChanged -= Refresh;
         if (_gameManager != null) _gameManager.Changed -= Refresh;
         if (_redReload != null) _redReload.onClick.RemoveListener(ReloadRed);

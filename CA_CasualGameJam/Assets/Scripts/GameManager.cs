@@ -150,12 +150,12 @@ public class GameManager : MonoBehaviour
                 foreach (TileController tile in TilesList) tile.PlayErrorBlink();
             if (StageClearCheck())
             {
+                var navigation = GetComponent<StageClearNavigation>();
+                if (navigation != null) StageProgress.RecordClear(navigation.StageNumber);
                 PlaySound(_clearSound);
                 if (_hud != null) await _hud.PlayClearAsync(token);
                 token.ThrowIfCancellationRequested();
                 State = GameState.Cleared;
-                var navigation = GetComponent<StageClearNavigation>();
-                if (navigation != null) StageProgress.RecordClear(navigation.StageNumber);
             }
             else State = GameState.Idle;
             Changed?.Invoke();
@@ -176,6 +176,7 @@ public class GameManager : MonoBehaviour
     {
         if (!tile.AddColor(_activeColor)) return;
         _drawingPaintedTiles.Add(tile.TileIndex);
+        TileHaptics.LightTap();
         PlaySound(_tileSound);
         tile.PlayFeedback();
     }

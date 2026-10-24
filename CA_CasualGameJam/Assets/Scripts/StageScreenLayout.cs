@@ -14,6 +14,11 @@ public class StageScreenLayout : MonoBehaviour
     [SerializeField] private Transform _board;
     [SerializeField] private Camera _boardCamera;
     [SerializeField] private Vector2Int _boardSize = new Vector2Int(4, 4);
+    [SerializeField] private RectTransform _clearContent;
+    [SerializeField] private RectTransform _clearBoardArea;
+    [SerializeField] private RectTransform _clearActions;
+    private float _clearProgress;
+    public float ClearProgress => _clearProgress;
     private Rect _lastSafeArea, _lastCameraRect;
     private Vector2 _lastCanvasSize;
     private float _lastCameraSize;
@@ -25,6 +30,15 @@ public class StageScreenLayout : MonoBehaviour
     private void OnValidate() => _dirty = true;
     private void Start() { Canvas.ForceUpdateCanvases(); ApplyLayout(); }
     private void LateUpdate() => UpdateLayout();
+    public void SetClearProgress(float progress)
+    {
+        _clearProgress = Mathf.Clamp01(progress); _dirty = true; ApplyLayout();
+    }
+    public void SetPlayControlsVisible(bool visible)
+    {
+        foreach (RectTransform rect in new[] { _home, _stageLabel, _mixLegend, _reloadPanel })
+            if (rect != null) rect.gameObject.SetActive(visible);
+    }
     private void UpdateLayout()
     {
         if (_safeArea == null || _content == null || _boardCamera == null) return;
@@ -66,6 +80,26 @@ public class StageScreenLayout : MonoBehaviour
         Place(_mixLegend, 163, legendY, 470, 110);
         Place(_reloadPanel, 57, trayY, 1200, 429);
 
+        if (_clearContent != null)
+        {
+            _clearContent.anchorMin = _safeArea.anchorMin; _clearContent.anchorMax = _safeArea.anchorMax;
+            _clearContent.offsetMin = _clearContent.offsetMax = Vector2.zero;
+        }
+        float previewY = size.y * 0.08f;
+        if (_clearBoardArea != null)
+        {
+            _clearBoardArea.anchorMin = _clearBoardArea.anchorMax = _clearBoardArea.pivot = new Vector2(0.5f, 0.5f);
+            _clearBoardArea.sizeDelta = new Vector2(1192, boardHeight) * (0.6f * scale);
+            _clearBoardArea.anchoredPosition = new Vector2(0, previewY);
+        }
+        if (_clearActions != null)
+        {
+            _clearActions.anchorMin = _clearActions.anchorMax = _clearActions.pivot = new Vector2(0.5f, 0.5f);
+            _clearActions.sizeDelta = new Vector2(1008, 166);
+            _clearActions.localScale = Vector3.one * scale;
+            _clearActions.anchoredPosition = new Vector2(0, previewY - boardHeight * 0.3f * scale - 180 * scale);
+        }
+
         _boardArea.GetWorldCorners(_corners);
         Vector2 topLeft = RectTransformUtility.WorldToScreenPoint(null, _corners[1]);
         Vector2 topRight = RectTransformUtility.WorldToScreenPoint(null, _corners[2]);
@@ -73,10 +107,22 @@ public class StageScreenLayout : MonoBehaviour
         Vector3 worldLeft = _boardCamera.ScreenToWorldPoint(new Vector3(topLeft.x, topLeft.y, depth));
         Vector3 worldRight = _boardCamera.ScreenToWorldPoint(new Vector3(topRight.x, topRight.y, depth));
         float boardScale = (worldRight.x - worldLeft.x) / (_boardSize.x + 0.3f);
-        _board.localScale = Vector3.one * boardScale;
         Vector2 bottomLeft = RectTransformUtility.WorldToScreenPoint(null, _corners[0]);
         Vector3 worldBottom = _boardCamera.ScreenToWorldPoint(new Vector3(bottomLeft.x, bottomLeft.y, depth));
-        _board.position = new Vector3((worldLeft.x + worldRight.x) / 2, (worldLeft.y + worldBottom.y) / 2, 0);
+        Vector3 boardPosition = new Vector3((worldLeft.x + worldRight.x) / 2, (worldLeft.y + worldBottom.y) / 2, 0);
+        if (_clearBoardArea != null && _clearProgress > 0)
+        {
+            _clearBoardArea.GetWorldCorners(_corners);
+            Vector2 lower = RectTransformUtility.WorldToScreenPoint(null, _corners[0]);
+            Vector2 upper = RectTransformUtility.WorldToScreenPoint(null, _corners[2]);
+            Vector3 targetLower = _boardCamera.ScreenToWorldPoint(new Vector3(lower.x, lower.y, depth));
+            Vector3 targetUpper = _boardCamera.ScreenToWorldPoint(new Vector3(upper.x, upper.y, depth));
+            Vector3 targetPosition = (targetLower + targetUpper) / 2; targetPosition.z = 0;
+            boardPosition = Vector3.Lerp(boardPosition, targetPosition, _clearProgress);
+            boardScale = Mathf.Lerp(boardScale, (targetUpper.x - targetLower.x) / (_boardSize.x + 0.3f), _clearProgress);
+        }
+        _board.localScale = Vector3.one * boardScale;
+        _board.position = boardPosition;
         Physics2D.SyncTransforms();
         _lastSafeArea = safe;
         _lastCanvasSize = ((RectTransform)_safeArea.parent).rect.size;

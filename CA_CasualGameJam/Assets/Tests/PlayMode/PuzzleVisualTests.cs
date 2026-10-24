@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
-public class PuzzleVisualTests
+public class PuzzleVisualTests : StageProgressTestFixture
 {
     private GameManager _game;
     [UnitySetUp]

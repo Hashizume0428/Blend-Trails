@@ -8,11 +8,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
-public class SceneNavigationTests
+public class SceneNavigationTests : StageProgressTestFixture
 {
-    [SetUp]
-    public void ResetProgress() => StageProgress.ResetSession();
-
     private static IEnumerator WaitForScene(string name)
     {
         float deadline = Time.realtimeSinceStartup + 10;
@@ -127,7 +124,7 @@ public class SceneNavigationTests
         Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(11));
         Assert.That(Button("NextStageButton").interactable, Is.False);
         Assert.That(Button("ClearHomeButton").interactable, Is.True);
-        Assert.That(GameObject.Find("ClearMessage").GetComponent<TMP_Text>().text, Is.EqualTo("ALL STAGES CLEAR"));
+        Assert.That(Button("NextStageButton").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage11"));
         Button("NextStageButton").onClick.Invoke();
         yield return new WaitForSecondsRealtime(1.3f);
         Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(StageCatalog.SceneName(10)));

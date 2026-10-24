@@ -58,18 +58,24 @@ public static class StageTestReference
     public static IEnumerator Solve(GameManager game)
     {
         int number = game.GetComponent<StageClearNavigation>().StageNumber;
-        Reference reference = Stages[number - 1];
-        foreach (string waypoints in new[] { reference.Red, reference.Blue })
+        foreach (BaseColor color in new[] { BaseColor.Red, BaseColor.Blue })
         {
-            Vector2Int[] cells = Cells(waypoints);
-            Assert.That(game.TryBeginLine(game.GetTile(cells[0]).TileIndex), Is.True, $"Stage{number} begin");
-            for (int i = 1; i < cells.Length; i++)
-                Assert.That(game.TryExtendLine(game.GetTile(cells[i]).TileIndex), Is.True, $"Stage{number} extend to {cells[i]}");
+            DrawLine(game, color);
             Assert.That(GameObject.Find("ClearPanel"), Is.Null, "Clear must wait for release.");
             yield return game.CommitLineAsync().ToCoroutine();
         }
         Assert.That(game.State, Is.EqualTo(GameState.Cleared), $"Stage{number} must be solvable using its reference path.");
         Assert.That(game.CorrectTileCount, Is.EqualTo(20));
         Assert.That(game.StageClearCheck(), Is.True);
+    }
+
+    public static void DrawLine(GameManager game, BaseColor color)
+    {
+        int number = game.GetComponent<StageClearNavigation>().StageNumber;
+        Reference reference = Stages[number - 1];
+        Vector2Int[] cells = Cells(color == BaseColor.Red ? reference.Red : reference.Blue);
+        Assert.That(game.TryBeginLine(game.GetTile(cells[0]).TileIndex), Is.True, $"Stage{number} begin");
+        for (int i = 1; i < cells.Length; i++)
+            Assert.That(game.TryExtendLine(game.GetTile(cells[i]).TileIndex), Is.True, $"Stage{number} extend to {cells[i]}");
     }
 }
