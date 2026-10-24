@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     private readonly Dictionary<BaseColor, TileController> _starts = new Dictionary<BaseColor, TileController>();
     private readonly HashSet<BaseColor> _committedColors = new HashSet<BaseColor>();
     private readonly List<int> _preview = new List<int>();
+    private readonly HashSet<int> _drawingPaintedTiles = new HashSet<int>();
     private BaseColor _activeColor;
     private CancellationTokenSource _operation;
 
@@ -87,8 +88,9 @@ public class GameManager : MonoBehaviour
         TileController tile = TilesList[tileIndex];
         if (!tile.IsStartTile || HasCommittedLine(tile.StartColor) || !tile.CanAddColor(tile.StartColor)) return false;
         _activeColor = tile.StartColor;
-        _preview.Clear(); _preview.Add(tileIndex);
+        _preview.Clear(); _drawingPaintedTiles.Clear(); _preview.Add(tileIndex);
         State = GameState.Drawing;
+        PaintDrawingTile(tile);
         ActiveLine.ShowPath(_preview, TilesList);
         RefreshLines();
         Changed?.Invoke();
@@ -108,14 +110,23 @@ public class GameManager : MonoBehaviour
             if (tile == null) break;
             PathStep action = PuzzleRules.ClassifyStep(_preview, tile.TileIndex, from, next);
             if (action == PathStep.Reject || (action == PathStep.Append && !tile.CanAddColor(_activeColor))) break;
-            if (action == PathStep.Backtrack) _preview.RemoveAt(_preview.Count - 1);
-            else _preview.Add(tile.TileIndex);
+            if (action == PathStep.Backtrack)
+            {
+                UndoDrawingTile(_preview[_preview.Count - 1]);
+                _preview.RemoveAt(_preview.Count - 1);
+            }
+            else
+            {
+                _preview.Add(tile.TileIndex);
+                PaintDrawingTile(tile);
+            }
             from = next; changed = true;
         }
         if (changed)
         {
             ActiveLine.ShowPath(_preview, TilesList);
             RefreshLines();
+            Changed?.Invoke();
         }
         return changed;
     }
@@ -124,22 +135,14 @@ public class GameManager : MonoBehaviour
         if (State != GameState.Drawing) return;
         State = GameState.Resolving;
         CancellationToken token = _operation.Token;
-        int[] path = _preview.ToArray();
         BaseColor color = _activeColor;
         _preview.Clear();
+        _drawingPaintedTiles.Clear();
         Changed?.Invoke();
         try
         {
-            foreach (int index in path)
-            {
-                token.ThrowIfCancellationRequested();
-                TileController tile = TilesList[index];
-                tile.AddColor(color);
-                Changed?.Invoke();
-                token.ThrowIfCancellationRequested();
-                PlaySound(_tileSound);
-                await tile.PlayFeedbackAsync(token);
-            }
+            // Faces already follow the pointer; release only finalizes the line and assessment.
+            await UniTask.Delay(120, cancellationToken: token);
             token.ThrowIfCancellationRequested();
             _committedColors.Add(color);
             if (_committedColors.Count == _starts.Count)
@@ -159,10 +162,26 @@ public class GameManager : MonoBehaviour
     public void CancelLine()
     {
         if (State != GameState.Drawing) return;
+        foreach (int index in _preview) UndoDrawingTile(index);
+        _drawingPaintedTiles.Clear();
         ActiveLine.ResetToStart(_starts[_activeColor].transform.position);
         RefreshLines();
         _preview.Clear(); State = GameState.Idle;
         Changed?.Invoke();
+    }
+    private void PaintDrawingTile(TileController tile)
+    {
+        if (!tile.AddColor(_activeColor)) return;
+        _drawingPaintedTiles.Add(tile.TileIndex);
+        PlaySound(_tileSound);
+        tile.PlayFeedback();
+    }
+    private void UndoDrawingTile(int index)
+    {
+        if (!_drawingPaintedTiles.Remove(index)) return;
+        TileController tile = TilesList[index];
+        tile.StopFeedback();
+        tile.RemoveColor(_activeColor);
     }
     public bool ReloadColor(BaseColor color)
     {
@@ -190,7 +209,7 @@ public class GameManager : MonoBehaviour
     {
         _operation?.Cancel(); _operation?.Dispose();
         _operation = CancellationTokenSource.CreateLinkedTokenSource(destroyCancellationToken);
-        _preview.Clear(); _committedColors.Clear();
+        _preview.Clear(); _drawingPaintedTiles.Clear(); _committedColors.Clear();
         foreach (TileController tile in TilesList) if (tile != null) tile.ResetRuntimeState();
         foreach (var pair in _starts)
         {

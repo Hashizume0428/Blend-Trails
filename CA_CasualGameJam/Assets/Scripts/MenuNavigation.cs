@@ -4,7 +4,7 @@ using UnityEngine;
 public class MenuNavigation : MonoBehaviour
 {
     [SerializeField] private UnityEngine.UI.Button _continueButton;
-    [SerializeField] private string _nextScene = SceneNavigator.StageSelectScene;
+    [SerializeField] private string _nextScene = SceneNavigator.StageScene;
 
     private void OnEnable()
     {

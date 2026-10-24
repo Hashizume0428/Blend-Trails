@@ -229,17 +229,17 @@ public static class PrototypeSceneBuilder
         cardImage.sprite = SpriteAt("Assets/Image/tile/タイル.png"); cardImage.raycastTarget = false;
         Text(card, "ClearTitle", "STAGE CLEAR", 68, new Vector2(0, 130), new Vector2(820, 100), null, FontStyles.Bold);
         Text(card, "ClearMessage", "Every color in its place.", 30, new Vector2(0, 35), new Vector2(800, 70), null);
-        RectTransform restartRect = Rect("StageSelectButton", card, new Vector2(0, -135), new Vector2(600, 120), 0.5f);
+        RectTransform restartRect = Rect("NextStageButton", card, new Vector2(0, -135), new Vector2(600, 120), 0.5f);
         var restartImage = restartRect.gameObject.AddComponent<UnityEngine.UI.Image>();
         restartImage.sprite = SpriteAt("Assets/Image/tile/タイル.png"); restartImage.color = GlobalScripts.GetLineColor(BaseColor.Blue);
         var restart = restartRect.gameObject.AddComponent<UnityEngine.UI.Button>();
         restart.targetGraphic = restartImage;
-        var label = Text(restartRect, "Label", "STAGE SELECT", 32, Vector2.zero, new Vector2(560, 100), null, FontStyles.Bold);
+        var label = Text(restartRect, "Label", "NEXT STAGE", 32, Vector2.zero, new Vector2(560, 100), null, FontStyles.Bold);
         label.color = Color.white;
         overlay.gameObject.SetActive(false);
         var hud = canvasObject.GetComponent<GameHud>();
         SetRef(hud, "_gameManager", manager); SetRef(hud, "_redReload", red); SetRef(hud, "_blueReload", blue);
-        SetRef(hud, "_stageSelect", restart); SetRef(hud, "_progress", progress);
+        SetRef(hud, "_nextStage", restart); SetRef(hud, "_progress", progress);
         SetRef(hud, "_status", status); SetRef(hud, "_clearPanel", group);
         return hud;
     }

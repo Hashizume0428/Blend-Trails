@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using NUnit.Framework;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -22,6 +23,7 @@ public class SceneNavigationTests
     private static UnityEngine.UI.Button Button(string name) => GameObject.Find(name).GetComponent<UnityEngine.UI.Button>();
     private static void Tap(UnityEngine.UI.Button button)
     {
+        Assert.That(button.interactable, Is.True, button.name);
         Assert.That(Object.FindObjectsByType<EventSystem>(FindObjectsSortMode.None).Length, Is.EqualTo(1));
         Canvas.ForceUpdateCanvases();
         var rect = button.GetComponent<RectTransform>();
@@ -40,55 +42,115 @@ public class SceneNavigationTests
     }
     private static IEnumerator Solve(GameManager game)
     {
-        int Index(int x, int y) => game.GetTile(new Vector2Int(x, y)).TileIndex;
-        void Extend(int x, int y) => Assert.That(game.TryExtendLine(Index(x, y)), Is.True);
-        Assert.That(game.TryBeginLine(Index(0, 0)), Is.True);
-        Extend(0, 1); Extend(1, 1); Extend(1, 0); Extend(2, 0);
-        Extend(2, 1); Extend(2, 2); Extend(3, 2); Extend(3, 1); Extend(3, 0);
-        yield return game.CommitLineAsync().ToCoroutine();
-        Assert.That(game.TryBeginLine(Index(0, 3)), Is.True);
-        Extend(0, 2); Extend(1, 2); Extend(1, 3); Extend(2, 3);
-        Extend(3, 3); Extend(3, 2); Extend(3, 1);
-        yield return game.CommitLineAsync().ToCoroutine();
+        int[,] red, blue;
+        if (game.GetComponent<StageClearNavigation>().StageNumber == 1)
+        {
+            red = new[,] { {0,0}, {0,1}, {1,1}, {1,0}, {2,0}, {2,1}, {2,2}, {3,2}, {3,1}, {3,0} };
+            blue = new[,] { {0,3}, {0,2}, {1,2}, {1,3}, {2,3}, {3,3}, {3,2}, {3,1} };
+        }
+        else
+        {
+            red = new[,] { {3,0}, {2,0}, {1,0}, {0,0}, {0,1}, {1,1}, {1,2}, {2,2}, {2,1}, {3,1} };
+            blue = new[,] { {0,3}, {0,2}, {1,2}, {2,2}, {3,2}, {3,3}, {2,3}, {1,3} };
+        }
+        foreach (int[,] path in new[] { red, blue })
+        {
+            int Index(int i) => game.GetTile(new Vector2Int(path[i, 0], path[i, 1])).TileIndex;
+            Assert.That(game.TryBeginLine(Index(0)), Is.True);
+            for (int i = 1; i < path.GetLength(0); i++) Assert.That(game.TryExtendLine(Index(i)), Is.True);
+            Assert.That(game.State, Is.EqualTo(GameState.Drawing));
+            Assert.That(GameObject.Find("ClearPanel"), Is.Null, "Clear must wait for release.");
+            yield return game.CommitLineAsync().ToCoroutine();
+        }
         Assert.That(game.State, Is.EqualTo(GameState.Cleared));
+        Assert.That(game.CorrectTileCount, Is.EqualTo(16));
     }
-
-    [UnityTest]
-    public IEnumerator TitleTapStageSelectionClearAndReplayLoop()
+    private static void AssertFreshStage(int number)
     {
-        yield return SceneManager.LoadSceneAsync(SceneNavigator.TitleScene);
-        yield return null;
-        var start = Button("TapToStart");
-        Tap(start);
-        start.onClick.Invoke(); // Repeated taps must not start another load.
-        yield return WaitForScene(SceneNavigator.StageSelectScene);
-        Tap(Button("Stage01Button"));
-        yield return WaitForScene(SceneNavigator.StageScene);
         var game = Object.FindFirstObjectByType<GameManager>();
         Assert.That(game.IsInitialized, Is.True);
         Assert.That(game.CorrectTileCount, Is.Zero);
-        yield return Solve(game);
-        Assert.That(Button("StageSelectButton").interactable, Is.True);
-        yield return WaitForScene(SceneNavigator.StageSelectScene);
-        Tap(Button("Stage01Button"));
-        yield return WaitForScene(SceneNavigator.StageScene);
-        game = Object.FindFirstObjectByType<GameManager>();
-        Assert.That(game.IsInitialized, Is.True);
-        Assert.That(game.CorrectTileCount, Is.Zero);
+        Assert.That(game.GetComponent<StageClearNavigation>().StageNumber, Is.EqualTo(number));
+        Assert.That(GameObject.Find("Level").GetComponent<TMP_Text>().text, Is.EqualTo($"-Stage{number}-"));
         foreach (TileController tile in game.TilesList) Assert.That(tile.CurrentColor, Is.EqualTo(TileColor.None));
         Assert.That(Object.FindObjectsByType<GameManager>(FindObjectsSortMode.None).Length, Is.EqualTo(1));
+        Assert.That(Button("HomeButton").interactable, Is.True, "Home must be ready as soon as the scene load finishes.");
+        Assert.That(Button("ReloadAll").interactable, Is.True);
     }
 
     [UnityTest]
-    public IEnumerator ClearButtonCanReturnToSelectionWithoutAutomaticReturn()
+    public IEnumerator TitleHasOneStageButtonAndOpensThePuzzleDirectly()
+    {
+        yield return SceneManager.LoadSceneAsync(SceneNavigator.TitleScene);
+        yield return null;
+        Assert.That(Object.FindObjectsByType<UnityEngine.UI.Button>(FindObjectsSortMode.None).Length, Is.EqualTo(1));
+        Assert.That(GameObject.Find("TapToStart"), Is.Null);
+        Canvas.ForceUpdateCanvases();
+        var outside = new PointerEventData(EventSystem.current) { position = new Vector2(Screen.width * 0.1f, Screen.height * 0.9f) };
+        var hits = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(outside, hits);
+        Assert.That(hits, Is.Empty, "Only the stage button should receive taps.");
+        var stage = Button("Stage01Button");
+        Tap(stage);
+        stage.onClick.Invoke();
+        yield return WaitForScene(SceneNavigator.StageScene);
+        AssertFreshStage(1);
+    }
+
+    [UnityTest]
+    public IEnumerator ClearWaitsForAChoiceAndHomeCanStartAFreshGame()
+    {
+        yield return SceneManager.LoadSceneAsync(SceneNavigator.StageScene);
+        yield return null;
+        yield return Solve(Object.FindFirstObjectByType<GameManager>());
+        Assert.That(Button("ClearHomeButton").interactable, Is.True);
+        Assert.That(Button("NextStageButton").interactable, Is.True);
+        yield return new WaitForSecondsRealtime(1.3f);
+        Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(SceneNavigator.StageScene), "Clear must not navigate automatically.");
+        Tap(Button("ClearHomeButton"));
+        yield return WaitForScene(SceneNavigator.TitleScene);
+        Tap(Button("Stage01Button"));
+        yield return WaitForScene(SceneNavigator.StageScene);
+        AssertFreshStage(1);
+    }
+
+    [UnityTest]
+    public IEnumerator NextStageOpensTheNewPuzzleAndFinalClearCanReturnHome()
+    {
+        yield return SceneManager.LoadSceneAsync(SceneNavigator.StageScene);
+        yield return null;
+        yield return Solve(Object.FindFirstObjectByType<GameManager>());
+        var next = Button("NextStageButton");
+        Tap(next);
+        next.onClick.Invoke();
+        yield return WaitForScene(SceneNavigator.SecondStageScene);
+        AssertFreshStage(2);
+        var game = Object.FindFirstObjectByType<GameManager>();
+        Assert.That(game.GetTile(new Vector2Int(3, 0)).IsStartTile, Is.True);
+        Assert.That(game.GetTile(Vector2Int.zero).IsStartTile, Is.False);
+        yield return Solve(game);
+        Assert.That(Button("NextStageButton").interactable, Is.False);
+        Assert.That(Button("ClearHomeButton").interactable, Is.True);
+        Assert.That(GameObject.Find("ClearMessage").GetComponent<TMP_Text>().text, Is.EqualTo("ALL STAGES CLEAR"));
+        Button("NextStageButton").onClick.Invoke();
+        yield return new WaitForSecondsRealtime(1.3f);
+        Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(SceneNavigator.SecondStageScene));
+        Tap(Button("ClearHomeButton"));
+        yield return WaitForScene(SceneNavigator.TitleScene);
+    }
+
+    [UnityTest]
+    public IEnumerator ClearChoicesCannotNavigateBeforeTheStageIsCleared()
     {
         yield return SceneManager.LoadSceneAsync(SceneNavigator.StageScene);
         yield return null;
         var game = Object.FindFirstObjectByType<GameManager>();
-        game.GetComponent<StageClearNavigation>().enabled = false;
-        yield return Solve(game);
-        Tap(Button("StageSelectButton"));
-        yield return WaitForScene(SceneNavigator.StageSelectScene);
-        Assert.That(Object.FindFirstObjectByType<GameManager>(), Is.Null);
+        Assert.That(game.TryBeginLine(game.GetTile(Vector2Int.zero).TileIndex), Is.True);
+        foreach (var button in Object.FindFirstObjectByType<GameHud>().GetComponentsInChildren<UnityEngine.UI.Button>(true))
+            if (button.name == "NextStageButton" || button.name == "ClearHomeButton") button.onClick.Invoke();
+        yield return null;
+        Assert.That(game.State, Is.EqualTo(GameState.Drawing));
+        Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(SceneNavigator.StageScene));
+        game.CancelLine();
     }
 }

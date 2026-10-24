@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Threading;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -114,20 +112,18 @@ public class TileController : MonoBehaviour
         _currentColorsList.Clear();
         RefreshVisuals();
     }
-    public async UniTask PlayFeedbackAsync(CancellationToken token)
+    public void PlayFeedback()
     {
         if (_faceRenderer == null) return;
         StopFeedback();
-        Tween feedback = _faceRenderer.transform.DOPunchScale(_faceScale * 0.055f, 0.12f, 1, 0f).SetLink(gameObject);
-        _feedback = feedback;
-        try { await UniTask.Delay(120, cancellationToken: token); }
-        finally
-        {
-            feedback.Kill();
-            if (_feedback == feedback) StopFeedback();
-        }
+        _feedback = _faceRenderer.transform.DOPunchScale(_faceScale * 0.055f, 0.12f, 1, 0f)
+            .SetLink(gameObject).OnComplete(() =>
+            {
+                _feedback = null;
+                if (_faceRenderer != null) _faceRenderer.transform.localScale = _faceScale;
+            });
     }
-    private void StopFeedback()
+    public void StopFeedback()
     {
         _feedback?.Kill(); _feedback = null;
         if (_faceRenderer != null && _faceScale != Vector3.zero) _faceRenderer.transform.localScale = _faceScale;

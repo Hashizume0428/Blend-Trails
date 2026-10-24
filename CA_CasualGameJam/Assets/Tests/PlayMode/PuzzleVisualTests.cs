@@ -36,13 +36,14 @@ public class PuzzleVisualTests
         Assert.That(visuals.GetEdgeColor(Index(3, 1), Index(3, 2)), Is.EqualTo(TileColor.Purple));
         Assert.That(visuals.GetEdgeColor(Index(0, 0), Index(1, 0)), Is.EqualTo(TileColor.Red));
         Assert.That(visuals.GetEdgeColor(Index(0, 3), Index(1, 3)), Is.EqualTo(TileColor.Blue));
-        Assert.That(Tile(3, 1).CurrentColor, Is.EqualTo(TileColor.Red), "Preview must not paint tiles.");
+        Assert.That(Tile(3, 1).CurrentColor, Is.EqualTo(TileColor.Purple), "Drawing must mix the face before release.");
         Assert.That(Tile(0, 0).Line.GetComponent<LineRenderer>().enabled, Is.False);
         Assert.That(Tile(0, 3).Line.GetComponent<LineRenderer>().enabled, Is.False);
         Color ink = GlobalScripts.GetLineColor(TileColor.Purple);
         Color32 purple = QualitySettings.activeColorSpace == ColorSpace.Linear ? ink.linear : ink;
         CollectionAssert.Contains(visuals.GetComponent<MeshFilter>().sharedMesh.colors32, purple);
         _game.CancelLine();
+        Assert.That(Tile(3, 1).CurrentColor, Is.EqualTo(TileColor.Red), "Cancel must restore the previously committed face.");
         Assert.That(visuals.GetEdgeColor(Index(3, 1), Index(3, 2)), Is.EqualTo(TileColor.Red));
         Assert.That(visuals.GetEdgeColor(Index(0, 3), Index(1, 3)), Is.EqualTo(TileColor.None));
         Begin(0, 3); Extend(3, 3); Extend(3, 1);
