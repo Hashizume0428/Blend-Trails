@@ -8,6 +8,7 @@ Unity 6000.3.24f1で `Assets/Scenes/Title.unity` を開き、Playで開始しま
 - ステージ選択画面のSTAGE 01を選ぶと、既存の4×4盤面（SampleScene）へ移動します。
 - クリア表示後、約1秒でステージ選択画面へ戻ります。STAGE SELECTボタンですぐに戻ることもできます。
 - 再びSTAGE 01を選ぶと、盤面と色別リロードの状態を初期化して開始します。
+- ステージ右上のホームボタンはタイトルへ戻ります。描画中・着色演出中でも戻ることができ、進行中の操作はシーン破棄時に終了します。
 
 Build Settingsの先頭はTitle、次にStageSelect、SampleSceneです。現在選べるステージは1つです。
 
@@ -16,7 +17,9 @@ Build Settingsの先頭はTitle、次にStageSelect、SampleSceneです。現在
 - 赤・青の開始点を押し、上下左右になぞって離すと色が確定します。マウスでも操作できます。
 - 直前のマスへ戻ると線を短くできます。描画中はマスの色は変わりません。
 - 指を離すと、開始マスからなぞった順に1マスずつ着色します。着色演出中は次の線入力と色別リロードを待ちます。
-- 色別のRESETボタンで、その色の線と構成色だけを除去します。混色マスは残った単色へ戻ります。
+- 盤面下の青・赤のリロードボタンで、その色の線と構成色だけを除去します。混色マスは残った単色へ戻ります。確定した色のボタンだけが使用できます。
+- 灰色のALLボタンは、同じ問題の全ての線・色・確定状態を初期化します。描画中・着色演出中は、ALLと色別リロードを使用できません。
+- 混色早見表は、このステージで使う紫＝赤＋青だけを表示します。黄色のリロードとヒントは表示しません。
 - 線が同じ辺を通る部分と交点は混色で表示します。描画中の線も対象で、キャンセルやリロード後は残った線の色に戻ります。
 - 禁止マークはマスの中央に表示します。赤・青両方の線を確定すると、未着色を含む全ての不正解マスの枠と面を2秒間点滅させます。禁止マスではバツも同じタイミングで点滅し、終了後は通常表示に戻ります。面の単色・混色は保ち、透明度を変えて点滅します。色別リロードでは点滅を止め、引き直しを確定した時に再判定します。
 - 全16マスの条件を満たすとクリアし、ステージ選択画面へ戻ります。
@@ -45,6 +48,8 @@ Color Puzzle/Import Text ResourcesはTMP標準リソースの導入用です。
 Color Puzzle/Build Prototypeは初回の生成用で、生成済み盤面の上書きを防ぎます。普段の調整はシーンやPrefabを編集してください。
 Color Puzzle/Build Scene Flowは不足するメニューシーンを生成し、ステージのクリア後の遷移とBuild Settingsを設定します。生成済みメニューのUIはそのシーンで編集できます。
 StageClearNavigationのClear Display Secondsで、クリア表示後に戻るまでの時間を調整できます。
+Color Puzzle/Apply Figma Stage UIは、既存の問題配置とクリア表示を維持してステージUIを更新します。
+StageScreenLayoutはFigmaの1324×2879を基準にSafe Areaへ配置し、短い縦画面ではセクション間の余白を縮めます。盤面のSpriteRendererとColliderもUIの盤面領域へ追従します。
 
 ## テスト
 
@@ -53,6 +58,7 @@ EditModeは色禁止・混色・完全一致・リロード後の表示・経路
 PlayModeは解答経路、他色開始点、色別リロード、巻き戻し、接触判定、キャンセル、なぞった順の着色、不正解マスの実際の面表示、演出中リスタートを検証します。
 PuzzleVisualTestsでは、重なった辺・交点の混色、キャンセル・リロード後の線表示、禁止マークの中央配置、全開始色の確定後の未着色マスを含む枠・面・禁止マークの同期点滅、2秒での停止、リロード・再確定・初期化時の色の復元を検証します。
 SceneNavigationTestsでは、メニューのタップ判定、連続タップ、タイトルからステージ選択・ステージへの遷移、クリア後の自動復帰とボタンでの復帰、再選択後の盤面初期化を検証します。
+StageHudTestsでは、Figma UIの配置・盤面へのタッチ、ALLでの初期化と条件維持、リロード操作制限、Idle・描画中・着色中のホーム復帰を検証します。
 
 ### 解答例
 
@@ -67,11 +73,13 @@ SceneNavigationTestsでは、メニューのタップ判定、連続タップ、
 ## Verification
 
 Unity Editor compilation: 0 errors / 0 warnings.
-EditMode: 12 / 12 passed. PlayMode: 13 / 13 passed (including scene navigation, sequential painting, mixed lines and error indicators).
+EditMode: 12 / 12 passed. PlayMode: 19 / 19 passed (including stage UI, scene navigation, sequential painting, mixed lines and error indicators).
+Stage HUD at fixed 540 × 960: 6 / 6 passed. Figma reference aspect and 9:16 portrait layouts visually checked.
 Error feedback: all start lines committed, empty incorrect tiles, synchronized frames/faces/markers, two-second stop, restored face colors, and reload/recommit verified.
 Sequential painting: draw order, separate display frames, actual face colors on incorrect tiles, blocked input during painting, and cancellation on restart verified.
 Scene navigation: title tap, stage selection, automatic return after clear, clear button return, repeated taps, and fresh board on replay verified.
-Test results: Logs/SceneFlow-EditMode.json and Logs/SceneFlow-PlayMode.json.
+Test results: Logs/FigmaStage-EditMode.json, Logs/FigmaStage-PlayMode.json and Logs/FigmaStage-PhoneTests.json.
+Figma stage previews: Logs/FigmaStage-Phone.png and Logs/FigmaStage-Reference.png.
 Manual runtime check: frame advancement, 16 / 16 clear, and restart verified.
 Screenshots: Logs/Prototype-Portrait.png and Logs/Prototype-Clear.png.
 Visual improvements: Logs/VisualImprovements.png (mixed lines, centered forbidden markers and error indicators).

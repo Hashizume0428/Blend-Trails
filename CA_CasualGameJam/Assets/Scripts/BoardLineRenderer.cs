@@ -59,7 +59,7 @@ public class BoardLineRenderer : MonoBehaviour
             GetComponent<MeshFilter>().sharedMesh = _mesh;
         }
         _vertices.Clear(); _colors.Clear(); _uvs.Clear(); _triangles.Clear();
-        float radius = _width * 0.5f;
+        float radius = _width * (tiles.Count > 0 ? tiles[0].transform.lossyScale.x : 1f) * 0.5f;
         foreach (var pair in _edges)
         {
             Vector3 from = tiles[pair.Key.x].transform.position;

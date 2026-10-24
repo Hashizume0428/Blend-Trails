@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
     public TileController GetTile(Vector2Int coordinate) => _grid.TryGetValue(coordinate, out TileController tile) ? tile : null;
     public bool HasCommittedLine(BaseColor color) => _committedColors.Contains(color);
     public bool CanReloadColor(BaseColor color) => IsInitialized && State == GameState.Idle && HasCommittedLine(color);
+    public bool CanReloadAll => IsInitialized && State == GameState.Idle;
     private LineController ActiveLine => _starts[_activeColor].Line;
 
     public bool TryBeginLine(int tileIndex)
@@ -176,6 +177,13 @@ public class GameManager : MonoBehaviour
         _starts[color].Line.ResetToStart(_starts[color].transform.position);
         RefreshLines();
         Changed?.Invoke();
+        return true;
+    }
+    public bool ReloadAll()
+    {
+        if (!CanReloadAll) return false;
+        PlaySound(_buttonSound);
+        RestartStage();
         return true;
     }
     public void RestartStage()
