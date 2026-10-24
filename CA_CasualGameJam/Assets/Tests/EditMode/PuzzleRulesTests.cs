@@ -38,17 +38,21 @@ public class PuzzleRulesTests
             tile.BindVisuals(face, null, null, null, null);
             tile.Configure(0, Vector2Int.zero, false, BaseColor.Red, new BaseColor[0], TileColor.Red);
             Assert.That(tile.AddColor(BaseColor.Red), Is.True);
-            Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.NormalFaceColor));
+            Assert.That(tile.IsTileCorrect(), Is.False);
+            Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.RedFaceColor));
+            Assert.That(face.color, Is.EqualTo(GlobalScripts.RedFaceColor));
             tile.AddColor(BaseColor.Blue);
             Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.PurpleFaceColor));
             Assert.That(face.color, Is.EqualTo(GlobalScripts.PurpleFaceColor));
             Assert.That(tile.AddColor(BaseColor.Blue), Is.False);
             tile.RemoveColor(BaseColor.Blue);
             Assert.That(tile.CurrentColor, Is.EqualTo(TileColor.Red));
-            Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.NormalFaceColor));
-            Assert.That(face.color, Is.EqualTo(GlobalScripts.NormalFaceColor));
+            Assert.That(tile.IsTileCorrect(), Is.False);
+            Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.RedFaceColor));
+            Assert.That(face.color, Is.EqualTo(GlobalScripts.RedFaceColor));
             tile.RemoveColor(BaseColor.Red);
             Assert.That(tile.CurrentColor, Is.EqualTo(TileColor.None));
+            Assert.That(face.color, Is.EqualTo(GlobalScripts.NormalFaceColor));
         }
         finally { Object.DestroyImmediate(go); }
     }
@@ -67,7 +71,28 @@ public class PuzzleRulesTests
             tile.Configure(0, Vector2Int.zero, false, BaseColor.Red, new[] { BaseColor.Red, BaseColor.Blue }, TileColor.None);
             tile.AddColor(BaseColor.Red); tile.AddColor(BaseColor.Blue); tile.RemoveColor(BaseColor.Red);
             Assert.That(tile.CurrentColor, Is.EqualTo(TileColor.Blue));
-            Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.NormalFaceColor));
+            Assert.That(tile.IsTileCorrect(), Is.False);
+            Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.BlueFaceColor));
+        }
+        finally { Object.DestroyImmediate(go); }
+    }
+    [Test]
+    public void IncorrectRequiredColorStillDisplaysItsActualMixedColor()
+    {
+        var go = new GameObject("Test tile");
+        try
+        {
+            var tile = go.AddComponent<TileController>();
+            var face = go.AddComponent<SpriteRenderer>();
+            tile.BindVisuals(face, null, null, null, null);
+            tile.Configure(0, Vector2Int.zero, false, BaseColor.Red, new[] { BaseColor.Blue }, TileColor.None);
+            tile.AddColor(BaseColor.Red); tile.AddColor(BaseColor.Blue);
+            Assert.That(tile.IsTileCorrect(), Is.False);
+            Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.PurpleFaceColor));
+            Assert.That(face.color, Is.EqualTo(GlobalScripts.PurpleFaceColor));
+            tile.RemoveColor(BaseColor.Red);
+            Assert.That(tile.IsTileCorrect(), Is.True);
+            Assert.That(face.color, Is.EqualTo(GlobalScripts.BlueFaceColor));
         }
         finally { Object.DestroyImmediate(go); }
     }

@@ -81,7 +81,9 @@ public class PuzzleVisualTests
         Begin(0, 0); Extend(0, 3); Extend(1, 3);
         yield return _game.CommitLineAsync().ToCoroutine();
         Assert.That(forbidden.IsTileCorrect(), Is.False);
-        Assert.That(forbidden.DisplayColor, Is.EqualTo(GlobalScripts.NormalFaceColor));
+        Assert.That(forbidden.DisplayColor, Is.EqualTo(GlobalScripts.RedFaceColor));
+        Assert.That(forbidden.transform.Find("TileFace").GetComponent<SpriteRenderer>().color,
+            Is.EqualTo(GlobalScripts.RedFaceColor));
         AssertNoErrorBlinks();
         Begin(0, 3);
         AssertNoErrorBlinks();

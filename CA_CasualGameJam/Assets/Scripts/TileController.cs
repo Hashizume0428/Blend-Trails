@@ -38,7 +38,7 @@ public class TileController : MonoBehaviour
     public LineController Line => _line;
     public TileColor CurrentColor => PuzzleRules.Mix(_currentColorsList);
     public IReadOnlyList<BaseColor> CurrentColors => _currentColorsList;
-    public Color DisplayColor => IsTileCorrect() ? GlobalScripts.GetFaceColor(CurrentColor) : GlobalScripts.NormalFaceColor;
+    public Color DisplayColor => GlobalScripts.GetFaceColor(CurrentColor);
     public bool IsErrorBlinking => _invalidBlink != null && _invalidBlink.IsActive();
 
     private void Awake()
@@ -95,7 +95,7 @@ public class TileController : MonoBehaviour
     {
         bool correct = IsTileCorrect();
         if (_faceRenderer != null)
-            _faceRenderer.color = correct ? GlobalScripts.GetFaceColor(CurrentColor) : GlobalScripts.NormalFaceColor;
+            _faceRenderer.color = DisplayColor;
         if (_frameRenderer != null)
             _frameRenderer.sprite = GlobalScripts.GetFrameImage(_hasRequiredColors ? PuzzleRules.Mix(_requiredColors) : TileColor.None);
         if (_startMarker != null) _startMarker.gameObject.SetActive(_isStartTile);

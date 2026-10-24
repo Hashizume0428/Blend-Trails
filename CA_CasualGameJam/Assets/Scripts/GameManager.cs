@@ -123,26 +123,24 @@ public class GameManager : MonoBehaviour
         if (State != GameState.Drawing) return;
         State = GameState.Resolving;
         CancellationToken token = _operation.Token;
-        var feedbackTiles = new List<TileController>();
-        _committedColors.Add(_activeColor);
-        foreach (int index in _preview)
-        {
-            TileController tile = TilesList[index];
-            bool wasCorrect = tile.IsTileCorrect();
-            tile.AddColor(_activeColor);
-            if (!wasCorrect && tile.IsTileCorrect()) feedbackTiles.Add(tile);
-        }
+        int[] path = _preview.ToArray();
+        BaseColor color = _activeColor;
         _preview.Clear();
         Changed?.Invoke();
         try
         {
-            foreach (TileController tile in feedbackTiles)
+            foreach (int index in path)
             {
+                token.ThrowIfCancellationRequested();
+                TileController tile = TilesList[index];
+                tile.AddColor(color);
+                Changed?.Invoke();
                 token.ThrowIfCancellationRequested();
                 PlaySound(_tileSound);
                 await tile.PlayFeedbackAsync(token);
             }
             token.ThrowIfCancellationRequested();
+            _committedColors.Add(color);
             if (_committedColors.Count == _starts.Count)
                 foreach (TileController tile in TilesList) tile.PlayErrorBlink();
             if (StageClearCheck())

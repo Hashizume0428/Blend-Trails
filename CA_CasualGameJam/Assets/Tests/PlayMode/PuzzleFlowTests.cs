@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using NUnit.Framework;
 using UnityEngine;
@@ -103,11 +104,59 @@ public class PuzzleFlowTests
         Assert.That(_game.TryBeginLine(Index(0, 0)), Is.False);
     }
     [UnityTest]
+    public IEnumerator CommitPaintsOneTileAtATimeInDrawOrderIncludingIncorrectTiles()
+    {
+        int[] path = { Index(0, 0), Index(0, 1), Index(0, 2), Index(1, 2), Index(1, 1), Index(2, 1) };
+        Begin(0, 0); Extend(0, 2); Extend(1, 2); Extend(1, 1); Extend(2, 1);
+        Assert.That(_game.CorrectTileCount, Is.Zero);
+        var painted = new List<int>();
+        var frames = new List<int>();
+        var faceColors = new List<Color>();
+        void ObserveColors()
+        {
+            foreach (int index in path)
+            {
+                TileController tile = _game.TilesList[index];
+                if (tile.CurrentColor != TileColor.Red || painted.Contains(index)) continue;
+                painted.Add(index);
+                frames.Add(Time.frameCount);
+                faceColors.Add(tile.transform.Find("TileFace").GetComponent<SpriteRenderer>().color);
+            }
+        }
+        _game.Changed += ObserveColors;
+        try
+        {
+            UniTask pending = _game.CommitLineAsync();
+            Assert.That(_game.State, Is.EqualTo(GameState.Resolving));
+            Assert.That(painted.Count, Is.EqualTo(1), "Only the start tile is colored immediately.");
+            Assert.That(_game.TryBeginLine(Index(0, 3)), Is.False);
+            Assert.That(_game.ReloadColor(BaseColor.Red), Is.False);
+            Assert.That(_game.CommitLineAsync().Status, Is.EqualTo(UniTaskStatus.Succeeded), "Duplicate commits must do nothing.");
+            yield return pending.ToCoroutine();
+        }
+        finally { _game.Changed -= ObserveColors; }
+        CollectionAssert.AreEqual(path, painted, "Tiles must be painted in drawn order.");
+        for (int i = 0; i < painted.Count; i++)
+        {
+            Assert.That(faceColors[i], Is.EqualTo(GlobalScripts.RedFaceColor));
+            if (i > 0)
+                Assert.That(frames[i], Is.GreaterThan(frames[i - 1]), "Each color change must be displayed on a later frame.");
+        }
+        Assert.That(_game.State, Is.EqualTo(GameState.Idle));
+        Assert.That(_game.HasCommittedLine(BaseColor.Red), Is.True);
+        TileController incorrect = _game.GetTile(new Vector2Int(0, 2));
+        Assert.That(incorrect.IsTileCorrect(), Is.False);
+        Assert.That(incorrect.DisplayColor, Is.EqualTo(GlobalScripts.RedFaceColor));
+        Assert.That(incorrect.IsErrorBlinking, Is.False);
+    }
+    [UnityTest]
     public IEnumerator RestartDuringFeedbackCancelsOldOperation()
     {
-        Begin(0, 0); Extend(1, 0);
+        Begin(0, 0); Extend(3, 0);
         UniTask pending = _game.CommitLineAsync();
         Assert.That(_game.State, Is.EqualTo(GameState.Resolving));
+        Assert.That(_game.GetTile(Vector2Int.zero).CurrentColor, Is.EqualTo(TileColor.Red));
+        Assert.That(_game.GetTile(new Vector2Int(1, 0)).CurrentColor, Is.EqualTo(TileColor.None));
         _game.RestartStage();
         yield return pending.ToCoroutine();
         Assert.That(_game.State, Is.EqualTo(GameState.Idle));
