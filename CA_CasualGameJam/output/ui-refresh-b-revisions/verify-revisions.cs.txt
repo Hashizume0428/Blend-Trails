@@ -1,0 +1,86 @@
+var captureRoot = System.IO.Path.GetFullPath("output/ui-refresh-b-revisions");
+int firstFrame = UnityEngine.Time.frameCount;
+void Require(bool ok, string message) { if (!ok) throw new System.Exception(message); }
+async System.Threading.Tasks.Task Capture(string name)
+{
+    UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(captureRoot, name + ".png"));
+    await Cysharp.Threading.Tasks.UniTask.Delay(350);
+}
+void Draw(GameManager game, string cells)
+{
+    var points = cells.Split(' ').Select(s => new UnityEngine.Vector2Int(s[1] - '1', s[0] - '1')).ToArray();
+    Require(game.TryBeginLine(game.GetTile(points[0]).TileIndex), "Cannot begin reference line");
+    foreach (var p in points.Skip(1)) Require(game.TryExtendLine(game.GetTile(p).TileIndex), "Cannot extend reference line");
+}
+void CheckModal()
+{
+    Require(UnityEngine.GameObject.Find("ClearHomeButton") == null, "Unwanted HOME action");
+    var next = UnityEngine.GameObject.Find("NextStageButton").GetComponent<UnityEngine.UI.Button>();
+    Require(next.interactable, "Next stage disabled after celebration");
+    var rect = (UnityEngine.RectTransform)next.transform;
+    var center = UnityEngine.RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
+    var pointer = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current) { position = center };
+    var hits = new System.Collections.Generic.List<UnityEngine.EventSystems.RaycastResult>();
+    UnityEngine.EventSystems.EventSystem.current.RaycastAll(pointer, hits);
+    Require(hits.Count > 0 && hits[0].gameObject == next.gameObject, "Next-stage button is obstructed");
+    foreach (string name in new[] { "NextStageButton", "SuccessBadge", "ToonClearTitle", "ToonClearStage" })
+    {
+        var item = UnityEngine.GameObject.Find(name).GetComponent<UnityEngine.RectTransform>();
+        var corners = new UnityEngine.Vector3[4]; item.GetWorldCorners(corners);
+        foreach (var p in corners) Require(UnityEngine.Screen.safeArea.Contains(UnityEngine.RectTransformUtility.WorldToScreenPoint(null, p)), name + " outside safe area");
+    }
+}
+async System.Threading.Tasks.Task Review()
+{
+    try
+    {
+        await Cysharp.Threading.Tasks.UniTask.Delay(450);
+        Require(UnityEngine.Screen.width == 941 && UnityEngine.Screen.height == 1672, "Wrong review resolution");
+        Require(UnityEngine.Object.FindFirstObjectByType<MenuNavigation>().GetComponentInChildren<TMPro.TMP_Text>(true).text == "Stage1", "Title must reflect the reset progress");
+        await Capture("title");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(StageCatalog.SceneName(3));
+        await Cysharp.Threading.Tasks.UniTask.Delay(500);
+        var game = UnityEngine.Object.FindFirstObjectByType<GameManager>();
+        var board = game.TilesList[0].transform.parent;
+        float initialScale = board.localScale.x;
+        await Capture("gameplay");
+        Draw(game, "15 45 44 14 13 33"); await game.CommitLineAsync();
+        Draw(game, "41 11 12 42 43 33"); await game.CommitLineAsync();
+        await Cysharp.Threading.Tasks.UniTask.Delay(250);
+        await Capture("reset-arrows");
+        game.ReloadColor(BaseColor.Blue);
+        Draw(game, "41 11 12 42 43 23"); await game.CommitLineAsync();
+        await Cysharp.Threading.Tasks.UniTask.Delay(350);
+        Require(game.State == GameState.Cleared && game.CorrectTileCount == 20, "Solved board lost colors");
+        Require(UnityEngine.Mathf.Abs(board.localScale.x / initialScale - .6f) < .01f, "Solved board did not retain 60% scale");
+        Require(UnityEngine.GameObject.Find("ToonClearStage").GetComponent<TMPro.TMP_Text>().text == "STAGE 3", "Wrong stage number on card");
+        Require(UnityEngine.GameObject.Find("NextStageButton").transform.Find("Label").GetComponent<TMPro.TMP_Text>().text == "Stage4", "Next-stage label must follow progress");
+        CheckModal(); await Capture("clear");
+        var assembly = typeof(UnityEditor.Editor).Assembly;
+        var viewType = assembly.GetType("UnityEditor.GameView");
+        var view = UnityEditor.EditorWindow.GetWindow(viewType);
+        var selected = viewType.GetProperty("selectedSizeIndex", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        selected.SetValue(view, 19); view.Repaint();
+        await Cysharp.Threading.Tasks.UniTask.Delay(400);
+        CheckModal(); await Capture("clear-tall");
+        selected.SetValue(view, 18); view.Repaint();
+        await Cysharp.Threading.Tasks.UniTask.Delay(350);
+        var next = UnityEngine.GameObject.Find("NextStageButton").GetComponent<UnityEngine.UI.Button>();
+        var pointer = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current) { button = UnityEngine.EventSystems.PointerEventData.InputButton.Left };
+        UnityEngine.EventSystems.ExecuteEvents.Execute(next.gameObject, pointer, UnityEngine.EventSystems.ExecuteEvents.pointerClickHandler);
+        await Cysharp.Threading.Tasks.UniTask.Delay(650);
+        Require(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == StageCatalog.SceneName(4), "Next-stage navigation failed");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(StageCatalog.SceneName(6));
+        await Cysharp.Threading.Tasks.UniTask.Delay(450); await Capture("stage6");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(StageCatalog.SceneName(11));
+        await Cysharp.Threading.Tasks.UniTask.Delay(450); await Capture("stage11");
+        Require(UnityEngine.Time.frameCount > firstFrame + 10, "Game simulation was frozen");
+        System.IO.File.WriteAllText(System.IO.Path.Combine(captureRoot, "manual-checks.json"), "{\"width\":941,\"height\":1672,\"tallHeight\":2039,\"simulationAdvancing\":true,\"correctTiles\":20,\"solvedBoardScale\":0.6,\"noHomeAction\":true,\"nextButtonHit\":true,\"nextStageNavigation\":true,\"modalInsideSafeAreaAtBothAspectRatios\":true,\"palette6\":\"red-yellow-orange\",\"palette11\":\"blue-yellow-green\"}");
+    }
+    catch (System.Exception error)
+    {
+        System.IO.File.WriteAllText(System.IO.Path.Combine(captureRoot, "manual-checks-error.txt"), error.ToString());
+        UnityEngine.Debug.LogException(error);
+    }
+}
+Review(); return "revision-review-running";

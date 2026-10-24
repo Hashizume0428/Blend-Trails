@@ -165,6 +165,14 @@ public static class ToonSkinBuilder
         EditorUtility.SetDirty(layout); EditorUtility.SetDirty(hud);
     }
 
+    public static void RefreshClearStage(GameHud hud, int number)
+    {
+        _skin = ToonSkinAssets.Current;
+        if (_skin == null) throw new InvalidOperationException("The current Toon skin is missing.");
+        StyleClear(hud, number);
+        EditorUtility.SetDirty(hud);
+    }
+
     private static void StyleClear(GameHud hud, int number)
     {
         var hs = new SerializedObject(hud);

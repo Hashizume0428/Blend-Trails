@@ -21,7 +21,7 @@ public class PuzzleInteractionSceneTests
     }
 
     [Test]
-    public void AllThirtyStagesHaveOneCenteredClearActionAndTheFailureClipAndEndpointChooser()
+    public void AllSixtyStagesHaveOneCenteredClearActionAndTheFailureClipAndEndpointChooser()
     {
         var clip = AssetDatabase.LoadAssetAtPath<AudioClip>(SoundPath);
         for (int number = 1; number <= StageCatalog.Count; number++)
@@ -43,6 +43,28 @@ public class PuzzleInteractionSceneTests
                 Assert.That(actions.GetChild(0).name, Is.EqualTo("NextStageButton"));
                 Assert.That(((RectTransform)actions.GetChild(0)).anchoredPosition.x, Is.Zero);
                 Assert.That(hud.GetComponentsInChildren<Transform>(true).Any(item => item.name == "ClearHomeButton"), Is.False);
+                var next = actions.GetChild(0).GetComponent<UnityEngine.UI.Button>();
+                Assert.That(next.GetComponent<UnityEngine.UI.Image>().sprite, Is.EqualTo(ToonSkinAssets.Current.PrimaryButton), scene.path);
+                Assert.That(next.transform.Find("Label").GetComponent<TMPro.TMP_Text>().font, Is.EqualTo(ToonSkinAssets.Current.Font), scene.path);
+                var arrow = next.transform.Find("ToonNextIcon") as RectTransform;
+                var nextRect = (RectTransform)next.transform;
+                // Hidden clear actions can have zero world scale; inspect their authored anchors.
+                Assert.That(arrow.anchorMin, Is.EqualTo(Vector2.up), scene.path);
+                Assert.That(arrow.anchoredPosition.x, Is.InRange(arrow.pivot.x * arrow.sizeDelta.x,
+                    nextRect.sizeDelta.x - (1 - arrow.pivot.x) * arrow.sizeDelta.x), scene.path);
+                Assert.That(-arrow.anchoredPosition.y, Is.InRange((1 - arrow.pivot.y) * arrow.sizeDelta.y,
+                    nextRect.sizeDelta.y - arrow.pivot.y * arrow.sizeDelta.y), scene.path);
+                var backing = game.TilesList[0].transform.parent.Find("BoardBackground").GetComponent<SpriteRenderer>();
+                float backingWidth = backing.bounds.size.x / backing.transform.parent.lossyScale.x;
+                Assert.That(backingWidth, Is.InRange(game.BoardSize.x + .3f, game.BoardSize.x + 1.5f), scene.path);
+                foreach (TileController tile in game.TilesList.Where(item => item.IsStartTile))
+                {
+                    var marker = tile.transform.Find("StartMarker").GetComponent<SpriteRenderer>();
+                    var face = tile.transform.Find("TileFace").GetComponent<SpriteRenderer>();
+                    float markerRatio = marker.sprite.bounds.size.x * marker.transform.localScale.x /
+                        (face.sprite.bounds.size.x * face.transform.localScale.x);
+                    Assert.That(markerRatio, Is.InRange(.5f, .8f), scene.path + " start dot must remain visible");
+                }
             }
             finally { EditorSceneManager.ClosePreviewScene(scene); }
         }

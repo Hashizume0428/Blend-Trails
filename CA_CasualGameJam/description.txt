@@ -1,0 +1,24 @@
+Two colors. One clever challenge.
+
+Swipe, mix, and solve in Blend Trails: Color Puzzle! Draw colorful paths across the board, blend colors where needed, and fill every tile to complete the puzzle.
+
+HOW TO PLAY
+- Start at a colored dot and trace a path up, down, left, or right.
+- Match each outlined tile to its required color.
+- Overlap both paths on tiles that need a mixed color.
+- Keep tiles without a color requirement single-colored.
+- Fill the whole board and satisfy every tile's color rule to clear the stage!
+
+MIX IT UP
+Mix your two colors in the following combinations:
+- Red + Blue = Purple
+- Red + Yellow = Orange
+- Blue + Yellow = Green
+
+PLAN, TRACE, TRY AGAIN
+Where should the paths overlap? Which tiles need just one color? Explore different routes, backtrack while drawing, or reset one color while keeping the other. You can also clear the board for a fresh start.
+
+KEEP THE COLORS FLOWING
+Play through 30 puzzles, then keep going as familiar puzzles return in a randomized order. Your stage progress is saved, so you can return to your current stage later and start that puzzle fresh.
+
+Find your path. Mix it right. Color every tile!

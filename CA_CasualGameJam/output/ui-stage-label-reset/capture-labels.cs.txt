@@ -1,0 +1,50 @@
+var root = System.IO.Path.Combine(UnityEngine.Application.dataPath, "../output/ui-refresh-b-revisions");
+void FreezeInput()
+{
+    if (UnityEngine.EventSystems.EventSystem.current != null) UnityEngine.EventSystems.EventSystem.current.enabled = false;
+    var input = UnityEngine.Object.FindFirstObjectByType<InputTouchManager>();
+    if (input != null) input.enabled = false;
+}
+void Draw(GameManager game, string cells)
+{
+    var points = cells.Split(' ').Select(s => new UnityEngine.Vector2Int(s[1] - '1', s[0] - '1')).ToArray();
+    if (!game.TryBeginLine(game.GetTile(points[0]).TileIndex)) throw new System.Exception("Cannot start line");
+    foreach (var p in points.Skip(1)) if (!game.TryExtendLine(game.GetTile(p).TileIndex)) throw new System.Exception("Cannot extend line");
+}
+async System.Threading.Tasks.Task Capture()
+{
+    try
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(SceneNavigator.TitleScene);
+        FreezeInput();
+        await Cysharp.Threading.Tasks.UniTask.Delay(400);
+        if (StageProgress.CurrentStageNumber != 1) throw new System.Exception("Progress was not reset");
+        UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(root, "title.png"));
+        await Cysharp.Threading.Tasks.UniTask.Delay(350);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(StageCatalog.SceneName(3));
+        FreezeInput();
+        await Cysharp.Threading.Tasks.UniTask.Delay(400);
+        var game = UnityEngine.Object.FindFirstObjectByType<GameManager>();
+        Draw(game, "15 45 44 14 13 33"); await game.CommitLineAsync();
+        Draw(game, "41 11 12 42 43 23"); await game.CommitLineAsync();
+        await Cysharp.Threading.Tasks.UniTask.Delay(300);
+        string label = UnityEngine.Object.FindFirstObjectByType<GameHud>().transform.Find("ClearPanel/Card/ClearActions/NextStageButton/Label").GetComponent<TMPro.TMP_Text>().text;
+        if (label != "Stage4") throw new System.Exception("Unexpected label: " + label);
+        UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(root, "clear.png"));
+        await Cysharp.Threading.Tasks.UniTask.Delay(350);
+        var viewType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.GameView");
+        var view = UnityEditor.EditorWindow.GetWindow(viewType);
+        var selected = viewType.GetProperty("selectedSizeIndex", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        selected.SetValue(view, 19); view.Repaint();
+        await Cysharp.Threading.Tasks.UniTask.Delay(350);
+        UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(root, "clear-tall.png"));
+        await Cysharp.Threading.Tasks.UniTask.Delay(350);
+        selected.SetValue(view, 18); view.Repaint();
+        System.IO.File.WriteAllText(System.IO.Path.Combine(UnityEngine.Application.dataPath, "../output/ui-stage-label-reset/capture-result.json"), "{\"titleStage\":1,\"clearedStage\":3,\"nextStageLabel\":\"Stage4\"}");
+    }
+    catch (System.Exception error)
+    {
+        System.IO.File.WriteAllText(System.IO.Path.Combine(UnityEngine.Application.dataPath, "../output/ui-stage-label-reset/capture-error.txt"), error.ToString());
+    }
+}
+Capture(); return "Capturing Stage1 and Stage4 labels";

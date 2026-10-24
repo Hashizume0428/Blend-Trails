@@ -42,22 +42,32 @@ public static class StageProgress
             Recent.AddRange(saved.recentPuzzleIds);
             return;
         }
-        // Migrate the former integer save, including the old disabled Stage11.
-        CurrentStageNumber = Mathf.Max(1, PlayerPrefs.GetInt(ProgressKey, 1));
+        // An old extra can now be an authored puzzle after the catalog expands.
+        // Prefer the v2 display number even if its legacy integer key is absent or stale.
+        bool expandedStage = HasValidHistory(saved) && saved.stageNumber <= StageCatalog.Count &&
+            StageCatalog.IsNormalPuzzle(saved.puzzleId) && saved.puzzleId < saved.stageNumber &&
+            Array.IndexOf(saved.recentPuzzleIds, saved.puzzleId) < 0;
+        CurrentStageNumber = expandedStage ? saved.stageNumber : Mathf.Max(1, PlayerPrefs.GetInt(ProgressKey, 1));
         SeedHistory(CurrentStageNumber);
         SelectPuzzle();
         Save();
     }
 
-    private static bool IsValid(SavedState saved)
+    private static bool HasValidHistory(SavedState saved)
     {
         if (saved == null || saved.stageNumber < 1 || saved.recentPuzzleIds == null ||
             saved.recentPuzzleIds.Length > StageCatalog.RecentPuzzleLimit) return false;
         var unique = new HashSet<int>();
         foreach (int id in saved.recentPuzzleIds)
             if (!StageCatalog.IsNormalPuzzle(id) || !unique.Add(id)) return false;
+        return true;
+    }
+
+    private static bool IsValid(SavedState saved)
+    {
+        if (!HasValidHistory(saved)) return false;
         return saved.stageNumber <= StageCatalog.Count ? saved.puzzleId == saved.stageNumber :
-            StageCatalog.IsNormalPuzzle(saved.puzzleId) && !unique.Contains(saved.puzzleId);
+            StageCatalog.IsNormalPuzzle(saved.puzzleId) && Array.IndexOf(saved.recentPuzzleIds, saved.puzzleId) < 0;
     }
 
     public static void RecordClear(int stageNumber)
@@ -74,7 +84,7 @@ public static class StageProgress
         Changed?.Invoke();
     }
 
-    // Direct Editor scene launches adopt that puzzle's number. Loading CurrentScene for Stage31+
+    // Direct Editor scene launches adopt that puzzle's number. Loading CurrentScene for Stage61+
     // keeps the increasing display number even though an authored scene is being reused.
     public static void EnterStage(int puzzleId)
     {

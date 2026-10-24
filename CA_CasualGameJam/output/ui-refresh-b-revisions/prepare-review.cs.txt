@@ -1,0 +1,17 @@
+const string prefix = "BlendRevision.";
+UnityEditor.SessionState.SetString(prefix + "Scene", UnityEngine.SceneManagement.SceneManager.GetActiveScene().path);
+UnityEditor.SessionState.SetBool(prefix + "HasState", UnityEngine.PlayerPrefs.HasKey("ColorPuzzle.StageProgress.v2"));
+UnityEditor.SessionState.SetString(prefix + "State", UnityEngine.PlayerPrefs.GetString("ColorPuzzle.StageProgress.v2", ""));
+UnityEditor.SessionState.SetBool(prefix + "HasNumber", UnityEngine.PlayerPrefs.HasKey("ColorPuzzle.CurrentStageNumber"));
+UnityEditor.SessionState.SetInt(prefix + "Number", UnityEngine.PlayerPrefs.GetInt("ColorPuzzle.CurrentStageNumber", 1));
+UnityEditor.SessionState.SetBool(prefix + "RunBackground", UnityEngine.Application.runInBackground);
+var assembly = typeof(UnityEditor.Editor).Assembly;
+var viewType = assembly.GetType("UnityEditor.GameView");
+var view = UnityEditor.EditorWindow.GetWindow(viewType);
+var flags = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance;
+var selected = viewType.GetProperty("selectedSizeIndex", flags);
+UnityEditor.SessionState.SetInt(prefix + "ViewSize", (int)selected.GetValue(view));
+selected.SetValue(view, 18); view.Repaint();
+UnityEngine.Application.runInBackground = true;
+UnityEditor.EditorApplication.isPlaying = true;
+return "Review state saved; starting title";

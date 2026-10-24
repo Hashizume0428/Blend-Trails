@@ -1,0 +1,38 @@
+[
+  {
+    "Path": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam\\Assets\\Scripts\\StageClearPresentation.cs",
+    "Hash": "0F3C8CA2D534B05A16A99A4E83D783609B71DEF896C34F8BAEB6A7AC7C849A37"
+  },
+  {
+    "Path": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam\\Assets\\Scripts\\StageScreenLayout.cs",
+    "Hash": "D073337592E882F1B781242ED3F571D101889E44D8D254D3D837C220F6607F7C"
+  },
+  {
+    "Path": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam\\Assets\\Scripts\\ToonClearBadge.cs",
+    "Hash": "55C266B96023AFF8F9E699D1DE881A63D0A95CE6BD9C2337BC0859443E5EEC97"
+  },
+  {
+    "Path": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam\\Assets\\Scripts\\ClearConfetti.cs",
+    "Hash": "556E9C646828F879F2085FAE4CF5286295E594EE6986B044FF384D65A8FB2A83"
+  },
+  {
+    "Path": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam\\Assets\\Scripts\\GameManager.cs",
+    "Hash": "F4457A7051A5D22DD038B118746356BC0678171AEC26DDDC0FFB65DD49244787"
+  },
+  {
+    "Path": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam\\Assets\\Scripts\\GameHud.cs",
+    "Hash": "88DB647BFF32429AADB769C4423809C55DBEA0263149A7FD661F84865DA1E71B"
+  },
+  {
+    "Path": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam\\Assets\\Editor\\ToonSkinBuilder.cs",
+    "Hash": "FC86A98E0BED0FCD7A650DAD8A3F99AE8FA2F9AAAEA4192679BDB58280CAF82E"
+  },
+  {
+    "Path": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam\\Assets\\Editor\\ClearScreenBuilder.cs",
+    "Hash": "9322150D7BC08C2066255FC48F18FE97B8986F401C7A074851BCE358BA6AE55C"
+  },
+  {
+    "Path": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam\\Assets\\Tests\\PlayMode\\ClearPresentationTests.cs",
+    "Hash": "11A9F525FB2501317945105A60D8F6D833AA412A5C9CEAEF8B60F32A21BA5780"
+  }
+]

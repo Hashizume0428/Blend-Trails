@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-25",
+  "updatedSceneLabels": 30,
+  "nextStageLabel": "Stage{current display stage + 1}",
+  "relatedTests": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0
+  },
+  "finalState": {
+    "stage": 1,
+    "puzzle": 1,
+    "recentHistory": 0,
+    "saved": "{\"stageNumber\":1,\"puzzleId\":1,\"recentPuzzleIds\":[]}",
+    "legacyStage": 1,
+    "playing": false,
+    "scene": "Assets/Scenes/Title.unity"
+  },
+  "screenshotCheck": {
+    "titleStage": 1,
+    "clearedStage": 3,
+    "nextStageLabel": "Stage4"
+  }
+}

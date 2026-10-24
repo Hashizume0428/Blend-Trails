@@ -6,7 +6,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// <summary>Authors all thirty supplied boards, preserving the existing stage UI.</summary>
+/// <summary>Authors all sixty supplied boards, preserving the existing stage UI.</summary>
 public static class ReferenceStageBuilder
 {
     // Coordinates here match the reference notes: row then column, both starting at 1.
@@ -15,6 +15,22 @@ public static class ReferenceStageBuilder
         public readonly string RedStart, BlueStart, RedFrames, BlueFrames, PurpleFrames;
         public Plan(string redStart, string blueStart, string red, string blue, string purple)
         { RedStart = redStart; BlueStart = blueStart; RedFrames = red; BlueFrames = blue; PurpleFrames = purple; }
+    }
+    private sealed class TileAppearance
+    {
+        public readonly Sprite Face;
+        public readonly float FaceWidth, FrameWidth, MarkerWidth;
+        public readonly Vector3 BackingPosition;
+        public TileAppearance(TileController tile)
+        {
+            var face = tile.transform.Find("TileFace").GetComponent<SpriteRenderer>();
+            Face = face.sprite;
+            FaceWidth = Width(face);
+            FrameWidth = Width(tile.transform.Find("TileFlame").GetComponent<SpriteRenderer>());
+            MarkerWidth = Width(tile.transform.Find("StartMarker").GetComponent<SpriteRenderer>());
+            BackingPosition = tile.transform.parent.Find("BoardBackground").localPosition;
+        }
+        private static float Width(SpriteRenderer renderer) => renderer.sprite.bounds.size.x * renderer.transform.localScale.x;
     }
     private static readonly Plan[] Plans =
     {
@@ -47,10 +63,40 @@ public static class ReferenceStageBuilder
         new Plan("21", "11", "14", "45", "12 22 23 33 34 44"),
         new Plan("21", "11", "45", "41", "12 13 22 34 43 44"),
         new Plan("14", "15", "13", "11", "12 22 23 24 33 34 43"),
-        new Plan("41", "15", "25", "31", "12 13 22 23 33 34 43 44")
+        new Plan("41", "15", "25", "31", "12 13 22 23 33 34 43 44"),
+        new Plan("41", "15", "25 45", "21 34", "23 44"),
+        new Plan("33", "32", "35 41", "15 24", "21 31 34"),
+        new Plan("32", "14", "13 41", "43 45", "11 21 23 33"),
+        new Plan("34", "11", "12 45", "15 22", "14 24 25"),
+        new Plan("25", "11", "13 21", "14 34", "12 22 33 43"),
+        new Plan("22", "21", "34 41", "15 45", "23 35 44"),
+        new Plan("41", "25", "32 43", "21 45", "23 24 34 44"),
+        new Plan("35", "45", "32 34", "11 13", "14 21 22 31"),
+        new Plan("11", "12", "22 45", "33 41", "24 31 34 43"),
+        new Plan("44", "11", "12 15", "32 43", "22 24 25 34 35"),
+        new Plan("44", "45", "13 34", "11 32", "12 22 23 24 33"),
+        new Plan("23", "45", "35 41", "11 15", "13 14 25 32 33"),
+        new Plan("23", "11", "21 32", "15 43", "24 25 31 33 34 41"),
+        new Plan("44", "12", "13 32", "24 43", "21 22 25 33"),
+        new Plan("24", "15", "11 41", "34 43", "13 22 23 32 33 42"),
+        new Plan("31", "15", "25 41", "43 45", "13 14 32 33 35 42"),
+        new Plan("15", "11", "12 23", "34 41", "22 25 35 43 44"),
+        new Plan("43", "15", "14", "44", "22 23 31 33 34 41 42"),
+        new Plan("42", "13", "15 23", "43 45", "14 21 22 24 32 33"),
+        new Plan("31", "41", "35", "24", "14 15 22 25 32 34 44"),
+        new Plan("42", "41", "32", "44", "11 12 13 14 21 22 23 31"),
+        new Plan("15", "41", "11 31", "14 34", "12 24 32 33 42 43"),
+        new Plan("22", "35", "41", "11", "13 14 15 23 24 31 32 42"),
+        new Plan("34", "12", "13", "15", "14 22 24 25 32 43 44"),
+        new Plan("15", "14", "32", "35", "11 12 13 21 31 34 42 43"),
+        new Plan("42", "41", "45", "11", "13 14 24 25 32 34 35"),
+        new Plan("21", "11", "15", "32", "14 23 24 25 33 34 35 42"),
+        new Plan("13", "15", "41", "12", "22 23 25 31 32 35 43 44"),
+        new Plan("12", "41", "15", "45", "13 14 22 23 24 25 33 34"),
+        new Plan("23", "11", "33", "14", "21 22 24 25 34 35 42 43")
     };
 
-    [MenuItem("Color Puzzle/Build Reference Stages 1-30")]
+    [MenuItem("Color Puzzle/Build Reference Stages 1-60")]
     public static void Build() => MenuSceneBuilder.Build();
 
     [MenuItem("Color Puzzle/Apply Revised Stages 5,6,9,10")]
@@ -84,7 +130,7 @@ public static class ReferenceStageBuilder
         string original = current.path;
         try
         {
-            BuildStages(11);
+            BuildStages(11, 30);
             // Existing boards and UI remain authored as-is; only refresh their old static destinations.
             for (int number = 1; number <= 10; number++)
             {
@@ -103,10 +149,38 @@ public static class ReferenceStageBuilder
         finally { if (!string.IsNullOrEmpty(original)) EditorSceneManager.OpenScene(original); }
     }
 
-    public static void BuildStages(int firstNumber = 1)
+    [MenuItem("Color Puzzle/Add Reference Stages 31-60")]
+    public static void BuildStages31To60()
+    {
+        if (EditorApplication.isPlaying)
+            throw new InvalidOperationException("Stop Play mode before editing stages.");
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+            if (SceneManager.GetSceneAt(i).isDirty)
+                throw new InvalidOperationException("Save the current scenes before adding stages.");
+        SceneSetup[] original = EditorSceneManager.GetSceneManagerSetup();
+        try
+        {
+            BuildStages(31);
+            // Runtime destinations come from StageProgress; existing scenes need no rewrite.
+            string[] paths = new[] { MenuSceneBuilder.TitlePath }
+                .Concat(Enumerable.Range(1, StageCatalog.Count).Select(StageCatalog.ScenePath)).ToArray();
+            EditorBuildSettings.scenes = paths.Select(path => new EditorBuildSettingsScene(path, true))
+                .Concat(EditorBuildSettings.scenes.Where(scene => !paths.Contains(scene.path) &&
+                    scene.path != MenuSceneBuilder.StageSelectPath)).ToArray();
+            AssetDatabase.SaveAssets();
+            Debug.Log("Color Puzzle: added authored puzzles 31-60; extras now begin at Stage61.");
+        }
+        finally { EditorSceneManager.RestoreSceneManagerSetup(original); }
+    }
+
+    public static void BuildStages(int firstNumber = 1, int lastNumber = 0)
     {
         if (EditorApplication.isPlaying) throw new InvalidOperationException("Stop Play mode before editing stages.");
-        for (int number = firstNumber; number <= StageCatalog.Count; number++)
+        if (Plans.Length != StageCatalog.Count)
+            throw new InvalidOperationException("The stage catalog and board definitions must have the same count.");
+        int last = lastNumber == 0 ? StageCatalog.Count : lastNumber;
+        TileAppearance appearance = ReadTemplateAppearance();
+        for (int number = firstNumber; number <= last; number++)
         {
             string path = StageCatalog.ScenePath(number);
             if (AssetDatabase.LoadAssetAtPath<SceneAsset>(path) == null)
@@ -115,8 +189,12 @@ public static class ReferenceStageBuilder
                 if (!EditorSceneManager.SaveScene(template, path, true)) throw new InvalidOperationException("Could not create " + path);
             }
             Scene scene = EditorSceneManager.OpenScene(path);
-            ApplyBoard(number);
+            ApplyBoard(number, appearance);
             MenuSceneBuilder.UpdateClearScreen(number, StageCatalog.SceneName(number + 1));
+            var hud = UnityEngine.Object.FindFirstObjectByType<GameHud>();
+            if (hud.GetComponent<ToonPaletteHud>() != null) ToonSkinBuilder.RefreshClearStage(hud, number);
+            Transform tagline = hud.transform.Find("SafeArea/StageContent/ToonHeader/ToonTagline");
+            if (tagline != null) tagline.gameObject.SetActive(number != 1);
             StageOneTutorialBuilder.Configure(UnityEngine.Object.FindFirstObjectByType<GameManager>());
             EditorSceneManager.MarkSceneDirty(scene);
             if (!EditorSceneManager.SaveScene(scene)) throw new InvalidOperationException("Could not save " + path);
@@ -127,8 +205,21 @@ public static class ReferenceStageBuilder
     private static HashSet<Vector2Int> Cells(string values) => new HashSet<Vector2Int>(
         values.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(Cell));
 
-    private static void ApplyBoard(int number)
+    private static TileAppearance ReadTemplateAppearance()
     {
+        Scene template = EditorSceneManager.OpenPreviewScene(StageCatalog.ScenePath(1));
+        try
+        {
+            var manager = template.GetRootGameObjects()
+                .SelectMany(root => root.GetComponentsInChildren<GameManager>(true)).Single();
+            return new TileAppearance(manager.TilesList[0]);
+        }
+        finally { EditorSceneManager.ClosePreviewScene(template); }
+    }
+
+    private static void ApplyBoard(int number, TileAppearance appearance = null)
+    {
+        appearance = appearance ?? ReadTemplateAppearance();
         var manager = UnityEngine.Object.FindFirstObjectByType<GameManager>();
         var layout = UnityEngine.Object.FindFirstObjectByType<StageScreenLayout>();
         if (manager == null || layout == null || manager.TilesList.Count == 0)
@@ -160,18 +251,22 @@ public static class ReferenceStageBuilder
             BaseColor startColor = cell == blueStart ? BaseColor.Blue : BaseColor.Red;
             tile.Configure(y * 5 + x, cell, cell == redStart || cell == blueStart, startColor, required, TileColor.None);
             var marker = tile.transform.Find("StartMarker").GetComponent<SpriteRenderer>();
-            marker.sprite = AssetDatabase.LoadAllAssetsAtPath(startColor == BaseColor.Red ?
-                "Assets/Image/startPoint/開始点赤.png" : "Assets/Image/startPoint/開始点青.png").OfType<Sprite>().First();
-            Fit(marker, 0.25f);
-            Fit(tile.transform.Find("TileFace").GetComponent<SpriteRenderer>(), 252f / 277);
+            marker.sprite = manager.PaletteVisuals != null ? manager.PaletteVisuals.StartMarker(startColor) :
+                AssetDatabase.LoadAllAssetsAtPath(startColor == BaseColor.Red ?
+                    "Assets/Image/startPoint/開始点赤.png" : "Assets/Image/startPoint/開始点青.png").OfType<Sprite>().First();
+            Fit(marker, appearance.MarkerWidth);
+            var face = tile.transform.Find("TileFace").GetComponent<SpriteRenderer>();
+            face.sprite = appearance.Face;
+            Fit(face, appearance.FaceWidth);
             var frame = tile.transform.Find("TileFlame").GetComponent<SpriteRenderer>();
-            frame.enabled = true; Fit(frame, 260f / 277);
+            frame.enabled = true; Fit(frame, appearance.FrameWidth);
             if (tile.IsStartTile) { tile.Line.SetColor(startColor); tile.Line.ResetToStart(tile.transform.position); }
             tiles.Add(tile);
         }
         manager.TilesList = tiles;
         SetSize(manager, "_boardSize", new Vector2Int(5, 4));
         SetSize(layout, "_boardSize", new Vector2Int(5, 4));
+        board.Find("BoardBackground").localPosition = appearance.BackingPosition;
         FitBoard(manager);
         foreach (TileController tile in tiles)
         {
@@ -194,8 +289,12 @@ public static class ReferenceStageBuilder
         var background = board.Find("BoardBackground").GetComponent<SpriteRenderer>();
         float width = manager.BoardSize.x + 0.3f;
         float height = width * manager.BoardSize.y / manager.BoardSize.x;
-        background.transform.localPosition = Vector3.zero;
-        background.transform.localScale = new Vector3(width / background.sprite.bounds.size.x, height / background.sprite.bounds.size.y, 1);
+        if (background.drawMode == SpriteDrawMode.Simple)
+        {
+            background.transform.localPosition = Vector3.zero;
+            background.transform.localScale = new Vector3(width / background.sprite.bounds.size.x, height / background.sprite.bounds.size.y, 1);
+        }
+        else background.transform.localScale = Vector3.one; // Sliced backings already have their authored size.
         foreach (TileController tile in manager.TilesList)
             tile.transform.localPosition = new Vector3(tile.Coordinate.x - (manager.BoardSize.x - 1) / 2f,
                 (manager.BoardSize.y - 1) / 2f - tile.Coordinate.y, 0);

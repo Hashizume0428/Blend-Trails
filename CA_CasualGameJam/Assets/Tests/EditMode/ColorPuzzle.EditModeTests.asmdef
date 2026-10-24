@@ -1,6 +1,6 @@
 {
   "name": "ColorPuzzle.EditModeTests",
-  "references": ["ColorPuzzle.Runtime"],
+  "references": ["ColorPuzzle.Runtime", "Unity.TextMeshPro"],
   "includePlatforms": ["Editor"],
   "optionalUnityReferences": ["TestAssemblies"],
   "autoReferenced": false

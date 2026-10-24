@@ -1,0 +1,12 @@
+const string p="UiPolish.";
+if (UnityEditor.SessionState.GetBool(p+"HasState",false)) UnityEngine.PlayerPrefs.SetString("ColorPuzzle.StageProgress.v2",UnityEditor.SessionState.GetString(p+"State",""));
+else UnityEngine.PlayerPrefs.DeleteKey("ColorPuzzle.StageProgress.v2");
+if (UnityEditor.SessionState.GetBool(p+"HasNumber",false)) UnityEngine.PlayerPrefs.SetInt("ColorPuzzle.CurrentStageNumber",UnityEditor.SessionState.GetInt(p+"Number",1));
+else UnityEngine.PlayerPrefs.DeleteKey("ColorPuzzle.CurrentStageNumber");
+UnityEngine.PlayerPrefs.Save(); StageProgress.ResetSession();
+UnityEngine.Application.runInBackground = UnityEditor.SessionState.GetBool(p+"RunBackground",true);
+var viewType = typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.GameView");
+var view = UnityEditor.EditorWindow.GetWindow(viewType);
+viewType.GetProperty("selectedSizeIndex",System.Reflection.BindingFlags.Public|System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance).SetValue(view,UnityEditor.SessionState.GetInt(p+"ViewSize",17)); view.Repaint();
+UnityEditor.SceneManagement.EditorSceneManager.OpenScene(UnityEditor.SessionState.GetString(p+"Scene","Assets/Scenes/Title.unity"));
+return new {stage=StageProgress.CurrentStageNumber,puzzle=StageProgress.CurrentPuzzleId,history=StageProgress.RecentPuzzleIds.Count,scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().path,dirty=UnityEngine.SceneManagement.SceneManager.GetActiveScene().isDirty};

@@ -16,13 +16,13 @@
 4. 完成した色・線・開始点・枠を保持した盤面の下に、左HOME・右Stage◯を横並びで0.2秒かけて表示。
 5. ボタンを操作可能にし、選択を待つ。紙吹雪は約2.4秒で消え、再放出しない。
 
-Stage◯は移動先の表示番号です。Stage3の後はStage4、Stage30の後はStage31のエクストラへ進み、以後もカウントアップします。HOMEはタイトルへ戻ります。
+Stage◯は移動先の表示番号です。Stage3の後はStage4、Stage30の後は新規問題31へ進み、Stage60の後はStage61のエクストラへ進みます。以後もカウントアップします。プレイ中のHOMEはタイトルへ戻ります。
 不正解のときは従来の2秒の点滅のみで、クリア演出は再生しません。
 
 StageClearPresentationがTweenと進行を管理し、GameManagerの取消トークンに従います。初期化すると紙吹雪・移動・ボタン表示を取り消し、盤面の位置・大きさ・プレイ用UIを戻します。シーン破棄時にもTweenを終了します。
 StageScreenLayoutが盤面とボタンのSafe Area配置を更新するため、縮小後も盤面は5列×4行の形状を保ちます。
 
-Color Puzzle/Update Clear Presentationで全30シーンへUI参照を反映します。各シーンの問題条件は変更しません。
+Color Puzzle/Update Clear Presentationで全60シーンへUI参照を反映します。各シーンの問題条件は変更しません。
 
 今回の確認はClearPresentationTestsの2件に限定し、両方成功しました。紙片の描画データ、演出の順序、色と線の保持、ボタンの配置と遷移、演出中の初期化からの復帰を確認しています。
 縦画面の紙吹雪と完成盤面の表示も確認済みです。結果はLogs/ClearEffects-PlayMode.json、画像はLogs/ClearEffects-Confetti.pngとLogs/ClearEffects-Result.pngです。

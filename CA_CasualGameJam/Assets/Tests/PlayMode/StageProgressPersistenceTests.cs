@@ -25,17 +25,17 @@ public class StageProgressPersistenceTests : StageProgressTestFixture
     [Test]
     public void ExtraDrawsExcludeThePreviousEightAndSurviveRestartWithoutRerolling()
     {
-        LoadLegacyProgress(30);
-        StageProgress.RecordClear(30);
-        CollectionAssert.AreEqual(Enumerable.Range(23, 8), StageProgress.RecentPuzzleIds);
-        Assert.That(StageProgress.CurrentPuzzleId, Is.InRange(5, 22));
+        LoadLegacyProgress(60);
+        StageProgress.RecordClear(60);
+        CollectionAssert.AreEqual(Enumerable.Range(53, 8), StageProgress.RecentPuzzleIds);
+        Assert.That(StageProgress.CurrentPuzzleId, Is.InRange(5, 52));
         for (int i = 0; i < 40; i++)
         {
             int number = StageProgress.CurrentStageNumber, puzzle = StageProgress.CurrentPuzzleId;
             int[] history = StageProgress.RecentPuzzleIds.ToArray();
-            Assert.That(number, Is.EqualTo(31 + i));
+            Assert.That(number, Is.EqualTo(61 + i));
             Assert.That(StageProgress.CurrentKind, Is.EqualTo(StageKind.Extra));
-            Assert.That(puzzle, Is.InRange(5, 30));
+            Assert.That(puzzle, Is.InRange(5, 60));
             CollectionAssert.DoesNotContain(history, puzzle);
             StageProgress.ResetSession();
             StageProgress.EnterStage(puzzle);
@@ -48,6 +48,35 @@ public class StageProgressPersistenceTests : StageProgressTestFixture
             Assert.That(StageProgress.RecentPuzzleIds.Last(), Is.EqualTo(puzzle));
             Assert.That(StageProgress.RecentPuzzleIds.Count, Is.EqualTo(8));
         }
+    }
+
+    [TestCase(31)]
+    [TestCase(45)]
+    [TestCase(60)]
+    public void FormerExtraStageNowOpensItsNewAuthoredPuzzleWithoutLosingTheDisplayNumber(int number)
+    {
+        PlayerPrefs.SetInt(ProgressKey, 1); // Stale compatibility save must not override v2.
+        PlayerPrefs.SetString(StateKey, $"{{\"stageNumber\":{number},\"puzzleId\":11,\"recentPuzzleIds\":[23,24,25,26,27,28,29,30]}}");
+        StageProgress.ResetSession();
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(number));
+        Assert.That(StageProgress.CurrentPuzzleId, Is.EqualTo(number));
+        Assert.That(StageProgress.CurrentKind, Is.EqualTo(StageKind.Normal));
+        Assert.That(StageProgress.CurrentScene, Is.EqualTo(StageCatalog.SceneName(number)));
+        Assert.That(PlayerPrefs.GetInt(ProgressKey), Is.EqualTo(number));
+        CollectionAssert.AreEqual(Enumerable.Range(number - 8, 8), StageProgress.RecentPuzzleIds);
+        StageProgress.ResetSession();
+        Assert.That(StageProgress.CurrentPuzzleId, Is.EqualTo(number), "Persist the migration.");
+    }
+
+    [Test]
+    public void FormerExtraAboveSixtyKeepsItsSelectedPuzzleAndHistory()
+    {
+        PlayerPrefs.SetString(StateKey, "{\"stageNumber\":73,\"puzzleId\":11,\"recentPuzzleIds\":[23,24,25,26,27,28,29,30]}");
+        StageProgress.ResetSession();
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(73));
+        Assert.That(StageProgress.CurrentPuzzleId, Is.EqualTo(11));
+        Assert.That(StageProgress.CurrentKind, Is.EqualTo(StageKind.Extra));
+        CollectionAssert.AreEqual(Enumerable.Range(23, 8), StageProgress.RecentPuzzleIds);
     }
 
     [Test]

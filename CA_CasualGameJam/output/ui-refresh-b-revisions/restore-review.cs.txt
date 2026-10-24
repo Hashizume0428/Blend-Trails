@@ -1,0 +1,14 @@
+const string prefix = "BlendRevision.";
+if (UnityEditor.SessionState.GetBool(prefix + "HasState", false)) UnityEngine.PlayerPrefs.SetString("ColorPuzzle.StageProgress.v2", UnityEditor.SessionState.GetString(prefix + "State", ""));
+else UnityEngine.PlayerPrefs.DeleteKey("ColorPuzzle.StageProgress.v2");
+if (UnityEditor.SessionState.GetBool(prefix + "HasNumber", false)) UnityEngine.PlayerPrefs.SetInt("ColorPuzzle.CurrentStageNumber", UnityEditor.SessionState.GetInt(prefix + "Number", 1));
+else UnityEngine.PlayerPrefs.DeleteKey("ColorPuzzle.CurrentStageNumber");
+UnityEngine.PlayerPrefs.Save(); StageProgress.ResetSession();
+UnityEngine.Application.runInBackground = UnityEditor.SessionState.GetBool(prefix + "RunBackground", true);
+var assembly = typeof(UnityEditor.Editor).Assembly;
+var viewType = assembly.GetType("UnityEditor.GameView");
+var view = UnityEditor.EditorWindow.GetWindow(viewType);
+viewType.GetProperty("selectedSizeIndex", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(view, UnityEditor.SessionState.GetInt(prefix + "ViewSize", 17));
+view.Repaint();
+UnityEditor.SceneManagement.EditorSceneManager.OpenScene(UnityEditor.SessionState.GetString(prefix + "Scene", "Assets/Scenes/Title.unity"));
+return new { stage = StageProgress.CurrentStageNumber, puzzle = StageProgress.CurrentPuzzleId, scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().path, dirty = UnityEngine.SceneManagement.SceneManager.GetActiveScene().isDirty };

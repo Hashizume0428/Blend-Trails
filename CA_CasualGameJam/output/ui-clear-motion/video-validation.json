@@ -1,0 +1,12 @@
+{
+  "decodedFrames": 480,
+  "durationSeconds": 8,
+  "width": 720,
+  "height": 1280,
+  "fps": 60,
+  "codec": "H.264",
+  "bytes": 2002188,
+  "decodeErrors": 0,
+  "audio": false,
+  "gameSourceEdited": false
+}

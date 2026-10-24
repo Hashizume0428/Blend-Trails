@@ -34,7 +34,7 @@ public static class MenuSceneBuilder
         EditorBuildSettings.scenes = paths.Select(path => new EditorBuildSettingsScene(path, true))
             .Concat(EditorBuildSettings.scenes.Where(scene => !paths.Contains(scene.path) && scene.path != StageSelectPath)).ToArray();
         AssetDatabase.SaveAssets();
-        Debug.Log("Color Puzzle: thirty reference puzzles, tutorials and endless extra progression are ready.");
+        Debug.Log("Color Puzzle: sixty reference puzzles, tutorials and endless extra progression are ready.");
     }
 
     public static void UpdateClearScreen(int stageNumber, string nextScene)

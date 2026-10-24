@@ -5,7 +5,7 @@ public enum StageKind { Tutorial, Normal, Extra }
 /// <summary>Authored puzzle identities. Displayed stage numbers continue beyond this catalog.</summary>
 public static class StageCatalog
 {
-    public const int Count = 30;
+    public const int Count = 60;
     public const int TutorialCount = 4;
     public const int FirstNormalPuzzle = TutorialCount + 1;
     public const int RecentPuzzleLimit = 8;

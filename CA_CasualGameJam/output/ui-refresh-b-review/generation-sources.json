@@ -1,0 +1,47 @@
+{
+  "mode": "built-in image_gen",
+  "sources": [
+    {
+      "id": "01-title",
+      "source": "C:\\Users\\robor\\.codex\\generated_images\\01a16ec1-1a79-7511-ad77-f8781a7a3152\\exec-be655059-b706-4c1f-9dbf-40106e689f25.png",
+      "file": "01-title.png",
+      "final": true
+    },
+    {
+      "id": "02-gameplay",
+      "source": "C:\\Users\\robor\\.codex\\generated_images\\01a16ec1-1a79-7511-ad77-f8781a7a3152\\exec-75d2c3dc-608f-4772-babb-e9e90c5c3946.png",
+      "file": "02-gameplay.png",
+      "final": true
+    },
+    {
+      "id": "06-clear",
+      "source": "C:\\Users\\robor\\.codex\\generated_images\\01a16ec1-1a79-7511-ad77-f8781a7a3152\\exec-b85690a6-2f6f-4dbb-8f75-7bcb1203a820.png",
+      "file": "06-clear-draft.png",
+      "final": false
+    },
+    {
+      "id": "03-tutorial",
+      "source": "C:\\Users\\robor\\.codex\\generated_images\\01a16ec1-1a79-7511-ad77-f8781a7a3152\\exec-70491f50-b071-4d58-b4d8-e52dd2986b3b.png",
+      "file": "03-tutorial.png",
+      "final": true
+    },
+    {
+      "id": "04-incorrect",
+      "source": "C:\\Users\\robor\\.codex\\generated_images\\01a16ec1-1a79-7511-ad77-f8781a7a3152\\exec-57d6a9ce-b6ff-4f6b-b04c-d9d97cc5f19b.png",
+      "file": "04-incorrect.png",
+      "final": true
+    },
+    {
+      "id": "05-resume-color",
+      "source": "C:\\Users\\robor\\.codex\\generated_images\\01a16ec1-1a79-7511-ad77-f8781a7a3152\\exec-a3b72e89-02aa-4e2c-9859-d7a72341c6e7.png",
+      "file": "05-resume-color.png",
+      "final": true
+    },
+    {
+      "id": "06-clear-refined",
+      "source": "C:\\Users\\robor\\.codex\\generated_images\\01a16ec1-1a79-7511-ad77-f8781a7a3152\\exec-7ef0d34b-53e5-4b57-a7b1-246a88fa9b2d.png",
+      "file": "06-clear.png",
+      "final": true
+    }
+  ]
+}

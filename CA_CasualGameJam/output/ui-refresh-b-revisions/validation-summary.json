@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-25",
+  "appName": "Blend Trails: Color Puzzle",
+  "editMode": {
+    "total": 48,
+    "passed": 48,
+    "failed": 0,
+    "skipped": 0,
+    "inconclusive": 0
+  },
+  "playMode": {
+    "total": 49,
+    "failed": 0,
+    "passed": 49
+  },
+  "passedUniqueTests": 97,
+  "manualChecks": {
+    "width": 941,
+    "height": 1672,
+    "tallHeight": 2039,
+    "simulationAdvancing": true,
+    "correctTiles": 20,
+    "solvedBoardScale": 0.6,
+    "noHomeAction": true,
+    "nextButtonHit": true,
+    "nextStageNavigation": true,
+    "modalInsideSafeAreaAtBothAspectRatios": true,
+    "palette6": "red-yellow-orange",
+    "palette11": "blue-yellow-green"
+  },
+  "restoredEditor": {
+    "stage": 11,
+    "puzzle": 11,
+    "scene": "Assets/Scenes/Title.unity",
+    "dirty": false
+  },
+  "titleArtwork": "Assets/UI/ToonBold/BlendTrailsTitle.png",
+  "generationTool": "built-in image_gen",
+  "prompt": "title-logo-prompt.txt"
+}

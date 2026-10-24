@@ -1,0 +1,30 @@
+var assembly = typeof(UnityEditor.Editor).Assembly;
+var flags = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance;
+var viewType = assembly.GetType("UnityEditor.GameView");
+var view = UnityEditor.EditorWindow.GetWindow(viewType);
+var sizesType = assembly.GetType("UnityEditor.GameViewSizes");
+var sizes = typeof(UnityEditor.ScriptableSingleton<>).MakeGenericType(sizesType).GetProperty("instance").GetValue(null);
+var groupType = assembly.GetType("UnityEditor.GameViewSizeGroupType");
+var group = sizesType.GetMethod("GetGroup").Invoke(sizes, new[] {System.Enum.Parse(groupType, UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.Android ? "Android" : "Standalone")});
+int Count() => (int)group.GetType().GetMethod("GetBuiltinCount").Invoke(group, null) + (int)group.GetType().GetMethod("GetCustomCount").Invoke(group, null);
+int Size(int width, int height, string name)
+{
+    for (int i = 0; i < Count(); i++)
+    {
+        var entry = group.GetType().GetMethod("GetGameViewSize").Invoke(group, new object[]{i});
+        if ((int)entry.GetType().GetProperty("width", flags).GetValue(entry) == width &&
+            (int)entry.GetType().GetProperty("height", flags).GetValue(entry) == height) return i;
+    }
+    int index = Count();
+    var created = System.Activator.CreateInstance(assembly.GetType("UnityEditor.GameViewSize"), new object[]{System.Enum.ToObject(assembly.GetType("UnityEditor.GameViewSizeType"),1), width, height, name});
+    group.GetType().GetMethod("AddCustomSize").Invoke(group,new[]{created});
+    return index;
+}
+int normal = Size(941,1672,"UI Polish Portrait"), tall = Size(941,2039,"UI Polish Tall"), wide = Size(1254,1672,"UI Polish Tablet");
+UnityEditor.SessionState.SetInt("UiPolish.NormalSize",normal);
+UnityEditor.SessionState.SetInt("UiPolish.TallSize",tall);
+UnityEditor.SessionState.SetInt("UiPolish.WideSize",wide);
+viewType.GetProperty("selectedSizeIndex",flags).SetValue(view,normal); view.Repaint();
+UnityEngine.Application.runInBackground = true;
+UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Scenes/Title.unity");
+return new { normal,tall,wide };

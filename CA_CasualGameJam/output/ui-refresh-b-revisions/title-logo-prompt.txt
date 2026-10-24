@@ -1,0 +1,5 @@
+Tool: built-in image_gen (edit, text-localization)
+Source: Assets/UI/ToonBold/ApprovedTitle.png
+Result: Assets/UI/ToonBold/BlendTrailsTitle.png
+
+Use case: text-localization. Edit target: attached existing approved portrait mobile game title art. Replace ONLY its logo wording. Main logo upper line must read 'BLEND' (red/yellow/orange letters), second line 'TRAILS' (white letters), small subtitle must read 'COLOR PUZZLE', instead of COLOR / TRACE / TRACE & MIX. Official game name is 'Blend Trails: Color Puzzle'. Preserve the exact bold bubbly cream-and-navy outlined lettering aesthetic, blue hard shadows and glossy highlights. Logo must remain in the same upper region, with the small subtitle above the tile illustration. Preserve everything else and its positions closely: sky blue background and clouds, red and yellow paths combining to orange over three white tiles, and the blue STAGE 6 button at bottom. Portrait 9:16 composition, no extra text, no extra objects. Keep artwork in same visual bounds so it can replace the old image in the existing Unity layout.

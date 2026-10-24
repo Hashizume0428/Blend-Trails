@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-25",
+  "editMode": {
+    "total": 48,
+    "passed": 48,
+    "failed": 0,
+    "skipped": 0,
+    "inconclusive": 0
+  },
+  "playMode": {
+    "total": 49,
+    "passed": 49,
+    "failed": 0,
+    "skipped": 0,
+    "inconclusive": 0
+  },
+  "passedTests": 97,
+  "manual": {
+    "fullScreenSky": true,
+    "activeSkyBitmaps": 0,
+    "portrait": "941x1672",
+    "tall": "941x2039",
+    "tablet": "1254x1672",
+    "blueGuideSeconds": 0.494125366,
+    "headingScaleLarge": 1.03602934,
+    "headingScaleSmall": 0.9647575,
+    "correctTiles": 20,
+    "vibrationVerification": "deferred by user"
+  },
+  "arrow": {
+    "textureWidth": 256,
+    "textureHeight": 256,
+    "iconWidth": 136.0,
+    "sprite": "Assets/UI/ToonBold/ResetArrowGenerated.png"
+  },
+  "pulse": {
+    "largeScale": 1.03602934,
+    "smallScale": 0.9647575,
+    "nextButton": true
+  },
+  "restoredEditor": {
+    "stage": 3,
+    "puzzle": 3,
+    "history": 0,
+    "scene": "Assets/Scenes/Title.unity",
+    "dirty": false
+  },
+  "console": {
+    "sampledUtc": "2026-10-24T21:41:04.3780158Z",
+    "ageMs": 164,
+    "compilationFailed": false,
+    "compiling": false,
+    "consoleErrors": 0,
+    "consoleWarnings": 0,
+    "consoleLogs": 2,
+    "seeded": true
+  },
+  "imageGenerationTool": "built-in image_gen",
+  "vibrationVerification": "deferred at user request"
+}

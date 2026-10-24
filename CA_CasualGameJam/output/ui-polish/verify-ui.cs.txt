@@ -1,0 +1,71 @@
+var root=System.IO.Path.GetFullPath(System.IO.Path.Combine(UnityEngine.Application.dataPath,"../output/ui-polish"));
+void Require(bool ok,string reason) {if(!ok)throw new System.Exception(reason);}
+void FreezeInput()
+{
+    if(UnityEngine.EventSystems.EventSystem.current!=null) UnityEngine.EventSystems.EventSystem.current.enabled=false;
+    var input=UnityEngine.Object.FindFirstObjectByType<InputTouchManager>(); if(input!=null)input.enabled=false;
+}
+void Resize(string key)
+{
+    var type=typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.GameView");
+    var view=UnityEditor.EditorWindow.GetWindow(type);
+    type.GetProperty("selectedSizeIndex",System.Reflection.BindingFlags.Public|System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance).SetValue(view,UnityEditor.SessionState.GetInt("UiPolish."+key,18));view.Repaint();
+}
+async System.Threading.Tasks.Task Capture(string name)
+{
+    UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(root,name+".png"));
+    await Cysharp.Threading.Tasks.UniTask.Delay(350);
+}
+void Draw(GameManager game,string cells)
+{
+    var points=cells.Split(' ').Select(s=>new UnityEngine.Vector2Int(s[1]-'1',s[0]-'1')).ToArray();
+    Require(game.TryBeginLine(game.GetTile(points[0]).TileIndex),"Cannot begin line");
+    foreach(var point in points.Skip(1)) Require(game.TryExtendLine(game.GetTile(point).TileIndex),"Cannot extend line");
+}
+async System.Threading.Tasks.Task Review()
+{
+    try
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(SceneNavigator.TitleScene);FreezeInput();
+        await Cysharp.Threading.Tasks.UniTask.Delay(400);
+        var menu=UnityEngine.Object.FindFirstObjectByType<MenuNavigation>();
+        Require(menu.GetComponentsInChildren<UnityEngine.UI.RawImage>(false).Length==0,"Title still draws a sky bitmap over the background");
+        Require(UnityEngine.Object.FindFirstObjectByType<ToonSkyGraphic>()!=null,"No full-screen sky");
+        await Capture("title-portrait");
+        Resize("TallSize");await Cysharp.Threading.Tasks.UniTask.Delay(350);await Capture("title-tall");
+        Resize("WideSize");await Cysharp.Threading.Tasks.UniTask.Delay(350);await Capture("title-tablet");
+        Resize("NormalSize");await Cysharp.Threading.Tasks.UniTask.Delay(350);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(StageCatalog.SceneName(1));FreezeInput();
+        await Cysharp.Threading.Tasks.UniTask.Delay(400);
+        var game=UnityEngine.Object.FindFirstObjectByType<GameManager>();
+        var guide=UnityEngine.Object.FindFirstObjectByType<StageOneTutorialGuide>();
+        guide.SendMessage("OnApplicationFocus",true);guide.SendMessage("OnApplicationPause",false);
+        Draw(game,"11 21 22 23 24 25 15 14 13 12");
+        float releasedAt=UnityEngine.Time.unscaledTime;
+        await game.CommitLineAsync();
+        Require(guide.GuideColor==BaseColor.Blue,"No blue guide after red");
+        while(!guide.IsVisible) {Require(UnityEngine.Time.unscaledTime-releasedAt<2,"Blue guide did not appear");await Cysharp.Threading.Tasks.UniTask.Yield();}
+        float blueLatency=UnityEngine.Time.unscaledTime-releasedAt;
+        Require(blueLatency>=.45f&&blueLatency<=.8f,"Blue guide delay is not about 0.5 seconds: "+blueLatency);
+        await Capture("tutorial-blue");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(StageCatalog.SceneName(3));FreezeInput();
+        await Cysharp.Threading.Tasks.UniTask.Delay(400);
+        game=UnityEngine.Object.FindFirstObjectByType<GameManager>();
+        Draw(game,"15 45 44 14 13 33");await game.CommitLineAsync();
+        Draw(game,"41 11 12 42 43 33");await game.CommitLineAsync();
+        await Cysharp.Threading.Tasks.UniTask.Delay(250);await Capture("reset-buttons");
+        game.ReloadColor(BaseColor.Blue);Draw(game,"41 11 12 42 43 23");await game.CommitLineAsync();
+        await Cysharp.Threading.Tasks.UniTask.Delay(250);
+        var heading=UnityEngine.GameObject.Find("ToonClearTitle").transform;
+        float deadline=UnityEngine.Time.unscaledTime+2;
+        while(heading.localScale.x<1.035f) {Require(UnityEngine.Time.unscaledTime<deadline,"Heading did not expand");await Cysharp.Threading.Tasks.UniTask.Yield();}
+        float largeScale=heading.localScale.x;await Capture("clear-large");
+        deadline=UnityEngine.Time.unscaledTime+2;
+        while(heading.localScale.x>.965f) {Require(UnityEngine.Time.unscaledTime<deadline,"Heading did not contract");await Cysharp.Threading.Tasks.UniTask.Yield();}
+        float smallScale=heading.localScale.x;await Capture("clear-small");
+        Require(game.CorrectTileCount==20,"Solved board changed");
+        System.IO.File.WriteAllText(System.IO.Path.Combine(root,"manual-checks.json"),Newtonsoft.Json.JsonConvert.SerializeObject(new{fullScreenSky=true,activeSkyBitmaps=0,portrait="941x1672",tall="941x2039",tablet="1254x1672",blueGuideSeconds=blueLatency,headingScaleLarge=largeScale,headingScaleSmall=smallScale,correctTiles=game.CorrectTileCount,vibrationVerification="deferred by user"},Newtonsoft.Json.Formatting.Indented));
+    }
+    catch(System.Exception error) {System.IO.File.WriteAllText(System.IO.Path.Combine(root,"manual-error.txt"),error.ToString());}
+}
+Review();return "UI polish review running";

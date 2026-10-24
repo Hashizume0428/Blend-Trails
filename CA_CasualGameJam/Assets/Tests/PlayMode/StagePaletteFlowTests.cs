@@ -119,15 +119,15 @@ public class StagePaletteFlowTests : StageProgressTestFixture
     [UnityTest]
     public IEnumerator ExtraPaletteUsesDisplayNumberAndSurvivesHomeAndSessionRestart()
     {
-        foreach (int stage in new[] { 31, 36, 41 })
+        foreach (int stage in new[] { 61, 66, 71 })
         {
             // Always reuse the same green-group authored puzzle to distinguish ID from display number.
             SaveStage(stage, 11);
             yield return SceneManager.LoadSceneAsync(StageCatalog.SceneName(11));
             yield return null;
-            BaseColor first = stage == 41 ? BaseColor.Blue : BaseColor.Red;
-            BaseColor second = stage == 31 ? BaseColor.Blue : BaseColor.Yellow;
-            TileColor mixed = stage == 31 ? TileColor.Purple : stage == 36 ? TileColor.Orange : TileColor.Green;
+            BaseColor first = stage == 71 ? BaseColor.Blue : BaseColor.Red;
+            BaseColor second = stage == 61 ? BaseColor.Blue : BaseColor.Yellow;
+            TileColor mixed = stage == 61 ? TileColor.Purple : stage == 66 ? TileColor.Orange : TileColor.Green;
             AssertPalette(first, second, mixed);
             StageTestReference.AssertLayout(Game, 11);
             Assert.That(Game.GetComponent<StageClearNavigation>().StageNumber, Is.EqualTo(stage));
@@ -146,15 +146,15 @@ public class StagePaletteFlowTests : StageProgressTestFixture
     [UnityTest]
     public IEnumerator BoundaryClearKeepsItsPaletteUntilTheNextSceneEnters()
     {
-        foreach (int stage in new[] { 5, 10, 15, 30, 35, 40 })
+        foreach (int stage in new[] { 5, 10, 15, 30, 35, 40, 60, 65, 70 })
         {
-            int puzzle = stage <= 30 ? stage : 11;
+            int puzzle = stage <= StageCatalog.Count ? stage : 11;
             SaveStage(stage, puzzle);
             yield return SceneManager.LoadSceneAsync(StageCatalog.SceneName(puzzle));
             yield return null;
             GameManager game = Game;
-            TileColor mixed = stage == 5 || stage == 35 ? TileColor.Purple :
-                stage == 10 || stage == 40 ? TileColor.Orange : TileColor.Green;
+            TileColor mixed = stage == 5 || stage == 35 || stage == 65 ? TileColor.Purple :
+                stage == 10 || stage == 40 || stage == 70 ? TileColor.Orange : TileColor.Green;
             TileColor nextMixed = mixed == TileColor.Purple ? TileColor.Orange :
                 mixed == TileColor.Orange ? TileColor.Green : TileColor.Purple;
             TileColor[] requirements = game.TilesList.Select(tile => tile.RequiredColor).ToArray();

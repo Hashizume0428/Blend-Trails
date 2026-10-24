@@ -1,0 +1,32 @@
+{
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "key": "reload-arrow",
+      "args": {
+        "transparent_background": true,
+        "prompt": "Use case: logo-brand. Asset type: a single production UI sprite for the reload/reset button in a cheerful mobile color puzzle. Generate ONLY ONE clean clockwise circular reload arrow, solid pure white on genuine transparent alpha. Thick, even, smooth circular stroke with a rounded trailing cap, flowing into one clearly joined arrowhead at the upper-right. The arrowhead points clockwise along the circle and is rounded yet unmistakable, balanced with the thick stroke. Open gap between the arrowhead and trailing end. Flat front view, crisp antialiased edges, centered square composition with modest transparent margins. No enclosing circle or badge, no button, no text, no shadows, no outline, no gradients, no gray/checkerboard background, no multiple arrows. The white silhouette must remain clear and friendly when displayed at 100 pixels and must be tintable navy on a yellow button."
+      }
+    },
+    {
+      "key": "title-logo",
+      "args": {
+        "transparent_background": true,
+        "referenced_image_paths": [
+          "C:/GitHub/CGJ_8/CA_CasualGameJam/Assets/UI/ToonBold/BlendTrailsTitle.png"
+        ],
+        "prompt": "Use case: background-extraction. Edit target: provided approved game title image. Isolate ONLY the existing upper logo: BLEND on first row in red/yellow/orange, TRAILS on second row in white, and COLOR PUZZLE beneath. Preserve the exact spelling, chunky rounded letter shapes, cream outer rim, thick navy outlines, glossy highlights and blue hard drop shadow. Remove all blue sky, clouds, the three tile/path illustration, and the bottom STAGE 6 button. Output one tightly framed standalone logo with genuine transparent alpha around the letters/rims/shadow and in every empty gap; no opaque sky rectangle and no background-colored residue. Keep the three text rows in their existing relative layout. Leave a small transparent safety margin so no outline or shadow is cut off. No extra text or objects. Landscape logo asset, around 3:2 aspect ratio."
+      }
+    },
+    {
+      "key": "title-mix",
+      "args": {
+        "transparent_background": true,
+        "referenced_image_paths": [
+          "C:/GitHub/CGJ_8/CA_CasualGameJam/Assets/UI/ToonBold/BlendTrailsTitle.png"
+        ],
+        "prompt": "Use case: background-extraction. Edit target: provided approved game title image. Isolate ONLY its middle illustration: two upper white rounded square tiles and one lower centered tile, with chunky navy outlines and blue hard shadows; a red dot/path on the upper-left and yellow dot/path on upper-right flow down and combine into an orange dot/path on the lower tile, with the small cream celebratory rays around the lower tile. Preserve its existing illustration style, geometry, vivid colors, thick strokes and glossy cartoon finish. Remove the complete title logo/text, bottom STAGE 6 button, sky and all clouds. Output this three-tile mixing illustration as a single standalone sprite with genuine transparent alpha around and between the tiles and paths, no opaque background rectangle and no sky-colored residue. Keep all navy outlines, blue hard shadows and cream rays. Tight framing with a small transparent safety margin. No text, no extra tiles or objects. Around 6:5 aspect ratio."
+      }
+    }
+  ]
+}

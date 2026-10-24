@@ -1,44 +1,49 @@
-# 30問とエクストラの進行仕様
+# 60問とエクストラの進行仕様
 
 Stage1〜4は既存の4問をチュートリアルとして使用します。Stage1だけは想定回答を指で案内し、Stage2〜4には操作ガイドを表示しません。
 Stage1のガイドは表示専用です。別の経路や着色の分担でも既存の条件を満たせばクリアします。操作中・判定中・クリア演出中は非表示にし、確定済みの着色が想定回答と異なる場合も矛盾する案内を止めます。全リセット・色別リセット・操作取消後は盤面を再評価します。
 新しい説明文や日本語のUIは追加しません。表示済みフラグは保存せず、Stage1へ入るたびに案内します。設定はAssets/UI/Tutorial/StageOneTutorial.prefab、ステージ1のみの再配置はColor Puzzle/Apply Stage 1 Tutorialです。
-Stage5〜30はノーマル26問を資料の番号順に出題します。
-Stage31以降はノーマルの問題5〜30を再利用し、クリアするたびに表示番号を増やします。
-例えば問題12を再利用しても、タイトル・ステージ上部・次のボタンはStage31・Stage31・Stage32となります。
+Stage5〜60はノーマル56問を資料の番号順に出題します。問題31〜60には追加30案を使用します。
+Stage61以降はノーマルの問題5〜60を再利用し、クリアするたびに表示番号を増やします。
+例えば問題12を再利用しても、タイトル・ステージ上部・次のボタンはStage61・Stage61・Stage62となります。
 
 ## 5ステージごとの色の切り替え
 
 チュートリアルを含め、表示番号1〜5は赤・青・紫、6〜10は赤・黄・オレンジ、11〜15は青・黄・緑とし、16以降は同じ順で繰り返します。既存問題の開始位置・指定位置・解法は変えず、旧赤を第1色、旧青を第2色、旧紫を混色へ置き換えます。
 
-Stage31以降も表示番号を使います。同じ問題11でもStage31では赤・青、Stage36では赤・黄、Stage41では青・黄です。パレットはStageClearNavigationが保持する入場番号からGameManagerで確定します。正解時にStageProgressが次の番号を保存しても、現在の盤面・クリア演出・UIは入場時の色を維持します。
+Stage61以降も表示番号を使います。同じ問題11でもStage61では赤・青、Stage66では赤・黄、Stage71では青・黄です。パレットはStageClearNavigationが保持する入場番号からGameManagerで確定します。正解時にStageProgressが次の番号を保存しても、現在の盤面・クリア演出・UIは入場時の色を維持します。
 
 色の組み合わせは表示番号から再現できるため、新しい保存項目やセーブ形式の変更はありません。HOME、途中離脱、再起動後も、保存された表示番号と問題IDから同じ色・同じ問題へ戻ります。
 
 ## 抽選と保存
 
 - クリアしたノーマル問題のIDを直近8件保持し、その8件を除いた候補から均等に抽選します。チュートリアルは抽選対象外です。
-- エクストラ開始時には問題23〜30が除外履歴に入っているため、Stage31は問題5〜22の18問から抽選します。
+- エクストラ開始時には問題53〜60が除外履歴に入っているため、Stage61は問題5〜52の48問から抽選します。
 - エクストラのクリア後も同じ8件の窓を更新します。問題の在庫数で表示番号を巻き戻したり、ノーマルを再度番号順に消費したりはしません。
 - 正解判定時、次の表示番号・選択済みの問題ID・直近8件をまとめてPlayerPrefsへ保存し、Saveを呼びます。
 - HOME、途中離脱、リロード、アプリ再起動は番号や履歴を消費せず、同じ選択済み問題を開きます。描きかけの線・着色は初期化します。
 - 再クリアや二重確定では番号を二重に進めません。紙吹雪・縮小演出中に終了しても次の問題への進行を保持します。
 
 保存キーはColorPuzzle.StageProgress.v2です。旧ColorPuzzle.CurrentStageNumberのみのセーブは、表示番号を保って移行します。旧Stage11は新しい問題11としてプレイできます。
+30問版のエクストラでStage31〜60にいるセーブは、表示番号を保ち、追加された同番号の問題へ移行します。履歴はその直前の8問へ更新し、v2の表示番号を旧整数キーより優先します。Stage61以上にいるセーブは、選択済みの問題IDと直近履歴を維持します。
 
 ## シーンと調整
 
-StageCatalogは問題1〜30とシーンの対応、TutorialCount=4、RecentPuzzleLimit=8を定義します。
+StageCatalogは問題1〜60とシーンの対応、TutorialCount=4、RecentPuzzleLimit=8を定義します。
 StageProgressはCurrentStageNumberとCurrentPuzzleIdを分離し、CurrentSceneで選択済みの問題シーンを返します。
 StageClearNavigationのInspectorのStage Numberは問題IDです。実行中のStageNumberは入場時の表示番号を保持し、クリア後に次の番号へ進んでも現在の盤面表示が変わらないようにします。
-Editorからシーンを直接再生した場合は、その問題IDを表示番号として入場します。エクストラで選ばれたCurrentSceneから入場した場合は、Stage31以降の表示番号を保持します。
+Editorからシーンを直接再生した場合は、その問題IDを表示番号として入場します。エクストラで選ばれたCurrentSceneから入場した場合は、Stage61以降の表示番号を保持します。
 
 問題11〜30の生成にはColor Puzzle/Add Reference Stages 11-30を使用します。既存1〜10の問題条件とタイトルUIを保持し、新しい20シーンとBuild Settingsを追加します。
 問題11〜20、21〜30の配置・解答例は提供JSONからReferenceStageBuilderとStageTestReferenceへ転記しています。プレイヤー実行時にoutputフォルダーは不要です。
+問題31〜60はoutput/stage-ideas-31-60/stages-31-60.jsonから転記しています。Color Puzzle/Add Reference Stages 31-60は既存1〜30のシーンを再保存せず、新しい30シーンとBuild Settingsを追加します。新規シーンは現在のStage1のUIを引き継ぎ、Stage1専用の操作ガイドは除去します。通常マスは基本色のどちらか単色、混色は指定マスのみで、禁止マスはありません。
+生成時にはStage1のタイル面・枠・開始点の表示幅を読み取り、現行スキンの画像へ適用します。スライス描画の盤面背景はサイズを保ち、クリア画面には同じToonスキンを適用します。開始点が極端に縮む、背景が拡大する、次へボタンの矢印が外れるという旧生成処理の表示差を防いでいます。
 
-検証対象はStageCatalogTests、StageProgressPersistenceTests、SceneNavigationTests.AllThirtyReferenceStagesClearInOrderAndContinueIntoPersistentExtrasです。テストは既存の保存データを退避・復元します。
+検証対象はStageCatalogTests、StageProgressPersistenceTests、SceneNavigationTests.AllSixtyReferenceStagesClearInOrderAndContinueIntoPersistentExtrasです。テストは既存の保存データを退避・復元します。
 
 2026-10-24の限定実行でEditMode 2件、PlayMode 5件がすべて成功しました。全30問の連続クリア、Stage31/32の遷移と番号表示、40回のエクストラ抽選、再起動時の問題・履歴の維持、旧セーブ移行を確認しています。
 縦画面ではStage30の正解からStage31へ進み、問題18を再利用しても盤面上部とタイトルがStage31となることを確認しました。結果と画像はLogs/ThirtyStages-*です。
 
 2026-10-25の色切り替え実装では、EditMode全46件・PlayMode全42件が成功しました。全30問の連続クリアに加え、同じ問題11をStage31/36/41で再利用した色・HOME復帰・セッション再初期化、境界5/10/15/30/35/40のクリア中の色保持を確認しています。結果はLogs/ColorPalette-EditMode.jsonとLogs/ColorPalette-PlayMode.jsonです。
+
+2026-10-25の60問への拡張では、PlayMode全53件が成功しました。最終の表示調整後にもEditMode48件とStageProgressionのPlayMode9件が成功し、全60問の連続クリアとStage61/62、40回のエクストラ抽選、旧Stage31/45/60の同番号新問題への移行、旧Stage73の選択問題・履歴維持を確認しています。既存の全シーンは変更せず、Title＋60問題の61シーンをBuild Settingsへ登録しました。結果はLogs/SixtyStages-EditMode.json、Logs/SixtyStages-PlayMode.json、Logs/SixtyStages-Progression.json、Logs/SixtyStages-Audit.jsonです。

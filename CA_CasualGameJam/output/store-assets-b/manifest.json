@@ -1,0 +1,187 @@
+{
+  "date": "2026-10-24",
+  "method": "built-in image_gen",
+  "selectedDesign": "2D B / Toon Bold",
+  "exports": [
+    {
+      "concept": "01",
+      "name": "混色シンボル",
+      "type": "icon",
+      "file": "icons/01-mix-symbol-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 727442,
+      "format": "png",
+      "colourSpace": "srgb",
+      "channels": 4,
+      "alpha": true,
+      "bitDepth": 8,
+      "sha256": "1a53b3bcd38ead8f1e97231273d131d620118b87b9b5b664416510d27ec4b7cf",
+      "colourReduction": false,
+      "sourceDimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "concept": "01",
+      "name": "混色シンボル",
+      "type": "icon",
+      "file": "google-play/icons/01-mix-symbol-512.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 226914,
+      "format": "png",
+      "colourSpace": "srgb",
+      "channels": 4,
+      "alpha": true,
+      "bitDepth": 8,
+      "sha256": "9217b142c6fdb014e77ad9e2ccdcf3749ff1811c39aa37ef54916120e2523b41",
+      "colourReduction": false,
+      "sourceDimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "concept": "02",
+      "name": "盤面パズル",
+      "type": "icon",
+      "file": "icons/02-mini-board-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 824257,
+      "format": "png",
+      "colourSpace": "srgb",
+      "channels": 4,
+      "alpha": true,
+      "bitDepth": 8,
+      "sha256": "850a2d9073164edbe8543fecc21f2185858b5b4bfcb2788783fddf2da2a215fc",
+      "colourReduction": false,
+      "sourceDimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "concept": "02",
+      "name": "盤面パズル",
+      "type": "icon",
+      "file": "google-play/icons/02-mini-board-512.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 253624,
+      "format": "png",
+      "colourSpace": "srgb",
+      "channels": 4,
+      "alpha": true,
+      "bitDepth": 8,
+      "sha256": "327a2a0d7dde87bfe3d834a1db3b09443e7ddbe683ea69cd773981a3a1309dc6",
+      "colourReduction": false,
+      "sourceDimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "concept": "03",
+      "name": "ライン強調",
+      "type": "icon",
+      "file": "icons/03-bold-paths-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 733968,
+      "format": "png",
+      "colourSpace": "srgb",
+      "channels": 4,
+      "alpha": true,
+      "bitDepth": 8,
+      "sha256": "e60eef6015d4883b410f41419b0ec555e2add05ded50f6a4c3d350f78d48c25f",
+      "colourReduction": false,
+      "sourceDimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "concept": "03",
+      "name": "ライン強調",
+      "type": "icon",
+      "file": "google-play/icons/03-bold-paths-512.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 231356,
+      "format": "png",
+      "colourSpace": "srgb",
+      "channels": 4,
+      "alpha": true,
+      "bitDepth": 8,
+      "sha256": "c93b89ec5cea633c74d250ff9e80b18b8fe4827a97aa1ad9649cda5f8d9e530a",
+      "colourReduction": false,
+      "sourceDimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "concept": "01",
+      "name": "混色シンボル",
+      "type": "feature",
+      "file": "feature-graphics/01-mix-symbol-1024x500.png",
+      "width": 1024,
+      "height": 500,
+      "bytes": 480852,
+      "format": "png",
+      "colourSpace": "srgb",
+      "channels": 3,
+      "alpha": false,
+      "bitDepth": 8,
+      "sha256": "12b8042944bbc438f7d069edc966827b8e258d178a4c760de102df9f53677994",
+      "colourReduction": false,
+      "sourceDimensions": [
+        1794,
+        876
+      ]
+    },
+    {
+      "concept": "02",
+      "name": "盤面パズル",
+      "type": "feature",
+      "file": "feature-graphics/02-mini-board-1024x500.png",
+      "width": 1024,
+      "height": 500,
+      "bytes": 502029,
+      "format": "png",
+      "colourSpace": "srgb",
+      "channels": 3,
+      "alpha": false,
+      "bitDepth": 8,
+      "sha256": "ef98cb0c220dc25a70348bb1db23841d60b8a4bb1a61f536a9c40d932656b72b",
+      "colourReduction": false,
+      "sourceDimensions": [
+        1794,
+        877
+      ]
+    },
+    {
+      "concept": "03",
+      "name": "ライン強調",
+      "type": "feature",
+      "file": "feature-graphics/03-bold-paths-1024x500.png",
+      "width": 1024,
+      "height": 500,
+      "bytes": 473922,
+      "format": "png",
+      "colourSpace": "srgb",
+      "channels": 3,
+      "alpha": false,
+      "bitDepth": 8,
+      "sha256": "5f4bef69f36bff216f2da04f9c90e711d0c96a463823762cbd124fd09e2b3dfb",
+      "colourReduction": false,
+      "sourceDimensions": [
+        1794,
+        876
+      ]
+    }
+  ]
+}

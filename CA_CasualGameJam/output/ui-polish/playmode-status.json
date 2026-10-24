@@ -1,0 +1,371 @@
+{
+  "success": true,
+  "command": "command test status",
+  "data": {
+    "command": "test status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 181.28,
+      "summary": {
+        "total": 49,
+        "passed": 49,
+        "failed": 0,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "ClearPresentationTests.ConfettiPrecedesShrinkingAndSolvedBoardKeepsColorsAndLinesWithStageActions",
+          "Status": "Passed",
+          "Duration": 6.253203,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "ClearPresentationTests.RestartDuringShrinkingCancelsPresentationAndRestoresThePlayableBoard",
+          "Status": "Passed",
+          "Duration": 1.8644772,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "LineResumeTests.AReferenceSolutionCanBeCompletedAcrossSeveralStrokes",
+          "Status": "Passed",
+          "Duration": 2.6777151,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "LineResumeTests.CancelAfterRemovingOldSegmentsAndReroutingRestoresBothPathsAndMixedColors",
+          "Status": "Passed",
+          "Duration": 0.960405,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "LineResumeTests.ChooserUsesCurrentStageColorsAndReloadAndCancelClearPendingSelection",
+          "Status": "Passed",
+          "Duration": 2.7506129,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "LineResumeTests.CommittedEndpointCanExtendAndShrinkAllTheWayToItsStart",
+          "Status": "Passed",
+          "Duration": 1.6276591,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "LineResumeTests.NoChangeReleaseDoesNotRestartTheErrorAssessmentOrBlockTheNextInput",
+          "Status": "Passed",
+          "Duration": 3.4993842,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "LineResumeTests.SharedEndpointRequiresAColorChoiceAndAFreshDragThenPreservesTheOtherColor",
+          "Status": "Passed",
+          "Duration": 0.937078,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "LineResumeTests.UnusedStartWinsOverAnotherColorsEndpoint",
+          "Status": "Passed",
+          "Duration": 0.6817152,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleFlowTests.BacktrackingAndCancelRemoveOnlyTheColorAddedByTheCurrentDrawing",
+          "Status": "Passed",
+          "Duration": 0.8230811,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleFlowTests.FacesFollowDrawingImmediatelyIncludingIncorrectTilesAndReleaseOnlyCommits",
+          "Status": "Passed",
+          "Duration": 0.7119938,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleFlowTests.FastSwipesPaintIntermediateTilesAndBacktrackingRestoresTheTail",
+          "Status": "Passed",
+          "Duration": 0.6782154,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleFlowTests.FullSolutionClearsAndRestartResetsBoard",
+          "Status": "Passed",
+          "Duration": 3.0738184,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleFlowTests.OtherColorStartRemainsUsableAndReloadPreservesOtherLine",
+          "Status": "Passed",
+          "Duration": 0.8608718,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleFlowTests.PointerHitTestingCancelAndSingleTileCommit",
+          "Status": "Passed",
+          "Duration": 0.6757435,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleFlowTests.PurpleNormalTileBlocksClearAndReloadAllowsCorrection",
+          "Status": "Passed",
+          "Duration": 2.2856084,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleFlowTests.RestartDuringFeedbackCancelsOldOperation",
+          "Status": "Passed",
+          "Duration": 0.7690674,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleVisualTests.CrossingMixesOnlyTheJunctionAndKeepsApproachingLinesTheirOwnColors",
+          "Status": "Passed",
+          "Duration": 0.7491666,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleVisualTests.ErrorBlinksFinishAfterTwoSecondsAndDoNotResumeOnRefresh",
+          "Status": "Passed",
+          "Duration": 3.0086577,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleVisualTests.ErrorsBlinkOnlyAfterAllStartLinesAreCommittedIncludingEmptyTiles",
+          "Status": "Passed",
+          "Duration": 1.5287979,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleVisualTests.ReloadWaitsForRecommitAndResetOrDisableStopsErrorBlinks",
+          "Status": "Passed",
+          "Duration": 1.4083328,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleVisualTests.SharedEdgesMixDuringPreviewAndRestoreOnCancelOrReload",
+          "Status": "Passed",
+          "Duration": 1.0180585,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "SceneNavigationTests.AllThirtyReferenceStagesClearInOrderAndContinueIntoPersistentExtras",
+          "Status": "Passed",
+          "Duration": 63.9830327,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "SceneNavigationTests.ClearChoicesCannotNavigateBeforeTheStageIsCleared",
+          "Status": "Passed",
+          "Duration": 0.794262,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "SceneNavigationTests.ClearingStageOneUpdatesTheTitleToStageTwoAndStartsThatStage",
+          "Status": "Passed",
+          "Duration": 5.002542,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "SceneNavigationTests.IncompleteLinesAndReloadDoNotAdvanceTheTitleStage",
+          "Status": "Passed",
+          "Duration": 1.3356679,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "SceneNavigationTests.ReclearingTheSameStageDoesNotAdvanceTheNumberTwice",
+          "Status": "Passed",
+          "Duration": 4.5769108,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "SceneNavigationTests.StageThreeUsesSeparatePurpleFramesAndHomeKeepsTheStageNumber",
+          "Status": "Passed",
+          "Duration": 2.1154872,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "SceneNavigationTests.TitleHasOneStageButtonAndOpensThePuzzleDirectly",
+          "Status": "Passed",
+          "Duration": 1.3049256,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageHudTests.AllReloadClearsLinesAndColorsAndPreservesPuzzleConditions",
+          "Status": "Passed",
+          "Duration": 0.9058108,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageHudTests.HomeCancelsDrawingAndReturnsToTitle",
+          "Status": "Passed",
+          "Duration": 1.2919988,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageHudTests.HomeDuringPaintingCancelsThePendingOperation",
+          "Status": "Passed",
+          "Duration": 1.7499686,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageHudTests.HomeReturnsToTitleFromIdle",
+          "Status": "Passed",
+          "Duration": 1.7126636,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageHudTests.ReloadControlsAreLockedDuringDrawingAndSequentialPainting",
+          "Status": "Passed",
+          "Duration": 1.183978,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageHudTests.StageSkinFitsAndDecorationsDoNotBlockTileInput",
+          "Status": "Passed",
+          "Duration": 0.6122373,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageOneTutorialTests.BlueFirstAndReferenceSolutionClearWithoutGuideDuringResolution",
+          "Status": "Passed",
+          "Duration": 3.4940934,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageOneTutorialTests.DifferentFinalColorPartitionClearsWithoutConflictingGuidance",
+          "Status": "Passed",
+          "Duration": 1.9508241,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageOneTutorialTests.DifferentStrokeShapeStillGuidesBlueAndResetsAndInterruptionsResume",
+          "Status": "Passed",
+          "Duration": 7.1138387,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageOneTutorialTests.HomeHidesGuideBeforeLoadingAndLeavesNoTutorial",
+          "Status": "Passed",
+          "Duration": 2.0006943,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageOneTutorialTests.OtherPuzzlesAndPersistentExtrasHaveNoTutorial",
+          "Status": "Passed",
+          "Duration": 2.5570838,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageOneTutorialTests.PreviewMovesWithoutPaintingAndAllowsInputThroughEveryGraphic",
+          "Status": "Passed",
+          "Duration": 8.0832789,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StagePaletteFlowTests.ActiveColorsDriveBothReloadButtonsAndMixRemoval",
+          "Status": "Passed",
+          "Duration": 1.6499456,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StagePaletteFlowTests.BoundaryClearKeepsItsPaletteUntilTheNextSceneEnters",
+          "Status": "Passed",
+          "Duration": 15.4122771,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StagePaletteFlowTests.ExtraPaletteUsesDisplayNumberAndSurvivesHomeAndSessionRestart",
+          "Status": "Passed",
+          "Duration": 5.5550523,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StagePaletteFlowTests.YellowPreviewMixesLinesAndCancelRestoresTheFirstLine",
+          "Status": "Passed",
+          "Duration": 4.0032003,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageProgressPersistenceTests.ClearSavesBeforePresentationAndTheTitleResumesTheSavedStage",
+          "Status": "Passed",
+          "Duration": 3.9083748,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageProgressPersistenceTests.ExtraDrawsExcludeThePreviousEightAndSurviveRestartWithoutRerolling",
+          "Status": "Passed",
+          "Duration": 0.0066509,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageProgressPersistenceTests.ReclearingAndInvalidClearsDoNotAdvanceSavedProgress",
+          "Status": "Passed",
+          "Duration": 0.0007079,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageProgressPersistenceTests.StartupMigratesTheOldSaveIncludingStageElevenAndExtraProgress",
+          "Status": "Passed",
+          "Duration": 0.0009853,
+          "Message": null,
+          "StackTrace": null
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}
