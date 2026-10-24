@@ -42,12 +42,12 @@ public class PuzzleFlowTests
         Assert.That(_game.State, Is.EqualTo(GameState.Cleared));
         Assert.That(_game.CorrectTileCount, Is.EqualTo(16));
         Assert.That(_game.StageClearCheck(), Is.True);
-        var restart = GameObject.Find("Restart").GetComponent<UnityEngine.UI.Button>();
-        Assert.That(restart.interactable, Is.True);
-        restart.onClick.Invoke();
+        _game.RestartStage();
         Assert.That(_game.State, Is.EqualTo(GameState.Idle));
         Assert.That(_game.CorrectTileCount, Is.Zero);
         foreach (TileController tile in _game.TilesList) Assert.That(tile.CurrentColor, Is.EqualTo(TileColor.None));
+        yield return new WaitForSecondsRealtime(1.1f);
+        Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(SceneNavigator.StageScene), "Restart must cancel the pending clear transition.");
     }
     [UnityTest]
     public IEnumerator OtherColorStartRemainsUsableAndReloadPreservesOtherLine()

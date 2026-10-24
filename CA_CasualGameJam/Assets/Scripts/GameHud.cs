@@ -3,13 +3,15 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameHud : MonoBehaviour
 {
     [SerializeField] private GameManager _gameManager;
     [SerializeField] private UnityEngine.UI.Button _redReload;
     [SerializeField] private UnityEngine.UI.Button _blueReload;
-    [SerializeField] private UnityEngine.UI.Button _restart;
+    [FormerlySerializedAs("_restart")]
+    [SerializeField] private UnityEngine.UI.Button _stageSelect;
     [SerializeField] private TMP_Text _progress;
     [SerializeField] private TMP_Text _status;
     [SerializeField] private CanvasGroup _clearPanel;
@@ -18,18 +20,22 @@ public class GameHud : MonoBehaviour
     {
         _redReload.onClick.AddListener(ReloadRed);
         _blueReload.onClick.AddListener(ReloadBlue);
-        _restart.onClick.AddListener(Restart);
+        _stageSelect.onClick.AddListener(ReturnToStageSelect);
         _gameManager.Changed += Refresh;
         Refresh();
     }
     private void ReloadRed() => _gameManager.ReloadColor(BaseColor.Red);
     private void ReloadBlue() => _gameManager.ReloadColor(BaseColor.Blue);
-    private void Restart() => _gameManager.RestartStage();
+    private void ReturnToStageSelect()
+    {
+        if (_gameManager.State == GameState.Cleared)
+            SceneNavigator.LoadAsync(SceneNavigator.StageSelectScene).Forget();
+    }
     private void Refresh()
     {
         _redReload.interactable = _gameManager.CanReloadColor(BaseColor.Red);
         _blueReload.interactable = _gameManager.CanReloadColor(BaseColor.Blue);
-        _restart.interactable = _gameManager.State == GameState.Cleared;
+        _stageSelect.interactable = _gameManager.State == GameState.Cleared && !SceneNavigator.IsLoading;
         _progress.text = $"{_gameManager.CorrectTileCount:00} / {_gameManager.TilesList.Count:00}";
         _status.text = _gameManager.State == GameState.Drawing ? "Release to paint" :
             _gameManager.State == GameState.Resolving ? "Checking colors..." : "Trace from a colored dot";
@@ -41,7 +47,7 @@ public class GameHud : MonoBehaviour
     }
     public async UniTask PlayClearAsync(CancellationToken token)
     {
-        _clearPanel.gameObject.SetActive(true); _clearPanel.alpha = 0; _restart.interactable = false;
+        _clearPanel.gameObject.SetActive(true); _clearPanel.alpha = 0; _stageSelect.interactable = false;
         _clearTween = DOTween.To(() => _clearPanel.alpha, value => _clearPanel.alpha = value, 1f, 0.3f).SetLink(gameObject);
         try { await UniTask.Delay(300, cancellationToken: token); }
         finally { _clearTween?.Kill(); _clearTween = null; }
@@ -52,6 +58,6 @@ public class GameHud : MonoBehaviour
         if (_gameManager != null) _gameManager.Changed -= Refresh;
         if (_redReload != null) _redReload.onClick.RemoveListener(ReloadRed);
         if (_blueReload != null) _blueReload.onClick.RemoveListener(ReloadBlue);
-        if (_restart != null) _restart.onClick.RemoveListener(Restart);
+        if (_stageSelect != null) _stageSelect.onClick.RemoveListener(ReturnToStageSelect);
     }
 }

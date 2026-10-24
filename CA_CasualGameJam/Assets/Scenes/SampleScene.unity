@@ -2202,6 +2202,7 @@ GameObject:
   - component: {fileID: 856013072}
   - component: {fileID: 856013074}
   - component: {fileID: 856013075}
+  - component: {fileID: 856013076}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2374,6 +2375,20 @@ MonoBehaviour:
   _tileLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &856013076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856013071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2486fac4f85c4824396d522eff533a31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: ColorPuzzle.Runtime::StageClearNavigation
+  _gameManager: {fileID: 856013072}
+  _clearDisplaySeconds: 1
 --- !u!1 &1000034947
 GameObject:
   m_ObjectHideFlags: 0
@@ -2431,7 +2446,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PLAY AGAIN
+  m_text: STAGE SELECT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2998,7 +3013,7 @@ GameObject:
   - component: {fileID: 1371593995}
   - component: {fileID: 1371593997}
   m_Layer: 0
-  m_Name: Restart
+  m_Name: StageSelectButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4153,7 +4168,7 @@ MonoBehaviour:
   _gameManager: {fileID: 856013072}
   _redReload: {fileID: 1341453043}
   _blueReload: {fileID: 129672360}
-  _restart: {fileID: 1371593997}
+  _stageSelect: {fileID: 1371593997}
   _progress: {fileID: 757723131}
   _status: {fileID: 340851576}
   _clearPanel: {fileID: 1949019831}
