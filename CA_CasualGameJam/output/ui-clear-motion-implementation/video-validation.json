@@ -1,0 +1,13 @@
+{
+  "source": "Unity ScreenCapture, real-time sampling",
+  "seconds": 8,
+  "width": 720,
+  "height": 1280,
+  "fps": 30,
+  "decodedFrames": 240,
+  "capturedFrames": 139,
+  "firstReadySeconds": 3.208608,
+  "bytes": 1420453,
+  "decodeErrors": 0,
+  "audio": false
+}

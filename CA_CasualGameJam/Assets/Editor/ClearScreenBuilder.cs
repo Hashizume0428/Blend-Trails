@@ -73,6 +73,7 @@ public static class ClearScreenBuilder
         Set(hud, "_clearPresentation", presentation); Set(hud, "_nextStageLabel", next.transform.Find("Label").GetComponent<TMPro.TMP_Text>());
         panel.alpha = 1; panel.gameObject.SetActive(false);
         layout.SetClearProgress(0); layout.SetPlayControlsVisible(true);
+        ClearMotionBuilder.Apply(hud);
         EditorUtility.SetDirty(layout); EditorUtility.SetDirty(hud); EditorUtility.SetDirty(presentation);
     }
     private static void Style(UnityEngine.UI.Button button, Transform parent, float x, string label)

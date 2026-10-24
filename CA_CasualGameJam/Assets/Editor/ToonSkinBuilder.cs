@@ -175,6 +175,7 @@ public static class ToonSkinBuilder
 
     private static void StyleClear(GameHud hud, int number)
     {
+        ClearMotionBuilder.PrepareForSkin(hud);
         var hs = new SerializedObject(hud);
         var layout = hud.GetComponent<StageScreenLayout>();
         var presentation = hud.ClearPresentation;
@@ -220,6 +221,7 @@ public static class ToonSkinBuilder
         Set(presentation, "_cardBackdrop", backdropGroup); Set(presentation, "_cardHeading", headingGroup);
         backdrop.SetActive(false);
         hs.ApplyModifiedPropertiesWithoutUndo();
+        ClearMotionBuilder.Apply(hud);
         EditorUtility.SetDirty(presentation);
     }
 

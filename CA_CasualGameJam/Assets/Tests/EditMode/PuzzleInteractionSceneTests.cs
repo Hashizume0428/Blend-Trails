@@ -44,6 +44,12 @@ public class PuzzleInteractionSceneTests
                 Assert.That(((RectTransform)actions.GetChild(0)).anchoredPosition.x, Is.Zero);
                 Assert.That(hud.GetComponentsInChildren<Transform>(true).Any(item => item.name == "ClearHomeButton"), Is.False);
                 var next = actions.GetChild(0).GetComponent<UnityEngine.UI.Button>();
+                var motion = new SerializedObject(hud.ClearPresentation);
+                foreach (string field in new[]{"_badge","_cardBody","_details","_introScrim","_backgroundScrim","_boardVisuals","_titleAnimator","_celebration","_boardSheen","_buttonSheen","_foregroundConfetti"})
+                    Assert.That(motion.FindProperty(field).objectReferenceValue,Is.Not.Null,scene.path+" "+field);
+                foreach(var effect in hud.GetComponentsInChildren<UnityEngine.UI.Graphic>(true).Where(item=>
+                    item is ClearConfetti || item is ClearCelebrationGraphic || item is ClearSheenGraphic))
+                    Assert.That(effect.raycastTarget,Is.False,scene.path+" "+effect.name);
                 Assert.That(next.GetComponent<UnityEngine.UI.Image>().sprite, Is.EqualTo(ToonSkinAssets.Current.PrimaryButton), scene.path);
                 Assert.That(next.transform.Find("Label").GetComponent<TMPro.TMP_Text>().font, Is.EqualTo(ToonSkinAssets.Current.Font), scene.path);
                 var arrow = next.transform.Find("ToonNextIcon") as RectTransform;

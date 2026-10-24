@@ -1,0 +1,71 @@
+async System.Threading.Tasks.Task Record()
+{
+    string root=System.IO.Path.GetFullPath("output/ui-clear-motion-implementation");
+    try
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Stage03");
+        if(UnityEngine.EventSystems.EventSystem.current!=null)UnityEngine.EventSystems.EventSystem.current.enabled=false;
+        var input=UnityEngine.Object.FindFirstObjectByType<InputTouchManager>();if(input!=null)input.enabled=false;
+        await Cysharp.Threading.Tasks.UniTask.Delay(350);
+        var game=UnityEngine.Object.FindFirstObjectByType<GameManager>();
+        var presentation=UnityEngine.Object.FindFirstObjectByType<StageClearPresentation>();
+        foreach(string cells in new[]{"15 45 44 14 13 33","41 11 12 42 43 23"})
+        {
+            var points=cells.Split(' ').Select(s=>new UnityEngine.Vector2Int(s[1]-'1',s[0]-'1')).ToArray();
+            if(!game.TryBeginLine(game.GetTile(points[0]).TileIndex))throw new System.Exception("Cannot begin");
+            foreach(var point in points.Skip(1))if(!game.TryExtendLine(game.GetTile(point).TileIndex))throw new System.Exception("Cannot extend");
+            if(cells[0]=='1')await game.CommitLineAsync();
+        }
+        var clear=game.CommitLineAsync();while(!presentation.IsPlaying)await Cysharp.Threading.Tasks.UniTask.Yield();
+        System.IO.Directory.CreateDirectory(System.IO.Path.Combine(root,"frames"));
+        var samples=new System.Collections.Generic.List<object>();
+        int index=0;
+        while(presentation.ElapsedSeconds<8)
+        {
+            float elapsed=presentation.ElapsedSeconds;
+            string file="frames/frame-"+index.ToString("D4")+".png";
+            UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(root,file));
+            samples.Add(new{file,elapsed,frame=UnityEngine.Time.frameCount,ready=UnityEngine.GameObject.Find("NextStageButton").GetComponent<UnityEngine.UI.Button>().interactable});
+            index++;
+            do { await Cysharp.Threading.Tasks.UniTask.NextFrame(); } while(presentation.ElapsedSeconds<elapsed+1f/30);
+        }
+        await clear;
+        await Cysharp.Threading.Tasks.UniTask.Delay(250);
+        System.IO.File.WriteAllText(System.IO.Path.Combine(root,"video-samples.json"),Newtonsoft.Json.JsonConvert.SerializeObject(samples));
+        UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(root,"native-result.png"));
+        await Cysharp.Threading.Tasks.UniTask.Delay(200);
+        var vt=typeof(UnityEditor.Editor).Assembly.GetType("UnityEditor.GameView");
+        var view=UnityEditor.EditorWindow.GetWindow(vt);
+        var property=vt.GetProperty("selectedSizeIndex",System.Reflection.BindingFlags.Public|System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance);
+        foreach(string shape in new[]{"Tall","Wide"})
+        {
+            property.SetValue(view,UnityEditor.SessionState.GetInt("ClearMotion."+shape+"Size",18));view.Repaint();
+            await Cysharp.Threading.Tasks.UniTask.Delay(400);
+            UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(root,"native-"+shape.ToLowerInvariant()+".png"));
+            await Cysharp.Threading.Tasks.UniTask.Delay(200);
+        }
+        property.SetValue(view,UnityEditor.SessionState.GetInt("ClearMotion.NormalSize",18));view.Repaint();
+        foreach(int stage in new[]{6,11})
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(StageCatalog.SceneName(stage));
+            if(UnityEngine.EventSystems.EventSystem.current!=null)UnityEngine.EventSystems.EventSystem.current.enabled=false;
+            input=UnityEngine.Object.FindFirstObjectByType<InputTouchManager>();if(input!=null)input.enabled=false;
+            await Cysharp.Threading.Tasks.UniTask.Delay(350);
+            game=UnityEngine.Object.FindFirstObjectByType<GameManager>();
+            string[] routes=stage==6?new[]{"11 14 24 21 31 33 43 41","15 14 24 25 35 34 44 45"}:new[]{"13 12 11 21 22 23 24 34 33 32 31 41","42 43 44 45 35 25 15 14 24 23 22"};
+            foreach(string route in routes)
+            {
+                var points=route.Split(' ').Select(s=>new UnityEngine.Vector2Int(s[1]-'1',s[0]-'1')).ToArray();
+                if(!game.TryBeginLine(game.GetTile(points[0]).TileIndex))throw new System.Exception("Palette begin");
+                foreach(var point in points.Skip(1))if(!game.TryExtendLine(game.GetTile(point).TileIndex))throw new System.Exception("Palette extend");
+                await game.CommitLineAsync();
+            }
+            await Cysharp.Threading.Tasks.UniTask.Delay(350);
+            UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(root,"native-stage"+stage+".png"));
+            await Cysharp.Threading.Tasks.UniTask.Delay(200);
+        }
+        System.IO.File.WriteAllText(System.IO.Path.Combine(root,"video-recording-complete.json"),Newtonsoft.Json.JsonConvert.SerializeObject(new{frames=index,source="Unity ScreenCapture",width=941,height=1672,palettes=new[]{3,6,11},sizes=new[]{"941x1672","941x2039","1254x1672"}}));
+    }
+    catch(System.Exception error){System.IO.File.WriteAllText(System.IO.Path.Combine(root,"video-error.txt"),error.ToString());}
+}
+Record();return "Recording live Unity animation and palette/layout checks";

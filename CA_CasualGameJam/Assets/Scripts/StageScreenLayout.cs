@@ -21,7 +21,12 @@ public class StageScreenLayout : MonoBehaviour
     [SerializeField] private RectTransform _clearFrame;
     [SerializeField] private RectTransform _clearHeading;
     private float _clearProgress;
+    private float _boardPunch = 1;
+    private CanvasGroup[] _playGroups;
     public float ClearProgress => _clearProgress;
+    public Transform BoardRoot => _board;
+    public Camera BoardCamera => _boardCamera;
+    public float VisualScale { get; private set; } = 1;
     private Rect _lastSafeArea, _lastCameraRect;
     private Vector2 _lastCanvasSize;
     private float _lastCameraSize;
@@ -35,13 +40,32 @@ public class StageScreenLayout : MonoBehaviour
     private void LateUpdate() => UpdateLayout();
     public void SetClearProgress(float progress)
     {
-        _clearProgress = Mathf.Clamp01(progress); _dirty = true; ApplyLayout();
+        SetBoardPresentation(progress, 1);
+    }
+    public void SetBoardPresentation(float progress, float punch)
+    {
+        progress = Mathf.Clamp01(progress);
+        if (Mathf.Approximately(progress, _clearProgress) && Mathf.Approximately(punch, _boardPunch)) return;
+        _clearProgress = progress; _boardPunch = punch; _dirty = true; ApplyLayout();
+    }
+    public void SetPlayControlsOpacity(float alpha)
+    {
+        if (_playGroups == null)
+        {
+            _playGroups = new CanvasGroup[4];
+            var controls = new[] { _home, _stageLabel, _mixLegend, _reloadPanel };
+            for (int i = 0; i < controls.Length; i++)
+                if (controls[i] != null) _playGroups[i] = controls[i].GetComponent<CanvasGroup>();
+        }
+        foreach (CanvasGroup group in _playGroups) if (group != null) group.alpha = alpha;
     }
     public void SetPlayControlsVisible(bool visible)
     {
-        foreach (RectTransform rect in new[] { _home, _stageLabel, _mixLegend, _reloadPanel })
-            if (rect != null) rect.gameObject.SetActive(visible);
+        ControlVisible(_home,visible); ControlVisible(_stageLabel,visible);
+        ControlVisible(_mixLegend,visible); ControlVisible(_reloadPanel,visible);
     }
+    private static void ControlVisible(RectTransform rect,bool visible)
+    { if (rect != null && rect.gameObject.activeSelf != visible) rect.gameObject.SetActive(visible); }
     private void UpdateLayout()
     {
         if (_safeArea == null || _content == null || _boardCamera == null) return;
@@ -66,6 +90,7 @@ public class StageScreenLayout : MonoBehaviour
         float boardHeight = 885f * (_boardSize.y + .9f) / (_boardSize.x + .7f);
         float sectionHeights = 775 + boardHeight;
         float scale = Mathf.Min(size.x / designWidth, size.y / sectionHeights);
+        VisualScale = scale;
         float height = size.y / scale;
         float gap = Mathf.Max(0, (height - sectionHeights) / designGaps);
         _content.anchorMin = _content.anchorMax = _content.pivot = new Vector2(0.5f, 0.5f);
@@ -136,7 +161,7 @@ public class StageScreenLayout : MonoBehaviour
             boardPosition = Vector3.Lerp(boardPosition, targetPosition, _clearProgress);
             boardScale = Mathf.Lerp(boardScale, (targetUpper.x - targetLower.x) / (_boardSize.x + 0.7f), _clearProgress);
         }
-        _board.localScale = Vector3.one * boardScale;
+        _board.localScale = Vector3.one * (boardScale * _boardPunch);
         _board.position = boardPosition;
         Physics2D.SyncTransforms();
         _lastSafeArea = safe;
