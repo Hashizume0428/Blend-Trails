@@ -54,11 +54,11 @@ public static class ClearScreenBuilder
         var actionGroup = GetOrAdd<CanvasGroup>(actions.gameObject);
         actionGroup.alpha = 0; actionGroup.interactable = actionGroup.blocksRaycasts = false;
         var next = settings.FindProperty("_nextStage").objectReferenceValue as UnityEngine.UI.Button;
-        var home = settings.FindProperty("_clearHome").objectReferenceValue as UnityEngine.UI.Button;
-        if (next == null || home == null) throw new InvalidOperationException("Both clear buttons are required.");
-        Style(home, actions, -270, "HOME");
+        if (next == null) throw new InvalidOperationException("The next-stage button is required.");
+        foreach (var button in card.GetComponentsInChildren<UnityEngine.UI.Button>(true))
+            if (button.name == "ClearHomeButton") UnityEngine.Object.DestroyImmediate(button.gameObject);
         int number = manager.GetComponent<StageClearNavigation>().StageNumber;
-        Style(next, actions, 270, $"Stage{number + 1}");
+        Style(next, actions, 0, $"Stage{number + 1}");
         RectTransform confettiRect = Rect(panel.transform, "ClearConfetti");
         confettiRect.anchorMin = Vector2.zero; confettiRect.anchorMax = Vector2.one;
         confettiRect.offsetMin = confettiRect.offsetMax = Vector2.zero;

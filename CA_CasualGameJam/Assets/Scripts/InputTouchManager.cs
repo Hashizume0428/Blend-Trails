@@ -7,11 +7,13 @@ public class InputTouchManager : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
     [SerializeField] private GameManager _gameManager;
+    [SerializeField] private LineResumeSelector _resumeSelector;
     [SerializeField] private LayerMask _tileLayerMask = ~0;
     private int _activeFingerId = -1;
     private bool _mouseActive;
     private bool _touchWasPresent;
     private readonly List<RaycastResult> _uiHits = new List<RaycastResult>();
+    private readonly List<BaseColor> _beginColors = new List<BaseColor>();
     private void Update()
     {
         if (_gameManager == null || _camera == null) return;
@@ -53,7 +55,7 @@ public class InputTouchManager : MonoBehaviour
     }
     public bool BeginPointer(Vector2 position, int pointerId)
     {
-        if (_gameManager == null || _camera == null) return false;
+        if (_gameManager == null || _camera == null || _gameManager.State != GameState.Idle || SceneNavigator.IsLoading) return false;
         if (EventSystem.current != null)
         {
             var pointer = new PointerEventData(EventSystem.current) { position = position, pointerId = pointerId };
@@ -62,7 +64,19 @@ public class InputTouchManager : MonoBehaviour
             if (_uiHits.Count > 0) return false;
         }
         TileController tile = HitTile(position);
-        return tile != null && _gameManager.TryBeginLine(tile.TileIndex);
+        if (tile == null) { if (_resumeSelector != null) _resumeSelector.Clear(); return false; }
+        if (_resumeSelector != null && _resumeSelector.TryConsumeSelection(tile.TileIndex, out BaseColor selected))
+            return _gameManager.TryBeginLine(tile.TileIndex, selected);
+        TileColor colors = _gameManager.GetLineStartColors(tile.TileIndex);
+        _beginColors.Clear();
+        for (int i = 0; i < 3; i++)
+            if ((colors & PuzzleRules.ToTileColor((BaseColor)i)) != 0) _beginColors.Add((BaseColor)i);
+        if (_beginColors.Count > 1)
+        {
+            if (_resumeSelector != null) _resumeSelector.Show(tile.TileIndex, _beginColors);
+            return false;
+        }
+        return _beginColors.Count == 1 && _gameManager.TryBeginLine(tile.TileIndex, _beginColors[0]);
     }
     public void MovePointer(Vector2 position)
     {
@@ -82,6 +96,7 @@ public class InputTouchManager : MonoBehaviour
     public void CancelPointer()
     {
         _activeFingerId = -1; _mouseActive = false;
+        if (_resumeSelector != null) _resumeSelector.Clear();
         if (_gameManager != null) _gameManager.CancelLine();
     }
     private void OnApplicationFocus(bool focused) { if (!focused) CancelPointer(); }

@@ -82,11 +82,14 @@ public class SceneNavigationTests : StageProgressTestFixture
         yield return null;
         yield return Solve(Object.FindFirstObjectByType<GameManager>());
         Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(2));
-        Assert.That(Button("ClearHomeButton").interactable, Is.True);
+        Assert.That(GameObject.Find("ClearHomeButton"), Is.Null);
         Assert.That(Button("NextStageButton").interactable, Is.True);
         yield return new WaitForSecondsRealtime(1.3f);
         Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(SceneNavigator.StageScene), "Clear must not navigate automatically.");
-        Tap(Button("ClearHomeButton"));
+        Tap(Button("NextStageButton"));
+        yield return WaitForScene(SceneNavigator.SecondStageScene);
+        AssertFreshStage(2);
+        Tap(Button("HomeButton"));
         yield return WaitForScene(SceneNavigator.TitleScene);
         Assert.That(Button("Stage01Button").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage2"));
         Tap(Button("Stage01Button"));
@@ -126,9 +129,11 @@ public class SceneNavigationTests : StageProgressTestFixture
         int firstExtraPuzzle = StageProgress.CurrentPuzzleId;
         CollectionAssert.AreEqual(System.Linq.Enumerable.Range(23, 8), StageProgress.RecentPuzzleIds);
         Assert.That(Button("NextStageButton").interactable, Is.True);
-        Assert.That(Button("ClearHomeButton").interactable, Is.True);
+        Assert.That(GameObject.Find("ClearHomeButton"), Is.Null);
         Assert.That(Button("NextStageButton").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage31"));
-        Tap(Button("ClearHomeButton"));
+        Tap(Button("NextStageButton"));
+        yield return WaitForScene(StageCatalog.SceneName(firstExtraPuzzle));
+        Tap(Button("HomeButton"));
         yield return WaitForScene(SceneNavigator.TitleScene);
         var stage = Button("Stage01Button");
         Assert.That(stage.transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage31"));
@@ -189,7 +194,7 @@ public class SceneNavigationTests : StageProgressTestFixture
         var game = Object.FindFirstObjectByType<GameManager>();
         Assert.That(game.TryBeginLine(game.GetTile(Vector2Int.zero).TileIndex), Is.True);
         foreach (var button in Object.FindFirstObjectByType<GameHud>().GetComponentsInChildren<UnityEngine.UI.Button>(true))
-            if (button.name == "NextStageButton" || button.name == "ClearHomeButton") button.onClick.Invoke();
+            if (button.name == "NextStageButton") button.onClick.Invoke();
         yield return null;
         Assert.That(game.State, Is.EqualTo(GameState.Drawing));
         Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(1));
@@ -229,7 +234,9 @@ public class SceneNavigationTests : StageProgressTestFixture
         game.RestartStage();
         yield return Solve(game);
         Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(2));
-        Tap(Button("ClearHomeButton"));
+        Tap(Button("NextStageButton"));
+        yield return WaitForScene(SceneNavigator.SecondStageScene);
+        Tap(Button("HomeButton"));
         yield return WaitForScene(SceneNavigator.TitleScene);
         Assert.That(Button("Stage01Button").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage2"));
     }

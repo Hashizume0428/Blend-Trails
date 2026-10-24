@@ -114,6 +114,7 @@ public static class PrototypeSceneBuilder
         PlayerSettings.allowedAutorotateToLandscapeRight = false;
         ConfigureLineVisuals(manager, board.transform, tiles);
         StagePaletteBuilder.ConfigureScene();
+        PuzzleInteractionBuilder.ConfigureScene();
         EditorUtility.SetDirty(manager);
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);

@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
-/// <summary>Confetti, the solved board's movement, then the two clear-screen actions.</summary>
+/// <summary>Confetti, the solved board's movement, then the next-stage action.</summary>
 public class StageClearPresentation : MonoBehaviour
 {
     [SerializeField] private StageScreenLayout _layout;

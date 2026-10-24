@@ -17,11 +17,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip _tileSound;
     [SerializeField] private AudioClip _clearSound;
     [SerializeField] private AudioClip _buttonSound;
+    [SerializeField] private AudioClip _incorrectSound;
     private readonly Dictionary<Vector2Int, TileController> _grid = new Dictionary<Vector2Int, TileController>();
     private readonly Dictionary<BaseColor, TileController> _starts = new Dictionary<BaseColor, TileController>();
     private readonly HashSet<BaseColor> _committedColors = new HashSet<BaseColor>();
     private readonly List<int> _preview = new List<int>();
     private readonly HashSet<int> _drawingPaintedTiles = new HashSet<int>();
+    private readonly List<int> _beforeDrawingPath = new List<int>();
+    private bool _resumingLine;
     private BaseColor _activeColor;
     private CancellationTokenSource _operation;
     private bool _paletteResolved;
@@ -94,15 +97,50 @@ public class GameManager : MonoBehaviour
     public bool CanReloadAll => IsInitialized && State == GameState.Idle;
     private LineController ActiveLine => _starts[_activeColor].Line;
 
+    public TileColor GetLineStartColors(int tileIndex)
+    {
+        if (!IsInitialized || State != GameState.Idle || tileIndex < 0 || tileIndex >= TilesList.Count) return TileColor.None;
+        TileController tile = TilesList[tileIndex];
+        // An unused start keeps its original meaning, even when another line ends here.
+        if (tile.IsStartTile && !HasCommittedLine(tile.StartColor))
+            return tile.CanAddColor(tile.StartColor) ? PuzzleRules.ToTileColor(tile.StartColor) : TileColor.None;
+        TileColor colors = TileColor.None;
+        foreach (var pair in _starts)
+        {
+            IReadOnlyList<int> path = pair.Value.Line.Path;
+            if (HasCommittedLine(pair.Key) && path.Count > 0 && path[path.Count - 1] == tileIndex)
+                colors |= PuzzleRules.ToTileColor(pair.Key);
+        }
+        return colors;
+    }
     public bool TryBeginLine(int tileIndex)
     {
-        if (!IsInitialized || State != GameState.Idle || tileIndex < 0 || tileIndex >= TilesList.Count) return false;
-        TileController tile = TilesList[tileIndex];
-        if (!tile.IsStartTile || HasCommittedLine(tile.StartColor) || !tile.CanAddColor(tile.StartColor)) return false;
-        _activeColor = tile.StartColor;
-        _preview.Clear(); _drawingPaintedTiles.Clear(); _preview.Add(tileIndex);
+        TileColor colors = GetLineStartColors(tileIndex);
+        BaseColor? candidate = null;
+        foreach (BaseColor color in _starts.Keys)
+        {
+            if ((colors & PuzzleRules.ToTileColor(color)) == 0) continue;
+            if (candidate.HasValue) return false; // Shared endpoints require an explicit choice.
+            candidate = color;
+        }
+        return candidate.HasValue && TryBeginLine(tileIndex, candidate.Value);
+    }
+    public bool TryBeginLine(int tileIndex, BaseColor color)
+    {
+        if (!_starts.ContainsKey(color) || (GetLineStartColors(tileIndex) & PuzzleRules.ToTileColor(color)) == 0) return false;
+        _activeColor = color;
+        _resumingLine = HasCommittedLine(color);
+        _preview.Clear(); _drawingPaintedTiles.Clear(); _beforeDrawingPath.Clear();
+        if (_resumingLine)
+        {
+            foreach (int index in ActiveLine.Path)
+            {
+                _beforeDrawingPath.Add(index); _preview.Add(index); _drawingPaintedTiles.Add(index);
+            }
+        }
+        else _preview.Add(tileIndex);
         State = GameState.Drawing;
-        PaintDrawingTile(tile);
+        if (!_resumingLine) PaintDrawingTile(TilesList[tileIndex]);
         ActiveLine.ShowPath(_preview, TilesList);
         RefreshLines();
         Changed?.Invoke();
@@ -145,11 +183,17 @@ public class GameManager : MonoBehaviour
     public async UniTask CommitLineAsync()
     {
         if (State != GameState.Drawing) return;
+        if (_resumingLine && DrawingPathUnchanged())
+        {
+            ClearDrawingState();
+            State = GameState.Idle;
+            Changed?.Invoke();
+            return;
+        }
         State = GameState.Resolving;
         CancellationToken token = _operation.Token;
         BaseColor color = _activeColor;
-        _preview.Clear();
-        _drawingPaintedTiles.Clear();
+        ClearDrawingState();
         Changed?.Invoke();
         try
         {
@@ -157,9 +201,14 @@ public class GameManager : MonoBehaviour
             await UniTask.Delay(120, cancellationToken: token);
             token.ThrowIfCancellationRequested();
             _committedColors.Add(color);
-            if (_committedColors.Count == _starts.Count)
+            bool cleared = StageClearCheck();
+            if (_committedColors.Count == _starts.Count && !cleared)
+            {
                 foreach (TileController tile in TilesList) tile.PlayErrorBlink();
-            if (StageClearCheck())
+                PlaySound(_incorrectSound);
+                TileHaptics.ErrorTap();
+            }
+            if (cleared)
             {
                 var navigation = GetComponent<StageClearNavigation>();
                 if (navigation != null) StageProgress.RecordClear(navigation.StageNumber);
@@ -177,11 +226,23 @@ public class GameManager : MonoBehaviour
     {
         if (State != GameState.Drawing) return;
         foreach (int index in _preview) UndoDrawingTile(index);
-        _drawingPaintedTiles.Clear();
-        ActiveLine.ResetToStart(_starts[_activeColor].transform.position);
+        // Restore only this line's ingredient; crossing colors belong to their own lines.
+        foreach (int index in _beforeDrawingPath) TilesList[index].AddColor(_activeColor);
+        if (_beforeDrawingPath.Count > 0) ActiveLine.ShowPath(_beforeDrawingPath, TilesList);
+        else ActiveLine.ResetToStart(_starts[_activeColor].transform.position);
         RefreshLines();
-        _preview.Clear(); State = GameState.Idle;
+        ClearDrawingState(); State = GameState.Idle;
         Changed?.Invoke();
+    }
+    private bool DrawingPathUnchanged()
+    {
+        if (_beforeDrawingPath.Count != _preview.Count) return false;
+        for (int i = 0; i < _preview.Count; i++) if (_preview[i] != _beforeDrawingPath[i]) return false;
+        return true;
+    }
+    private void ClearDrawingState()
+    {
+        _preview.Clear(); _drawingPaintedTiles.Clear(); _beforeDrawingPath.Clear(); _resumingLine = false;
     }
     private void PaintDrawingTile(TileController tile)
     {
@@ -224,7 +285,7 @@ public class GameManager : MonoBehaviour
     {
         _operation?.Cancel(); _operation?.Dispose();
         _operation = CancellationTokenSource.CreateLinkedTokenSource(destroyCancellationToken);
-        _preview.Clear(); _drawingPaintedTiles.Clear(); _committedColors.Clear();
+        ClearDrawingState(); _committedColors.Clear();
         foreach (TileController tile in TilesList) if (tile != null) tile.ResetRuntimeState();
         foreach (var pair in _starts)
         {

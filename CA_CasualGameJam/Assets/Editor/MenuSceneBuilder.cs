@@ -55,22 +55,18 @@ public static class MenuSceneBuilder
         var next = serializedHud.FindProperty("_nextStage").objectReferenceValue as UnityEngine.UI.Button;
         if (next == null) throw new InvalidOperationException("The existing clear button is missing.");
         next.name = "NextStageButton";
-        StyleButton(next, new Vector2(195, -155), new Vector2(350, 120), new Color32(75, 142, 229, 255));
+        StyleButton(next, new Vector2(0, -155), new Vector2(350, 120), new Color32(75, 142, 229, 255));
         Label(next.transform, "Label", "NEXT STAGE", 32, Vector2.zero, new Vector2(330, 100));
-        var home = serializedHud.FindProperty("_clearHome").objectReferenceValue as UnityEngine.UI.Button;
-        RectTransform homeRect = home != null ? (RectTransform)home.transform : Rect(card, "ClearHomeButton", new Vector2(-195, -155), new Vector2(350, 120));
-        if (home == null) home = GetOrAdd<UnityEngine.UI.Button>(homeRect.gameObject);
-        StyleButton(home, new Vector2(-195, -155), new Vector2(350, 120), new Color32(104, 104, 104, 255));
-        Label(homeRect, "Label", "HOME", 32, Vector2.zero, new Vector2(330, 100));
         TMP_Text stageLabel = hud.GetComponentsInChildren<TMP_Text>(true).First(text => text.name == "Level");
         stageLabel.text = $"-Stage{stageNumber}-";
         TMP_Text message = card.Find("ClearMessage").GetComponent<TMP_Text>();
         message.text = string.IsNullOrEmpty(nextScene) ? "ALL STAGES CLEAR" : "Every color in its place.";
-        SetReference(hud, "_nextStage", next); SetReference(hud, "_clearHome", home);
+        SetReference(hud, "_nextStage", next);
         SetReference(hud, "_stageLabel", stageLabel); SetReference(hud, "_clearMessage", message);
         panel.gameObject.SetActive(false);
         EditorUtility.SetDirty(hud); EditorUtility.SetDirty(navigation);
         ClearScreenBuilder.Apply(manager, hud);
+        PuzzleInteractionBuilder.ConfigureScene();
     }
 
     private static void PrepareAssets()

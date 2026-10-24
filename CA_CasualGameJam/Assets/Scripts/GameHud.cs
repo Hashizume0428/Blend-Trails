@@ -13,7 +13,6 @@ public class GameHud : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Button _home;
     [FormerlySerializedAs("_restart"), FormerlySerializedAs("_stageSelect")]
     [SerializeField] private UnityEngine.UI.Button _nextStage;
-    [SerializeField] private UnityEngine.UI.Button _clearHome;
     [SerializeField] private TMP_Text _stageLabel;
     [SerializeField] private TMP_Text _clearMessage;
     [SerializeField] private TMP_Text _progress;
@@ -35,7 +34,6 @@ public class GameHud : MonoBehaviour
         if (_home != null) _home.onClick.AddListener(ReturnToTitle);
         _stageNavigation = _gameManager.GetComponent<StageClearNavigation>();
         if (_nextStage != null) _nextStage.onClick.AddListener(GoToNextStage);
-        if (_clearHome != null) _clearHome.onClick.AddListener(ReturnHomeAfterClear);
         _gameManager.Changed += Refresh;
         SceneNavigator.LoadingChanged += Refresh;
         Refresh();
@@ -60,11 +58,6 @@ public class GameHud : MonoBehaviour
             if (this != null) { _leavingScene = false; Refresh(); }
         }
     }
-    private void ReturnHomeAfterClear()
-    {
-        if (CanOperate && _gameManager.State == GameState.Cleared)
-            NavigateAsync(SceneNavigator.TitleScene).Forget();
-    }
     private void GoToNextStage()
     {
         if (CanOperate && _gameManager.State == GameState.Cleared && _stageNavigation != null && _stageNavigation.HasNextStage)
@@ -83,7 +76,6 @@ public class GameHud : MonoBehaviour
         if (_allReload != null) _allReload.interactable = CanOperate && _gameManager.CanReloadAll;
         if (_home != null) _home.interactable = CanOperate;
         bool cleared = CanOperate && _gameManager.State == GameState.Cleared;
-        if (_clearHome != null) _clearHome.interactable = cleared;
         if (_nextStage != null) _nextStage.interactable = cleared && _stageNavigation != null && _stageNavigation.HasNextStage;
         if (_nextStageLabel != null) _nextStageLabel.text = $"Stage{(_stageNavigation != null ? _stageNavigation.StageNumber + 1 : 2)}";
         if (_stageLabel != null) _stageLabel.text = $"-Stage{(_stageNavigation != null ? _stageNavigation.StageNumber : 1)}-";
@@ -124,7 +116,6 @@ public class GameHud : MonoBehaviour
         if (_allReload != null) _allReload.onClick.RemoveListener(ReloadAll);
         if (_home != null) _home.onClick.RemoveListener(ReturnToTitle);
         if (_nextStage != null) _nextStage.onClick.RemoveListener(GoToNextStage);
-        if (_clearHome != null) _clearHome.onClick.RemoveListener(ReturnHomeAfterClear);
         if (_paletteMaterial != null) Destroy(_paletteMaterial);
     }
 }

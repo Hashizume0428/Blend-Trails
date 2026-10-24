@@ -142,7 +142,8 @@ public class PuzzleFlowTests : StageProgressTestFixture
         Begin(0, 0);
         yield return _game.CommitLineAsync().ToCoroutine();
         Assert.That(_game.GetTile(Vector2Int.zero).CurrentColor, Is.EqualTo(TileColor.Red));
-        Assert.That(_game.TryBeginLine(Index(0, 0)), Is.False);
+        Assert.That(_game.TryBeginLine(Index(0, 0)), Is.True, "A single-tile committed line can resume at its start/end.");
+        _game.CancelLine();
     }
     [UnityTest]
     public IEnumerator FacesFollowDrawingImmediatelyIncludingIncorrectTilesAndReleaseOnlyCommits()

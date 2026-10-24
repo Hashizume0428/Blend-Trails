@@ -95,7 +95,7 @@ public class StageScreenLayout : MonoBehaviour
         if (_clearActions != null)
         {
             _clearActions.anchorMin = _clearActions.anchorMax = _clearActions.pivot = new Vector2(0.5f, 0.5f);
-            _clearActions.sizeDelta = new Vector2(1008, 166);
+            _clearActions.sizeDelta = new Vector2(460, 166);
             _clearActions.localScale = Vector3.one * scale;
             _clearActions.anchoredPosition = new Vector2(0, previewY - boardHeight * 0.3f * scale - 180 * scale);
         }

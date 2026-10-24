@@ -71,7 +71,7 @@ public class ClearPresentationTests : StageProgressTestFixture
         Assert.That(_presentation.Confetti.IsPlaying, Is.True);
         Assert.That(_layout.ClearProgress, Is.Zero);
         Assert.That(Button("NextStageButton").interactable, Is.False);
-        Assert.That(Button("ClearHomeButton").interactable, Is.False);
+        Assert.That(_presentation.GetComponentsInChildren<UnityEngine.UI.Button>(true).Any(button => button.name == "ClearHomeButton"), Is.False);
         yield return new WaitForSecondsRealtime(0.2f);
         Assert.That(_layout.ClearProgress, Is.Zero, "Confetti plays before the board moves.");
         Canvas.ForceUpdateCanvases();
@@ -88,14 +88,14 @@ public class ClearPresentationTests : StageProgressTestFixture
         CollectionAssert.AreEqual(colors, _game.TilesList.Select(tile => tile.CurrentColor));
         CollectionAssert.AreEqual(lines, _game.TilesList.Where(tile => tile.IsStartTile).Select(tile => tile.Line.PointCount));
         Assert.That(_game.LineVisuals.GetComponent<MeshFilter>().sharedMesh.vertexCount, Is.GreaterThan(0));
-        var next = Button("NextStageButton"); var home = Button("ClearHomeButton");
+        var next = Button("NextStageButton");
         Assert.That(next.transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage4"));
-        Vector2 nextCenter = Center((RectTransform)next.transform), homeCenter = Center((RectTransform)home.transform);
-        Assert.That(nextCenter.y, Is.EqualTo(homeCenter.y).Within(1));
-        Assert.That(homeCenter.x, Is.LessThan(nextCenter.x));
+        Vector2 nextCenter = Center((RectTransform)next.transform);
+        Assert.That(next.transform.parent.childCount, Is.EqualTo(1));
+        Assert.That(nextCenter.x, Is.EqualTo(Screen.safeArea.center.x).Within(1));
         float boardBottom = Camera.main.WorldToScreenPoint(_board.Find("BoardBackground").GetComponent<SpriteRenderer>().bounds.min).y;
-        Assert.That(nextCenter.y, Is.LessThan(boardBottom), "Both actions belong below the solved board.");
-        Assert.That(Screen.safeArea.Contains(nextCenter) && Screen.safeArea.Contains(homeCenter), Is.True);
+        Assert.That(nextCenter.y, Is.LessThan(boardBottom), "The next-stage action belongs below the solved board.");
+        Assert.That(Screen.safeArea.Contains(nextCenter), Is.True);
         yield return WaitUntil(() => !_presentation.Confetti.IsPlaying);
         Tap(next);
         yield return WaitUntil(() => SceneManager.GetActiveScene().name == StageCatalog.SceneName(4) && !SceneNavigator.IsLoading);
@@ -107,8 +107,8 @@ public class ClearPresentationTests : StageProgressTestFixture
         yield return StageTestReference.Solve(Object.FindFirstObjectByType<GameManager>());
         Assert.That(Button("NextStageButton").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage11"));
         Assert.That(Button("NextStageButton").interactable, Is.True);
-        Tap(Button("ClearHomeButton"));
-        yield return WaitUntil(() => SceneManager.GetActiveScene().name == SceneNavigator.TitleScene && !SceneNavigator.IsLoading);
+        Tap(Button("NextStageButton"));
+        yield return WaitUntil(() => SceneManager.GetActiveScene().name == StageCatalog.SceneName(11) && !SceneNavigator.IsLoading);
     }
 
     [UnityTest]

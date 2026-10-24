@@ -12,6 +12,9 @@
         android:xlargeScreens="true"
         android:anyDensity="true"/>
 
+    <!-- One strong, short vibration when the completed color assessment fails. -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <!-- Permissions needed by the Adjust SDK. -->
     <!-- For more information, check: https://github.com/adjust/unity_sdk#post-build-android -->
     <uses-permission android:name="android.permission.INTERNET" />
