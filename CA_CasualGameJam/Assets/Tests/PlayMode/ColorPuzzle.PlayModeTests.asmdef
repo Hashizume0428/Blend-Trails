@@ -1,0 +1,6 @@
+{
+  "name": "ColorPuzzle.PlayModeTests",
+  "references": ["ColorPuzzle.Runtime", "UniTask", "Unity.ugui", "Unity.TextMeshPro"],
+  "optionalUnityReferences": ["TestAssemblies"],
+  "autoReferenced": false
+}

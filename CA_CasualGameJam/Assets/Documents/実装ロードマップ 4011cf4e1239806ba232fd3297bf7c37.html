@@ -1,0 +1,798 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>実装ロードマップ</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="4011cf4e-1239-806b-a232-fd3297bf7c37" class="page sans"><header><h1 class="page-title" dir="auto">実装ロードマップ</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><figure id="4011cf4e-1239-802b-9c7e-e2d83f4781e6" class="image" data-notion-image="%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88_2026-10-22_205004.png" dir="ltr"><a href="%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88_2026-10-22_205004.png"><img style="width:582.2115478515625px" src="%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88_2026-10-22_205004.png"/></a></figure><p id="4021cf4e-1239-8037-ae75-cf42d1d91b08" class="" dir="auto">ガチ背景：#F2EEEE</p><ul id="4021cf4e-1239-80be-8933-ef1d7bf22f5d" class="bulleted-list" dir="auto"><li style="list-style-type:disc">マスの色<ul id="4021cf4e-1239-80b7-bd5a-f95d5fd2d3ee" class="bulleted-list" dir="auto"><li style="list-style-type:circle">ノーマル：F9F9F9</li></ul><ul id="4021cf4e-1239-80c8-a825-f9a986580841" class="bulleted-list" dir="auto"><li style="list-style-type:circle">赤：FE9F9F</li></ul><ul id="4021cf4e-1239-8041-8ce3-f8c7bee8fed5" class="bulleted-list" dir="auto"><li style="list-style-type:circle">青：9CC6FE</li></ul><ul id="4021cf4e-1239-804a-abd6-e4f9db635598" class="bulleted-list" dir="auto"><li style="list-style-type:circle">黄：FBE18A</li></ul><ul id="4021cf4e-1239-80be-ad55-dd270471c8bc" class="bulleted-list" dir="auto"><li style="list-style-type:circle">紫：E5A3FB</li></ul><ul id="4021cf4e-1239-809a-9836-e22fd5ced38f" class="bulleted-list" dir="auto"><li style="list-style-type:circle">緑：8DDF82</li></ul><ul id="4021cf4e-1239-8061-bd1e-e64d832225a9" class="bulleted-list" dir="auto"><li style="list-style-type:circle">オレンジ：FDC492</li></ul></li></ul><ul id="4021cf4e-1239-80f0-a1d1-dee52334ba41" class="bulleted-list" dir="auto"><li style="list-style-type:disc">toDo<ul id="4021cf4e-1239-80e3-97e1-c6fe31f7c55a" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">Flow Free、ひとふでナンバーを音ありで遊ぶ</span><div class="indented"></div></li></ul><ul id="4021cf4e-1239-808f-bc33-fa364c013968" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-on" disabled="" checked=""/> <span class="to-do-children-checked">素材作成（UI）</span><div class="indented"></div></li></ul><ul id="4021cf4e-1239-80a0-bfb1-f21c5716a2a4" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-on" disabled="" checked=""/> <span class="to-do-children-checked">素材の収集（効果音、BGM？）</span><div class="indented"></div></li></ul><ul id="4021cf4e-1239-80a6-ad66-f8a52ef2c52c" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">設計の完成</span><div class="indented"><ul id="4021cf4e-1239-805a-9fda-fac4bf41a380" class="bulleted-list" dir="auto"><li style="list-style-type:disc">メソッド名、変数名まで指定</li></ul><ul id="4021cf4e-1239-80d2-b36c-dd0c71db4e18" class="bulleted-list" dir="auto"><li style="list-style-type:disc">GameObjectの階層構造まで指定</li></ul></div></li></ul><ul id="4021cf4e-1239-8055-860c-c926041c6664" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">動画の構成の検討</span><div class="indented"></div></li></ul><ul id="4021cf4e-1239-8045-957a-c58d0a94dee5" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-on" disabled="" checked=""/> <span class="to-do-children-checked">UniTask、Dotween、Lineレンダラー、InputTouchの確認</span><div class="indented"></div></li></ul><ul id="4021cf4e-1239-805e-b504-f4d0555f68ac" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">ステージの構成（とりあえず10ステージくらい？）</span><div class="indented"><ol type="1" id="4021cf4e-1239-8043-b1a9-f1f4c8358a0e" class="numbered-list" start="1" dir="auto"><li>ルール理解用</li></ol><ol type="1" id="4021cf4e-1239-8044-b590-e6aa00d70091" class="numbered-list" start="2" dir="auto"><li>ルール理解用</li></ol><ol type="1" id="4021cf4e-1239-807f-bcd9-e9682141fe54" class="numbered-list" start="3" dir="auto"><li>始める</li></ol></div></li></ul><ul id="4021cf4e-1239-8080-bf78-fad09021c745" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">各ステージのヒントの検討</span><div class="indented"><ul id="4021cf4e-1239-8065-8a0b-d56a1675f51f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">開始マスの一歩先を教える</li></ul><ul id="4021cf4e-1239-801c-aeb1-fd8961b21900" class="bulleted-list" dir="auto"><li style="list-style-type:disc">混色の周りを開ける</li></ul><ul id="4021cf4e-1239-80e6-9d65-e6cf09e9a261" class="bulleted-list" dir="auto"><li style="list-style-type:disc">混色の場所を教える（難しくなるかも）</li></ul></div></li></ul><ul id="4021cf4e-1239-8096-bed7-d31acdf6dd31" class="to-do-list" dir="auto"><li><input type="checkbox" class="checkbox checkbox-off" disabled=""/> <span class="to-do-children-unchecked">どういう演出を入れたいか</span><div class="indented"></div></li></ul></li></ul><ul id="4021cf4e-1239-8071-87b5-f421955f8104" class="bulleted-list" dir="auto"><li style="list-style-type:disc">パッケージ導入<ul id="4021cf4e-1239-8039-aaad-c3a88043c2e8" class="bulleted-list" dir="auto"><li style="list-style-type:circle">JetBrains Rider Editor</li></ul><ul id="4021cf4e-1239-8058-ac1c-f578c47962f6" class="bulleted-list" dir="auto"><li style="list-style-type:circle">UniTask<figure id="4021cf4e-1239-802a-a852-fa9d8427e63c" class="link-to-page"><a href="UniTask%E7%B0%A1%E5%8D%98%E3%81%BE%E3%81%A8%E3%82%81%204021cf4e1239802aa852fa9d8427e63c.html" data-notion-page-id="4021cf4e-1239-802a-a852-fa9d8427e63c" data-notion-space-id="0971f712-e763-4ad8-9e0f-fda430f953da">UniTask簡単まとめ</a></figure></li></ul><ul id="4021cf4e-1239-8098-aa4f-d33c0db9f555" class="bulleted-list" dir="auto"><li style="list-style-type:circle">Dotween<figure id="4021cf4e-1239-80f8-a0c6-dc25d50762b3" class="link-to-page"><a href="DOTween%E7%B0%A1%E5%8D%98%E4%BD%BF%E3%81%84%E6%96%B9%204021cf4e123980f8a0c6dc25d50762b3.html" data-notion-page-id="4021cf4e-1239-80f8-a0c6-dc25d50762b3" data-notion-space-id="0971f712-e763-4ad8-9e0f-fda430f953da">DOTween簡単使い方</a></figure></li></ul></li></ul><ul id="4021cf4e-1239-80e5-9ec4-fd7e788906c5" class="bulleted-list" dir="auto"><li style="list-style-type:disc">素材リスト<ul id="4021cf4e-1239-8084-b7e6-db698233b0e6" class="bulleted-list" dir="auto"><li style="list-style-type:circle">マスの画像（タイルの色はUnity上で付ける）</li></ul><ul id="4021cf4e-1239-8039-affd-de5b20ecbf60" class="bulleted-list" dir="auto"><li style="list-style-type:circle">枠の画像（各色：赤、青、紫、（黄、緑、オレンジ））</li></ul><ul id="4021cf4e-1239-80c4-923c-d287d691be12" class="bulleted-list" dir="auto"><li style="list-style-type:circle">ボタン<ul id="4021cf4e-1239-8039-8e3a-e06321d36df1" class="bulleted-list" dir="auto"><li style="list-style-type:square">リロード</li></ul><ul id="4021cf4e-1239-806d-9849-c05dd8d74b6e" class="bulleted-list" dir="auto"><li style="list-style-type:square">戻る</li></ul></li></ul><ul id="4021cf4e-1239-802f-b9ae-d91bdf92d2f5" class="bulleted-list" dir="auto"><li style="list-style-type:circle">効果音<ul id="4021cf4e-1239-80cc-a61a-f0f03d368957" class="bulleted-list" dir="auto"><li style="list-style-type:square">タイルの正誤判定の正解の音</li></ul><ul id="4021cf4e-1239-80ba-9714-d0378fa895d0" class="bulleted-list" dir="auto"><li style="list-style-type:square">ステージクリアの音（チロリン）</li></ul></li></ul></li></ul><ul id="4021cf4e-1239-807a-92c3-f136d667ce85" class="bulleted-list" dir="auto"><li style="list-style-type:disc">入力について<ul id="4021cf4e-1239-8026-8b85-dfb464702b9a" class="bulleted-list" dir="auto"><li style="list-style-type:circle">画面のタッチはInputTouchでできるみたい<figure id="4021cf4e-1239-8004-aa65-de434f8e8ed6" class="link-to-page"><a href="%E3%82%BF%E3%83%83%E3%83%81%E3%81%AE%E5%AE%9F%E8%A3%85%E3%81%AE%E6%A4%9C%E8%A8%8E%204021cf4e12398004aa65de434f8e8ed6.html" data-notion-page-id="4021cf4e-1239-8004-aa65-de434f8e8ed6" data-notion-space-id="0971f712-e763-4ad8-9e0f-fda430f953da">タッチの実装の検討</a></figure></li></ul><ul id="4021cf4e-1239-8072-84f0-d708977cf80d" class="bulleted-list" dir="auto"><li style="list-style-type:circle">なぞるのはできるのかな？</li></ul><ul id="4021cf4e-1239-8046-9fd5-f597e32954a8" class="bulleted-list" dir="auto"><li style="list-style-type:circle">色開始マスがタップされたとき、Lineを引き始める</li></ul></li></ul><ul id="4011cf4e-1239-8030-a756-fb60a9be8635" class="bulleted-list" dir="auto"><li style="list-style-type:disc">なぞったときの線<ul id="4021cf4e-1239-8032-ab7a-fa00485ec020" class="bulleted-list" dir="auto"><li style="list-style-type:circle">lineレンダラーで実装<figure id="4021cf4e-1239-809c-8a6b-c3dbfb36985b" class="link-to-page"><a href="Line%20Renderer%204021cf4e1239809c8a6bc3dbfb36985b.html" data-notion-page-id="4021cf4e-1239-809c-8a6b-c3dbfb36985b" data-notion-space-id="0971f712-e763-4ad8-9e0f-fda430f953da">Line Renderer</a></figure><ul id="4021cf4e-1239-80bd-b748-eec85a29611f" class="bulleted-list" dir="auto"><li style="list-style-type:square">Lineを開始タイルに点を1つの状態で置いておく</li></ul><ul id="4021cf4e-1239-8030-b4a8-e5ac3ac3778e" class="bulleted-list" dir="auto"><li style="list-style-type:square">タイルを通ったら、タイルが持っているタイルの中心座標を受け取って、そこの座標に点を追加</li></ul><ul id="4021cf4e-1239-8030-a568-cdee4c2920f1" class="bulleted-list" dir="auto"><li style="list-style-type:square">（前のタイルに戻ったときは点を削除）</li></ul></li></ul><ul id="4021cf4e-1239-80f6-944c-d9036df96868" class="bulleted-list" dir="auto"><li style="list-style-type:circle"><mark class="highlight-red" data-notion-highlight="red">上下左右のマスにのみ線を引きたい（斜めには引きたくない）</mark><ul id="4021cf4e-1239-8093-b5cb-d6da7b2f94f8" class="bulleted-list" dir="auto"><li style="list-style-type:square">前の点のポイントを取って、</li></ul></li></ul><ul id="4011cf4e-1239-809c-9c9b-d6b323b735eb" class="bulleted-list" dir="auto"><li style="list-style-type:circle">なぞっているときは線の表示のみ</li></ul><ul id="4021cf4e-1239-8031-9929-e908df349a13" class="bulleted-list" dir="auto"><li style="list-style-type:circle">線をなぞり終える（画面から手を離す）<ul id="4021cf4e-1239-8071-8f6d-eda11bd68b35" class="bulleted-list" dir="auto"><li style="list-style-type:square">タイルに色情報を渡す</li></ul><ul id="4021cf4e-1239-805a-be58-e857ec0a0850" class="bulleted-list" dir="auto"><li style="list-style-type:square">マスに入る色が正しく無い場合は、灰色のまま</li></ul></li></ul></li></ul><ul id="4021cf4e-1239-8099-b6f1-ca27467f938a" class="bulleted-list" dir="auto"><li style="list-style-type:disc">LineController<ul id="4021cf4e-1239-80e1-9ec6-f873d9e75ae7" class="bulleted-list" dir="auto"><li style="list-style-type:circle">ラインを引く</li></ul><ul id="4021cf4e-1239-80ce-8292-e5565239288a" class="bulleted-list" dir="auto"><li style="list-style-type:circle">ラインを引くことを停止する関数</li></ul><ul id="4021cf4e-1239-8026-8d42-e5ad443ca6a8" class="bulleted-list" dir="auto"><li style="list-style-type:circle">ラインを引き終わったときのトリガー関数<ul id="4021cf4e-1239-80de-8cf5-dae152056e70" class="bulleted-list" dir="auto"><li style="list-style-type:square">GameManagerのでかい関数を叩く<ul id="4021cf4e-1239-802d-a5a1-ff57c39da479" class="bulleted-list" dir="auto"><li style="list-style-type:disc">ラインとリロードのInputを停止する変数を操作</li></ul><ul id="4021cf4e-1239-8059-b491-c67ff7338e5f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">タイルの状態の変更と正誤判定をする大きい関数を叩く操作をする。（引数として、通ってきたタイルのインデックスのリスト）</li></ul></li></ul></li></ul><ul id="4021cf4e-1239-80bb-bb3c-ce90f85b3aa7" class="bulleted-list" dir="auto"><li style="list-style-type:circle">有効なタイルの検知機能<ul id="4021cf4e-1239-804e-b977-de1c071a865b" class="bulleted-list" dir="auto"><li style="list-style-type:square">通ってきたタイルのインデックスをリストに保存<ul id="4021cf4e-1239-807d-81df-c4b521f03e6d" class="bulleted-list" dir="auto"><li style="list-style-type:disc">もし戻った場合はDropする</li></ul></li></ul><ul id="4021cf4e-1239-8070-b4cd-dfc0e2d00928" class="bulleted-list" dir="auto"><li style="list-style-type:square">現在のタイルの位置から、次移動可能なタイルを計算<ul id="4021cf4e-1239-8094-bf4d-f50d41c5ce3b" class="bulleted-list" dir="auto"><li style="list-style-type:disc">「上下左右のタイルであるか」かつ「通ったタイルでないか」</li></ul></li></ul><ul id="4021cf4e-1239-807c-b737-de74456379bd" class="bulleted-list" dir="auto"><li style="list-style-type:square">移動可能なタイルとの接触を検知した際に、</li></ul></li></ul></li></ul><ul id="4021cf4e-1239-801f-ba17-c1ee86e160f4" class="bulleted-list" dir="auto"><li style="list-style-type:disc">SceneMoveManager<ul id="4011cf4e-1239-80d4-914e-fada01f28d42" class="bulleted-list" dir="auto"><li style="list-style-type:circle">ステージ移動<ul id="4011cf4e-1239-80f5-a78d-f0081c283c1e" class="bulleted-list" dir="auto"><li style="list-style-type:square">シーン移動で行う</li></ul><ul id="4011cf4e-1239-8023-be0f-d68f31a15f4a" class="bulleted-list" dir="auto"><li style="list-style-type:square">(シーン移動しない：カメラ移動orステージ自体をプレハブ化）</li></ul></li></ul></li></ul><ul id="4011cf4e-1239-8085-a9bc-e5405900dec0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">混色の条件<ul id="4011cf4e-1239-803d-a607-c372b148bd59" class="bulleted-list" dir="auto"><li style="list-style-type:circle">タイルクラス上で管理</li></ul><ul id="4011cf4e-1239-80c4-b17f-d27cd4fe2a5e" class="bulleted-list" dir="auto"><li style="list-style-type:circle">色リストは、紫という要素は持たず、「赤と青」の要素を紫として扱う（リスト内の要素の一致（順番は無視））</li></ul><ul id="4021cf4e-1239-802d-8245-e8d369022cbd" class="bulleted-list" dir="auto"><li style="list-style-type:circle">3色以上の混色は無し</li></ul></li></ul><ul id="4021cf4e-1239-80bf-a52a-de43088aa639" class="bulleted-list" dir="auto"><li style="list-style-type:disc">ReloadButtonContoroller<ul id="4021cf4e-1239-80d4-b3e0-d4c951de9190" class="bulleted-list" dir="auto"><li style="list-style-type:circle">インスペクター上でリロード対象の色を選択</li></ul><ul id="4021cf4e-1239-8020-a83f-d8105dc50ea5" class="bulleted-list" dir="auto"><li style="list-style-type:circle"><del>リロードボタンを無効にする関数</del></li></ul><ul id="4021cf4e-1239-8081-ad17-e5ab3324f9a6" class="bulleted-list" dir="auto"><li style="list-style-type:circle"><del>リロードボタンを有効にする関数</del></li></ul><ul id="4021cf4e-1239-8047-ae8e-d108ea9be438" class="bulleted-list" dir="auto"><li style="list-style-type:circle">リロードボタンについて<ul id="4021cf4e-1239-80e2-a047-d0363921f8b7" class="bulleted-list" dir="auto"><li style="list-style-type:square">引くことのできる線の色毎にリロードボタンを作る（赤、青、黄）</li></ul><ul id="4021cf4e-1239-801e-b706-e5b80b2e040e" class="bulleted-list" dir="auto"><li style="list-style-type:square">全タイルの色リストを全探索して、該当の色をドロップさせる</li></ul></li></ul></li></ul><ul id="4011cf4e-1239-80c7-86c6-f59d44c8d622" class="bulleted-list" dir="auto"><li style="list-style-type:disc">タイルの行列の要素を何するのか<ul id="4011cf4e-1239-802d-9050-e5a1c4f8e3ff" class="bulleted-list" dir="auto"><li style="list-style-type:circle">行列の要素をクラス(タイルのGameObjectにアタッチするクラス)に</li></ul><ul id="4011cf4e-1239-80bd-9fdd-def50003bcaf" class="bulleted-list" dir="auto"><li style="list-style-type:circle">tileクラス<ul id="4021cf4e-1239-80c3-9dba-e9f763a7070e" class="bulleted-list" dir="auto"><li style="list-style-type:square">自分の状態を管理<ul id="4021cf4e-1239-800b-82f9-dc26694e03a9" class="bulleted-list" dir="auto"><li style="list-style-type:disc">自分のタイル行列のインデックス（タイルの場所情報）</li></ul><ul id="4021cf4e-1239-80b6-9425-cdb481ea28ed" class="bulleted-list" dir="auto"><li style="list-style-type:disc">タイル固有の状態（開始タイルか否か、色指定、色禁止）</li></ul><ul id="4021cf4e-1239-80a4-8d59-e800c6ba3db4" class="bulleted-list" dir="auto"><li style="list-style-type:disc">現在の色リスト（リストに要素がないとラインが引かれていないと同義）</li></ul><ul id="4021cf4e-1239-80c8-843a-c90a5f32cbda" class="bulleted-list" dir="auto"><li style="list-style-type:disc">タイルの正誤</li></ul></li></ul><ul id="4021cf4e-1239-808d-a9aa-f52ea92c9c44" class="bulleted-list" dir="auto"><li style="list-style-type:square">状態を変更する関数<ul id="4021cf4e-1239-8070-a52e-c10cd1209d7c" class="bulleted-list" dir="auto"><li style="list-style-type:disc">色リストの追加関数</li></ul><ul id="4021cf4e-1239-80e6-95d8-d831bc663545" class="bulleted-list" dir="auto"><li style="list-style-type:disc">色リストの除外関数</li></ul><ul id="4021cf4e-1239-80df-bf2e-d5ba31a4d13f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">正誤判定する関数</li></ul></li></ul><ul id="4021cf4e-1239-804f-8233-eac5a26fefd0" class="bulleted-list" dir="auto"><li style="list-style-type:square">タイルの見た目の変更<ul id="4021cf4e-1239-801f-a508-ead9a1605ae4" class="bulleted-list" dir="auto"><li style="list-style-type:disc">面の色を変更する関数（引数：面の色）</li></ul><ul id="4021cf4e-1239-80eb-9446-d30744abbb63" class="bulleted-list" dir="auto"><li style="list-style-type:disc">枠の画像を差し替える関数（引数：枠の色）</li></ul></li></ul></li></ul><ul id="4021cf4e-1239-80c9-a9e7-d4553842fd7f" class="bulleted-list" dir="auto"><li style="list-style-type:circle">タイルはインターフェースにする？<ul id="4021cf4e-1239-8084-bbe9-fba3d028b4ee" class="bulleted-list" dir="auto"><li style="list-style-type:square">開始マス（開始マスは、色が入ったら、開始マスの機能を止める）</li></ul><ul id="4021cf4e-1239-8091-b859-cc6d506ea61a" class="bulleted-list" dir="auto"><li style="list-style-type:square">色指定</li></ul><ul id="4021cf4e-1239-80a8-b627-d0693b35ca4c" class="bulleted-list" dir="auto"><li style="list-style-type:square">色禁止</li></ul></li></ul></li></ul><ul id="4011cf4e-1239-8049-9973-cfc90a6fa033" class="bulleted-list" dir="auto"><li style="list-style-type:disc">GameManager（タイルの状態を変更する、全体の進行）<ul id="4021cf4e-1239-804b-856c-d75c4fb7d7f9" class="bulleted-list" dir="auto"><li style="list-style-type:circle">タイルの行列を定義</li></ul><ul id="4021cf4e-1239-802b-880f-c757146da20a" class="bulleted-list" dir="auto"><li style="list-style-type:circle">LineManagerから叩くでかい関数（引数：通ったタイルのインデックス）<ul id="4021cf4e-1239-803c-81a0-e9488dde8b07" class="bulleted-list" dir="auto"><li style="list-style-type:square">ラインのInputを停止する変数を操作</li></ul><ul id="4021cf4e-1239-802c-8f8c-ea79a4c3d716" class="bulleted-list" dir="auto"><li style="list-style-type:square">リロードのInputを停止する変数を操作<ul id="4021cf4e-1239-8015-8ef3-d72896b6ea92" class="bulleted-list" dir="auto"><li style="list-style-type:disc">リロードボタンを無効に（灰色っぽくする）</li></ul></li></ul><ul id="4021cf4e-1239-803d-80cc-d0e1fd06f436" class="bulleted-list" dir="auto"><li style="list-style-type:square">タイルの状態の変更と正誤判定をする大きい関数を叩く操作をする</li></ul><ul id="4021cf4e-1239-802b-8288-e5bd5514ecce" class="bulleted-list" dir="auto"><li style="list-style-type:square">タイルの状態変化の関数を叩く　⇐　そんなことないかも</li></ul></li></ul><ul id="4011cf4e-1239-8072-b9e9-e3ab6dfdd4b5" class="bulleted-list" dir="auto"><li style="list-style-type:circle">全体正誤判定<ul id="4021cf4e-1239-80b8-b420-e3171cee0ab7" class="bulleted-list" dir="auto"><li style="list-style-type:square">全てのマスに色が入ったとき（開始マスに色が入ったとき？）</li></ul><ul id="4011cf4e-1239-8040-ba0e-c4e2e28d78b0" class="bulleted-list" dir="auto"><li style="list-style-type:square">タイルクラス内のタイルの正誤のbool値持ってきて、Trueの数（16個か否か）で判定</li></ul><ul id="4021cf4e-1239-80b6-9b7c-ff139bc24597" class="bulleted-list" dir="auto"><li style="list-style-type:square">達成したら、Tittleボタン、NEXTボタン</li></ul><ul id="4021cf4e-1239-8056-8371-e34129416063" class="bulleted-list" dir="auto"><li style="list-style-type:square"></li></ul></li></ul></li></ul><ul id="4011cf4e-1239-80a0-90ee-dbb04be3c1a0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">正誤判定<ul id="4021cf4e-1239-80bb-b8ea-dcf482065a69" class="bulleted-list" dir="auto"><li style="list-style-type:circle">全てのタイルの色リストに要素を持っているか（全てのタイルに色付いているか）</li></ul><ul id="4011cf4e-1239-8081-861d-d0e6d39f433c" class="bulleted-list" dir="auto"><li style="list-style-type:circle">色指定マスに指定の色が入っているか</li></ul><ul id="4021cf4e-1239-8095-a130-feb68108941f" class="bulleted-list" dir="auto"><li style="list-style-type:circle">色禁止マスに禁止の色が入っていないか</li></ul></li></ul><ul id="4021cf4e-1239-80d0-9034-e0c8c98cfea8" class="bulleted-list" dir="auto"><li style="list-style-type:disc">SoundManager<ul id="4021cf4e-1239-80a3-85dc-c55c7a34f7c6" class="bulleted-list" dir="auto"><li style="list-style-type:circle">使い回し</li></ul></li></ul><ul id="4021cf4e-1239-80aa-a766-d41ecda9507b" class="bulleted-list" dir="auto"><li style="list-style-type:disc">ヒント機能<ul id="4021cf4e-1239-8031-a5a8-f33d479c5711" class="bulleted-list" dir="auto"><li style="list-style-type:circle">広告を見ることでヒント見れる</li></ul><ul id="4021cf4e-1239-8058-a88e-d30fb4f6e5ad" class="bulleted-list" dir="auto"><li style="list-style-type:circle">ヒントは色指定マスを1つ増やす</li></ul><ul id="4021cf4e-1239-807d-96a5-e6770b88c164" class="bulleted-list" dir="auto"><li style="list-style-type:circle">マスの固定情報を更新する必要ありそう</li></ul></li></ul><ul id="4021cf4e-1239-809c-9260-c32df93cbcbe" class="bulleted-list" dir="auto"><li style="list-style-type:disc">設定画面いる？</li></ul><ul id="4021cf4e-1239-80c5-9c3e-ea25912d90bb" class="bulleted-list" dir="auto"><li style="list-style-type:disc">タイトル画面</li></ul><ul id="4021cf4e-1239-80a4-8e36-e7c53c6bb63f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">ステージ選択画面？</li></ul><ul id="4021cf4e-1239-8097-998d-d87dd8eebe72" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><mark class="highlight-red" data-notion-highlight="red">特定のCanvasのUIと画面の操作全体の入力を停止する機能</mark><ul id="4021cf4e-1239-800c-8659-f65ad4f11e20" class="bulleted-list" dir="auto"><li style="list-style-type:circle">アニメーションなどの再生時</li></ul><ul id="4021cf4e-1239-80df-bbff-f5359a8c38a3" class="bulleted-list" dir="auto"><li style="list-style-type:circle">そもそも入力とかボタンの無効とかをせずに、リロードがあったときに、アニメーション側をキャンセルするのもあり</li></ul></li></ul><ul id="4021cf4e-1239-8022-933d-d627ff021b63" class="bulleted-list" dir="auto"><li style="list-style-type:disc">pureなC#ファイルで宣言<ul id="4021cf4e-1239-80fe-9bad-cdae6ab6af6c" class="bulleted-list" dir="auto"><li style="list-style-type:circle"><a href="https://qiita.com/Arihi/items/4242dcbd07de76a60f3a">https://qiita.com/Arihi/items/4242dcbd07de76a60f3a</a></li></ul><ul id="4021cf4e-1239-808d-894a-e4266e60baac" class="bulleted-list" dir="auto"><li style="list-style-type:circle">staticなグローバル定数として、色を定義<ul id="4021cf4e-1239-80b2-b29e-e1c8e284403c" class="bulleted-list" dir="auto"><li style="list-style-type:square">red＝0</li></ul><ul id="4021cf4e-1239-80ef-89f2-db9e6db4810c" class="bulleted-list" dir="auto"><li style="list-style-type:square">blue=1</li></ul><ul id="4021cf4e-1239-802d-a2bd-c45367ecb539" class="bulleted-list" dir="auto"><li style="list-style-type:square">yellow=2</li></ul></li></ul><ul id="4021cf4e-1239-8033-91b5-d952a7f843b1" class="bulleted-list" dir="auto"><li style="list-style-type:circle">staticなグローバル定数として、カラーコード系も定義</li></ul></li></ul><ul id="4021cf4e-1239-805e-a485-d00bc0da7779" class="bulleted-list" dir="auto"><li style="list-style-type:disc">アニメーションは基本再生させるだけだから、Unitaskで待たないと次の処理が始まってしまう。</li></ul><p id="4011cf4e-1239-8049-9e10-fde383c5e3ac" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

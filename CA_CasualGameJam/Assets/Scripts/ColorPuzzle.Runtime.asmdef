@@ -1,0 +1,5 @@
+{
+    "name": "ColorPuzzle.Runtime",
+    "references": ["UniTask", "Unity.ugui", "Unity.TextMeshPro"],
+    "autoReferenced": true
+}

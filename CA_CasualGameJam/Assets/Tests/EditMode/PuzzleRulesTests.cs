@@ -1,0 +1,92 @@
+using NUnit.Framework;
+using UnityEngine;
+
+public class PuzzleRulesTests
+{
+    [TestCase(TileColor.None, false)]
+    [TestCase(TileColor.Red, false)]
+    [TestCase(TileColor.Blue, true)]
+    [TestCase(TileColor.Purple, true)]
+    [TestCase(TileColor.Orange, true)]
+    public void RedBanChecksFinishedColor(TileColor current, bool expected)
+    {
+        Assert.That(PuzzleRules.IsTileCorrect(current, false, TileColor.None, TileColor.Red), Is.EqualTo(expected));
+    }
+    [Test]
+    public void RequiredColorMatchesExactlyAndIgnoresOrder()
+    {
+        TileColor mixed = PuzzleRules.Mix(new[] { BaseColor.Blue, BaseColor.Red, BaseColor.Red });
+        Assert.That(mixed, Is.EqualTo(TileColor.Purple));
+        Assert.That(PuzzleRules.IsTileCorrect(mixed, true, TileColor.Purple, TileColor.None), Is.True);
+        Assert.That(PuzzleRules.IsTileCorrect(TileColor.Red, true, TileColor.Purple, TileColor.None), Is.False);
+    }
+    [Test]
+    public void ThreeColorsAndUnknownColorsAreRejected()
+    {
+        Assert.That(PuzzleRules.CanAddColor(TileColor.Purple, BaseColor.Yellow), Is.False);
+        Assert.That(PuzzleRules.CanAddColor(TileColor.Blue, BaseColor.Red), Is.True);
+        Assert.That(PuzzleRules.CanAddColor(TileColor.None, (BaseColor)5), Is.False);
+    }
+    [Test]
+    public void RemovingOneIngredientReevaluatesBansAndFaceColor()
+    {
+        var go = new GameObject("Test tile");
+        try
+        {
+            var tile = go.AddComponent<TileController>();
+            var face = go.AddComponent<SpriteRenderer>();
+            tile.BindVisuals(face, null, null, null, null);
+            tile.Configure(0, Vector2Int.zero, false, BaseColor.Red, new BaseColor[0], TileColor.Red);
+            Assert.That(tile.AddColor(BaseColor.Red), Is.True);
+            Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.NormalFaceColor));
+            tile.AddColor(BaseColor.Blue);
+            Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.PurpleFaceColor));
+            Assert.That(face.color, Is.EqualTo(GlobalScripts.PurpleFaceColor));
+            Assert.That(tile.AddColor(BaseColor.Blue), Is.False);
+            tile.RemoveColor(BaseColor.Blue);
+            Assert.That(tile.CurrentColor, Is.EqualTo(TileColor.Red));
+            Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.NormalFaceColor));
+            Assert.That(face.color, Is.EqualTo(GlobalScripts.NormalFaceColor));
+            tile.RemoveColor(BaseColor.Red);
+            Assert.That(tile.CurrentColor, Is.EqualTo(TileColor.None));
+        }
+        finally { Object.DestroyImmediate(go); }
+    }
+    [Test]
+    public void ReloadingMixReturnsToRemainingSingleColor()
+    {
+        var go = new GameObject("Test tile");
+        try
+        {
+            var tile = go.AddComponent<TileController>();
+            tile.AddColor(BaseColor.Red); tile.AddColor(BaseColor.Blue);
+            tile.RemoveColor(BaseColor.Red);
+            Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.BlueFaceColor));
+            tile.AddColor(BaseColor.Red); tile.RemoveColor(BaseColor.Blue);
+            Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.RedFaceColor));
+            tile.Configure(0, Vector2Int.zero, false, BaseColor.Red, new[] { BaseColor.Red, BaseColor.Blue }, TileColor.None);
+            tile.AddColor(BaseColor.Red); tile.AddColor(BaseColor.Blue); tile.RemoveColor(BaseColor.Red);
+            Assert.That(tile.CurrentColor, Is.EqualTo(TileColor.Blue));
+            Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.NormalFaceColor));
+        }
+        finally { Object.DestroyImmediate(go); }
+    }
+    [Test]
+    public void PathAllowsOnlyAdjacentUnusedTilesOrImmediateBacktracking()
+    {
+        int[] path = { 0, 1, 5, 4 };
+        Assert.That(PuzzleRules.ClassifyStep(path, 5, new Vector2Int(0, 1), new Vector2Int(1, 1)), Is.EqualTo(PathStep.Backtrack));
+        Assert.That(PuzzleRules.ClassifyStep(path, 0, new Vector2Int(0, 1), Vector2Int.zero), Is.EqualTo(PathStep.Reject));
+        Assert.That(PuzzleRules.ClassifyStep(path, 8, new Vector2Int(0, 1), new Vector2Int(0, 2)), Is.EqualTo(PathStep.Append));
+        Assert.That(PuzzleRules.TryGetAxisStep(Vector2Int.zero, new Vector2Int(2, 2), out _), Is.False);
+        Assert.That(PuzzleRules.TryGetAxisStep(Vector2Int.zero, new Vector2Int(0, 3), out Vector2Int step), Is.True);
+        Assert.That(step, Is.EqualTo(Vector2Int.up));
+    }
+    [Test]
+    public void EmptyBoardIsNeverClear()
+    {
+        var go = new GameObject("Test manager");
+        try { Assert.That(go.AddComponent<GameManager>().StageClearCheck(), Is.False); }
+        finally { Object.DestroyImmediate(go); }
+    }
+}

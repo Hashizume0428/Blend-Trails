@@ -1,0 +1,7 @@
+{
+  "name": "ColorPuzzle.EditModeTests",
+  "references": ["ColorPuzzle.Runtime"],
+  "includePlatforms": ["Editor"],
+  "optionalUnityReferences": ["TestAssemblies"],
+  "autoReferenced": false
+}
