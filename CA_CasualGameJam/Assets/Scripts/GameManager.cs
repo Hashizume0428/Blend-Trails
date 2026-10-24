@@ -143,6 +143,8 @@ public class GameManager : MonoBehaviour
                 await tile.PlayFeedbackAsync(token);
             }
             token.ThrowIfCancellationRequested();
+            if (_committedColors.Count == _starts.Count)
+                foreach (TileController tile in TilesList) tile.PlayErrorBlink();
             if (StageClearCheck())
             {
                 PlaySound(_clearSound);
@@ -167,7 +169,11 @@ public class GameManager : MonoBehaviour
     {
         if (!CanReloadColor(color)) return false;
         PlaySound(_buttonSound);
-        foreach (TileController tile in TilesList) tile.RemoveColor(color);
+        foreach (TileController tile in TilesList)
+        {
+            tile.StopErrorBlink();
+            tile.RemoveColor(color);
+        }
         _committedColors.Remove(color);
         _starts[color].Line.ResetToStart(_starts[color].transform.position);
         RefreshLines();

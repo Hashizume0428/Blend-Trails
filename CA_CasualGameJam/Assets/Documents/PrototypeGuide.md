@@ -8,7 +8,7 @@ Unity 6000.3.24f1で `Assets/Scenes/SampleScene.unity` を開き、Playで開始
 - 直前のマスへ戻ると線を短くできます。描画中はマスの色は変わりません。
 - 色別のRESETボタンで、その色の線と構成色だけを除去します。混色マスは残った単色へ戻ります。
 - 線が同じ辺を通る部分と交点は混色で表示します。描画中の線も対象で、キャンセルやリロード後は残った線の色に戻ります。
-- 禁止マークはマスの中央に表示します。色が入って不正解になったマスは枠を点滅させ、禁止マスではマークも同じタイミングで点滅します。正解または未着色になると点滅を止めます。
+- 禁止マークはマスの中央に表示します。赤・青両方の線を確定すると、未着色を含む全ての不正解マスの枠を2秒間点滅させます。禁止マスではバツも同じタイミングで点滅し、終了後は通常表示に戻ります。色別リロードでは点滅を止め、引き直しを確定した時に再判定します。
 - 全16マスの条件を満たすとクリアです。PLAY AGAINで初期状態に戻ります。
 
 ## 判定
@@ -39,7 +39,7 @@ Color Puzzle/Build Prototypeは初回の生成用で、生成済み盤面の上�
 Unity Test RunnerからColorPuzzle.EditModeTestsとColorPuzzle.PlayModeTestsを実行できます。
 EditModeは色禁止・混色・完全一致・リロード後の表示・経路・空盤面を検証します。
 PlayModeは解答経路、他色開始点、色別リロード、巻き戻し、接触判定、キャンセル、演出中リスタートを検証します。
-PuzzleVisualTestsでは、重なった辺・交点の混色、キャンセル・リロード後の線表示、禁止マークの中央配置、不正解時の同期点滅と停止を検証します。
+PuzzleVisualTestsでは、重なった辺・交点の混色、キャンセル・リロード後の線表示、禁止マークの中央配置、全開始色の確定後の未着色マスを含む同期点滅、2秒での停止、リロード・再確定・初期化を検証します。
 
 ### 解答例
 
@@ -54,7 +54,9 @@ PuzzleVisualTestsでは、重なった辺・交点の混色、キャンセル・
 ## Verification
 
 Unity Editor compilation: 0 errors / 0 warnings.
-EditMode: 11 / 11 passed. PlayMode: 9 / 9 passed (including mixed lines and error indicators).
+EditMode: 11 / 11 passed. PlayMode: 10 / 10 passed (including mixed lines and error indicators).
+Error feedback: all start lines committed, empty incorrect tiles, synchronized markers, two-second stop, and reload/recommit verified.
+Test results: Logs/ErrorBlink-EditMode.json and Logs/ErrorBlink-PlayMode.json.
 Manual runtime check: frame advancement, 16 / 16 clear, and restart verified.
 Screenshots: Logs/Prototype-Portrait.png and Logs/Prototype-Clear.png.
 Visual improvements: Logs/VisualImprovements.png (mixed lines, centered forbidden markers and error indicators).

@@ -7,6 +7,8 @@ using UnityEngine.Serialization;
 
 public class TileController : MonoBehaviour
 {
+    private const float ErrorBlinkDuration = 2f;
+    private const int ErrorBlinkLoops = 8;
     [SerializeField] private int _tileIndex;
     [SerializeField] private Vector2Int _coordinate;
     [SerializeField] private bool _isStartTile;
@@ -61,7 +63,7 @@ public class TileController : MonoBehaviour
     public void BindVisuals(SpriteRenderer face, SpriteRenderer frame, SpriteRenderer start,
         SpriteRenderer forbidden, LineController line)
     {
-        StopInvalidBlink();
+        StopErrorBlink();
         _faceRenderer = face; _frameRenderer = frame; _startMarker = start;
         _forbiddenMarker = forbidden; _line = line;
         _indicatorColorsCached = false;
@@ -103,10 +105,11 @@ public class TileController : MonoBehaviour
             _forbiddenMarker.gameObject.SetActive(_forbiddenColor != TileColor.None);
         }
         if (_line != null) _line.gameObject.SetActive(_isStartTile);
-        UpdateInvalidBlink(CurrentColor != TileColor.None && !correct);
+        if (correct) StopErrorBlink();
     }
     public void ResetRuntimeState()
     {
+        StopErrorBlink();
         StopFeedback();
         _currentColorsList.Clear();
         RefreshVisuals();
@@ -136,18 +139,20 @@ public class TileController : MonoBehaviour
         if (_forbiddenMarker != null) _forbiddenBaseColor = _forbiddenMarker.color;
         _indicatorColorsCached = true;
     }
-    private void UpdateInvalidBlink(bool invalid)
+    public void PlayErrorBlink()
     {
-        if (!Application.isPlaying || !isActiveAndEnabled || !invalid)
-        {
-            StopInvalidBlink();
-            return;
-        }
-        if (IsErrorBlinking) return;
+        StopErrorBlink();
+        if (!Application.isPlaying || !isActiveAndEnabled || IsTileCorrect()) return;
         CacheIndicatorColors();
         SetIndicatorAlpha(1);
-        _invalidBlink = DOTween.To(() => 1f, SetIndicatorAlpha, 0.2f, 0.25f)
-            .SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo).SetLink(gameObject);
+        _invalidBlink = DOTween.To(() => 1f, SetIndicatorAlpha, 0.2f, ErrorBlinkDuration / ErrorBlinkLoops)
+            .SetEase(Ease.InOutSine).SetLoops(ErrorBlinkLoops, LoopType.Yoyo)
+            .SetUpdate(true).SetLink(gameObject)
+            .OnComplete(() =>
+            {
+                _invalidBlink = null;
+                SetIndicatorAlpha(1);
+            });
     }
     private void SetIndicatorAlpha(float alpha)
     {
@@ -162,14 +167,14 @@ public class TileController : MonoBehaviour
             _forbiddenMarker.color = color;
         }
     }
-    private void StopInvalidBlink()
+    public void StopErrorBlink()
     {
         _invalidBlink?.Kill();
         _invalidBlink = null;
         if (_indicatorColorsCached) SetIndicatorAlpha(1);
     }
-    private void OnDisable() { StopInvalidBlink(); StopFeedback(); }
-    private void OnDestroy() { StopInvalidBlink(); StopFeedback(); }
+    private void OnDisable() { StopErrorBlink(); StopFeedback(); }
+    private void OnDestroy() { StopErrorBlink(); StopFeedback(); }
 
     // Compatibility with the original tile API.
     public void AddColorList(int color) => AddColor((BaseColor)color);

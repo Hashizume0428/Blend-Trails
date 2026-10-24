@@ -20,6 +20,11 @@ public class PuzzleVisualTests
     private int Index(int x, int y) => Tile(x, y).TileIndex;
     private void Begin(int x, int y) => Assert.That(_game.TryBeginLine(Index(x, y)), Is.True);
     private void Extend(int x, int y) => Assert.That(_game.TryExtendLine(Index(x, y)), Is.True);
+    private void AssertNoErrorBlinks()
+    {
+        foreach (TileController tile in _game.TilesList)
+            Assert.That(tile.IsErrorBlinking, Is.False, $"Unexpected blink at {tile.Coordinate}");
+    }
 
     [UnityTest]
     public IEnumerator SharedEdgesMixDuringPreviewAndRestoreOnCancelOrReload()
@@ -66,20 +71,30 @@ public class PuzzleVisualTests
     }
 
     [UnityTest]
-    public IEnumerator ForbiddenMarkerIsCenteredAndBlinksTogetherWithItsFrame()
+    public IEnumerator ErrorsBlinkOnlyAfterAllStartLinesAreCommittedIncludingEmptyTiles()
     {
         TileController forbidden = Tile(1, 3);
         var marker = forbidden.transform.Find("ForbiddenMarker").GetComponent<SpriteRenderer>();
         var frame = forbidden.transform.Find("TileFlame").GetComponent<SpriteRenderer>();
         Assert.That(marker.transform.localPosition, Is.EqualTo(Vector3.zero));
-        Assert.That(forbidden.IsErrorBlinking, Is.False, "Empty tiles must not flash.");
+        AssertNoErrorBlinks();
         Begin(0, 0); Extend(0, 3); Extend(1, 3);
         yield return _game.CommitLineAsync().ToCoroutine();
         Assert.That(forbidden.IsTileCorrect(), Is.False);
         Assert.That(forbidden.DisplayColor, Is.EqualTo(GlobalScripts.NormalFaceColor));
-        Assert.That(forbidden.IsErrorBlinking, Is.True);
+        AssertNoErrorBlinks();
+        Begin(0, 3);
+        AssertNoErrorBlinks();
+        _game.CancelLine();
+        AssertNoErrorBlinks();
+        Begin(0, 3);
+        yield return _game.CommitLineAsync().ToCoroutine();
+        Assert.That(_game.State, Is.EqualTo(GameState.Idle));
+        Assert.That(Tile(2, 3).CurrentColor, Is.EqualTo(TileColor.None));
+        foreach (TileController tile in _game.TilesList)
+            Assert.That(tile.IsErrorBlinking, Is.EqualTo(!tile.IsTileCorrect()), $"Assessment at {tile.Coordinate}");
         float minimum = 1, maximum = 0;
-        for (float end = Time.time + 0.6f; Time.time < end;)
+        for (float end = Time.unscaledTime + 0.6f; Time.unscaledTime < end;)
         {
             minimum = Mathf.Min(minimum, frame.color.a);
             maximum = Mathf.Max(maximum, frame.color.a);
@@ -87,34 +102,62 @@ public class PuzzleVisualTests
             yield return null;
         }
         Assert.That(maximum - minimum, Is.GreaterThan(0.4f));
-        Assert.That(_game.ReloadColor(BaseColor.Red), Is.True);
-        Assert.That(forbidden.IsErrorBlinking, Is.False);
-        Assert.That(frame.color.a, Is.EqualTo(1));
-        Assert.That(marker.color.a, Is.EqualTo(1));
     }
 
     [UnityTest]
-    public IEnumerator RequiredFrameStopsBlinkingWhenCorrectAndRestoresAfterResetOrDisable()
+    public IEnumerator ErrorBlinksFinishAfterTwoSecondsAndDoNotResumeOnRefresh()
+    {
+        Begin(0, 3);
+        yield return _game.CommitLineAsync().ToCoroutine();
+        AssertNoErrorBlinks();
+        Begin(0, 0);
+        yield return _game.CommitLineAsync().ToCoroutine();
+        TileController empty = Tile(1, 3);
+        Assert.That(empty.CurrentColor, Is.EqualTo(TileColor.None));
+        Assert.That(empty.IsErrorBlinking, Is.True);
+        yield return new WaitForSecondsRealtime(1.8f);
+        Assert.That(empty.IsErrorBlinking, Is.True, "The feedback must last for two seconds.");
+        yield return new WaitForSecondsRealtime(0.35f);
+        AssertNoErrorBlinks();
+        foreach (TileController tile in _game.TilesList)
+        {
+            var frame = tile.transform.Find("TileFlame").GetComponent<SpriteRenderer>();
+            var marker = tile.transform.Find("ForbiddenMarker").GetComponent<SpriteRenderer>();
+            Assert.That(frame.color.a, Is.EqualTo(1));
+            Assert.That(marker.color.a, Is.EqualTo(1));
+            tile.RefreshVisuals();
+        }
+        AssertNoErrorBlinks();
+    }
+
+    [UnityTest]
+    public IEnumerator ReloadWaitsForRecommitAndResetOrDisableStopsErrorBlinks()
     {
         TileController required = Tile(3, 1);
         var frame = required.transform.Find("TileFlame").GetComponent<SpriteRenderer>();
         Begin(0, 0); Extend(3, 0); Extend(3, 1);
         yield return _game.CommitLineAsync().ToCoroutine();
-        Assert.That(required.IsErrorBlinking, Is.True);
+        AssertNoErrorBlinks();
         Begin(0, 3); Extend(3, 3); Extend(3, 1);
         yield return _game.CommitLineAsync().ToCoroutine();
         Assert.That(required.CurrentColor, Is.EqualTo(TileColor.Purple));
         Assert.That(required.IsErrorBlinking, Is.False);
         Assert.That(frame.color.a, Is.EqualTo(1));
+        Assert.That(Tile(2, 2).IsErrorBlinking, Is.True);
         Assert.That(_game.ReloadColor(BaseColor.Blue), Is.True);
+        Assert.That(required.IsTileCorrect(), Is.False);
+        AssertNoErrorBlinks();
+        Begin(0, 3);
+        AssertNoErrorBlinks();
+        yield return _game.CommitLineAsync().ToCoroutine();
         Assert.That(required.IsErrorBlinking, Is.True);
         required.gameObject.SetActive(false);
         Assert.That(required.IsErrorBlinking, Is.False);
         Assert.That(frame.color.a, Is.EqualTo(1));
         required.gameObject.SetActive(true);
-        Assert.That(required.IsErrorBlinking, Is.True);
-        _game.RestartStage();
         Assert.That(required.IsErrorBlinking, Is.False);
+        _game.RestartStage();
+        AssertNoErrorBlinks();
         Assert.That(frame.color.a, Is.EqualTo(1));
     }
 }
