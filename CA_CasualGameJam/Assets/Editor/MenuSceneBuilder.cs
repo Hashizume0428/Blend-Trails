@@ -22,9 +22,7 @@ public static class MenuSceneBuilder
         Scene active = SceneManager.GetActiveScene();
         if (active.isDirty && (string.IsNullOrEmpty(active.path) || !EditorSceneManager.SaveScene(active)))
             throw new InvalidOperationException("Save the current scene before editing the scene flow.");
-        _font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset");
-        _tileSprite = AssetDatabase.LoadAllAssetsAtPath("Assets/Image/tile/タイル.png").OfType<Sprite>().FirstOrDefault();
-        if (_font == null || _tileSprite == null) throw new InvalidOperationException("Prototype UI assets are missing.");
+        PrepareAssets();
 
         ReferenceStageBuilder.BuildStages();
 
@@ -36,11 +34,12 @@ public static class MenuSceneBuilder
         EditorBuildSettings.scenes = paths.Select(path => new EditorBuildSettingsScene(path, true))
             .Concat(EditorBuildSettings.scenes.Where(scene => !paths.Contains(scene.path) && scene.path != StageSelectPath)).ToArray();
         AssetDatabase.SaveAssets();
-        Debug.Log("Color Puzzle: the ten reference stages and Title / Home / Next Stage navigation are ready.");
+        Debug.Log("Color Puzzle: thirty reference puzzles, tutorials and endless extra progression are ready.");
     }
 
     public static void UpdateClearScreen(int stageNumber, string nextScene)
     {
+        PrepareAssets();
         var manager = UnityEngine.Object.FindFirstObjectByType<GameManager>();
         var hud = UnityEngine.Object.FindFirstObjectByType<GameHud>();
         if (manager == null || hud == null) throw new InvalidOperationException("The existing puzzle and HUD are required.");
@@ -72,6 +71,13 @@ public static class MenuSceneBuilder
         panel.gameObject.SetActive(false);
         EditorUtility.SetDirty(hud); EditorUtility.SetDirty(navigation);
         ClearScreenBuilder.Apply(manager, hud);
+    }
+
+    private static void PrepareAssets()
+    {
+        if (_font == null) _font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset");
+        if (_tileSprite == null) _tileSprite = AssetDatabase.LoadAllAssetsAtPath("Assets/Image/tile/タイル.png").OfType<Sprite>().FirstOrDefault();
+        if (_font == null || _tileSprite == null) throw new InvalidOperationException("Prototype UI assets are missing.");
     }
 
     private static void UpdateTitle()

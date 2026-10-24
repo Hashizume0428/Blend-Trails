@@ -94,8 +94,8 @@ public class SceneNavigationTests : StageProgressTestFixture
         AssertFreshStage(2);
     }
 
-    [UnityTest]
-    public IEnumerator AllTenReferenceStagesClearInOrderAndFinalClearCanReturnHome()
+    [UnityTest, Category("StageProgression")]
+    public IEnumerator AllThirtyReferenceStagesClearInOrderAndContinueIntoPersistentExtras()
     {
         yield return SceneManager.LoadSceneAsync(SceneNavigator.StageScene);
         yield return null;
@@ -114,29 +114,54 @@ public class SceneNavigationTests : StageProgressTestFixture
             game = Object.FindFirstObjectByType<GameManager>();
             yield return Solve(game);
             Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(number + 1));
-            Assert.That(Button("NextStageButton").interactable, Is.EqualTo(number < StageCatalog.Count));
+            Assert.That(Button("NextStageButton").interactable, Is.True);
             if (number < StageCatalog.Count)
             {
                 Tap(Button("NextStageButton"));
                 yield return WaitForScene(StageCatalog.SceneName(number + 1));
             }
         }
-        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(11));
-        Assert.That(Button("NextStageButton").interactable, Is.False);
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(31));
+        Assert.That(StageProgress.CurrentPuzzleId, Is.InRange(5, 22));
+        int firstExtraPuzzle = StageProgress.CurrentPuzzleId;
+        CollectionAssert.AreEqual(System.Linq.Enumerable.Range(23, 8), StageProgress.RecentPuzzleIds);
+        Assert.That(Button("NextStageButton").interactable, Is.True);
         Assert.That(Button("ClearHomeButton").interactable, Is.True);
-        Assert.That(Button("NextStageButton").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage11"));
-        Button("NextStageButton").onClick.Invoke();
-        yield return new WaitForSecondsRealtime(1.3f);
-        Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(StageCatalog.SceneName(10)));
+        Assert.That(Button("NextStageButton").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage31"));
         Tap(Button("ClearHomeButton"));
         yield return WaitForScene(SceneNavigator.TitleScene);
         var stage = Button("Stage01Button");
-        Assert.That(stage.transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage11"));
-        Assert.That(stage.transform.Find("Description").GetComponent<TMP_Text>().text, Is.EqualTo("COMING SOON"));
-        Assert.That(stage.interactable, Is.False);
-        stage.onClick.Invoke();
+        Assert.That(stage.transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage31"));
+        Assert.That(stage.transform.Find("Description").GetComponent<TMP_Text>().text, Is.EqualTo("STAGE SELECT"));
+        Assert.That(stage.interactable, Is.True);
+        StageProgress.ResetSession();
+        Assert.That(StageProgress.CurrentPuzzleId, Is.EqualTo(firstExtraPuzzle));
+        Tap(stage);
+        yield return WaitForScene(StageCatalog.SceneName(firstExtraPuzzle));
+        game = Object.FindFirstObjectByType<GameManager>();
+        StageTestReference.AssertLayout(game, firstExtraPuzzle);
+        Assert.That(game.GetComponent<StageClearNavigation>().PuzzleId, Is.EqualTo(firstExtraPuzzle));
+        Assert.That(game.GetComponent<StageClearNavigation>().StageNumber, Is.EqualTo(31));
+        Assert.That(GameObject.Find("Level").GetComponent<TMP_Text>().text, Is.EqualTo("-Stage31-"));
+        Tap(Button("HomeButton"));
+        yield return WaitForScene(SceneNavigator.TitleScene);
+        Tap(Button("Stage01Button"));
+        yield return WaitForScene(StageCatalog.SceneName(firstExtraPuzzle));
+        game = Object.FindFirstObjectByType<GameManager>();
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(31));
+        Assert.That(game.CorrectTileCount, Is.Zero);
+        yield return Solve(game);
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(32));
+        CollectionAssert.DoesNotContain(StageProgress.RecentPuzzleIds, StageProgress.CurrentPuzzleId);
+        Assert.That(Button("NextStageButton").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage32"));
+        string secondExtraScene = StageProgress.CurrentScene;
+        Tap(Button("NextStageButton"));
+        yield return WaitForScene(secondExtraScene);
         yield return null;
-        Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(SceneNavigator.TitleScene));
+        Assert.That(GameObject.Find("Level").GetComponent<TMP_Text>().text, Is.EqualTo("-Stage32-"));
+        Tap(Button("HomeButton"));
+        yield return WaitForScene(SceneNavigator.TitleScene);
+        Assert.That(Button("Stage01Button").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage32"));
     }
 
     [UnityTest]

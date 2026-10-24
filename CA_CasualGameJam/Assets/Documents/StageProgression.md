@@ -1,0 +1,32 @@
+# 30問とエクストラの進行仕様
+
+Stage1〜4は既存の4問をチュートリアルとして使用し、操作ガイドは追加しません。
+Stage5〜30はノーマル26問を資料の番号順に出題します。
+Stage31以降はノーマルの問題5〜30を再利用し、クリアするたびに表示番号を増やします。
+例えば問題12を再利用しても、タイトル・ステージ上部・次のボタンはStage31・Stage31・Stage32となります。
+
+## 抽選と保存
+
+- クリアしたノーマル問題のIDを直近8件保持し、その8件を除いた候補から均等に抽選します。チュートリアルは抽選対象外です。
+- エクストラ開始時には問題23〜30が除外履歴に入っているため、Stage31は問題5〜22の18問から抽選します。
+- エクストラのクリア後も同じ8件の窓を更新します。問題の在庫数で表示番号を巻き戻したり、ノーマルを再度番号順に消費したりはしません。
+- 正解判定時、次の表示番号・選択済みの問題ID・直近8件をまとめてPlayerPrefsへ保存し、Saveを呼びます。
+- HOME、途中離脱、リロード、アプリ再起動は番号や履歴を消費せず、同じ選択済み問題を開きます。描きかけの線・着色は初期化します。
+- 再クリアや二重確定では番号を二重に進めません。紙吹雪・縮小演出中に終了しても次の問題への進行を保持します。
+
+保存キーはColorPuzzle.StageProgress.v2です。旧ColorPuzzle.CurrentStageNumberのみのセーブは、表示番号を保って移行します。旧Stage11は新しい問題11としてプレイできます。
+
+## シーンと調整
+
+StageCatalogは問題1〜30とシーンの対応、TutorialCount=4、RecentPuzzleLimit=8を定義します。
+StageProgressはCurrentStageNumberとCurrentPuzzleIdを分離し、CurrentSceneで選択済みの問題シーンを返します。
+StageClearNavigationのInspectorのStage Numberは問題IDです。実行中のStageNumberは入場時の表示番号を保持し、クリア後に次の番号へ進んでも現在の盤面表示が変わらないようにします。
+Editorからシーンを直接再生した場合は、その問題IDを表示番号として入場します。エクストラで選ばれたCurrentSceneから入場した場合は、Stage31以降の表示番号を保持します。
+
+問題11〜30の生成にはColor Puzzle/Add Reference Stages 11-30を使用します。既存1〜10の問題条件とタイトルUIを保持し、新しい20シーンとBuild Settingsを追加します。
+問題11〜20、21〜30の配置・解答例は提供JSONからReferenceStageBuilderとStageTestReferenceへ転記しています。プレイヤー実行時にoutputフォルダーは不要です。
+
+検証対象はStageCatalogTests、StageProgressPersistenceTests、SceneNavigationTests.AllThirtyReferenceStagesClearInOrderAndContinueIntoPersistentExtrasです。テストは既存の保存データを退避・復元します。
+
+2026-10-24の限定実行でEditMode 2件、PlayMode 5件がすべて成功しました。全30問の連続クリア、Stage31/32の遷移と番号表示、40回のエクストラ抽選、再起動時の問題・履歴の維持、旧セーブ移行を確認しています。
+縦画面ではStage30の正解からStage31へ進み、問題18を再利用しても盤面上部とタイトルがStage31となることを確認しました。結果と画像はLogs/ThirtyStages-*です。

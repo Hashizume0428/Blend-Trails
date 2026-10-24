@@ -10,7 +10,39 @@ public class PuzzleRulesTests
     [TestCase(TileColor.Orange, true)]
     public void RedBanChecksFinishedColor(TileColor current, bool expected)
     {
-        Assert.That(PuzzleRules.IsTileCorrect(current, false, TileColor.None, TileColor.Red), Is.EqualTo(expected));
+        Assert.That(PuzzleRules.IsTileCorrect(current, true, current, TileColor.Red), Is.EqualTo(expected));
+    }
+    [TestCase(TileColor.None, false)]
+    [TestCase(TileColor.Red, true)]
+    [TestCase(TileColor.Blue, true)]
+    [TestCase(TileColor.Purple, false)]
+    [TestCase(TileColor.Yellow, false)]
+    [TestCase(TileColor.Green, false)]
+    [TestCase(TileColor.Orange, false)]
+    [TestCase((TileColor)7, false)]
+    [TestCase((TileColor)8, false)]
+    public void NormalTilesRequireOnlyRedOrBlue(TileColor current, bool expected)
+    {
+        Assert.That(PuzzleRules.IsTileCorrect(current, false, TileColor.None, TileColor.None), Is.EqualTo(expected));
+    }
+    [Test]
+    public void MixingANormalTileMakesItIncorrectUntilOneColorIsReloaded()
+    {
+        var go = new GameObject("Normal tile");
+        try
+        {
+            var tile = go.AddComponent<TileController>();
+            tile.Configure(0, Vector2Int.zero, true, BaseColor.Red, new BaseColor[0], TileColor.None);
+            Assert.That(tile.AddColor(BaseColor.Red), Is.True);
+            Assert.That(tile.IsTileCorrect(), Is.True);
+            Assert.That(tile.AddColor(BaseColor.Blue), Is.True, "Drawing purple must remain allowed.");
+            Assert.That(tile.CurrentColor, Is.EqualTo(TileColor.Purple));
+            Assert.That(tile.IsTileCorrect(), Is.False, "The normal-cell rule also applies to start tiles.");
+            Assert.That(tile.RemoveColor(BaseColor.Red), Is.True);
+            Assert.That(tile.CurrentColor, Is.EqualTo(TileColor.Blue));
+            Assert.That(tile.IsTileCorrect(), Is.True);
+        }
+        finally { Object.DestroyImmediate(go); }
     }
     [Test]
     public void RequiredColorMatchesExactlyAndIgnoresOrder()
@@ -44,6 +76,7 @@ public class PuzzleRulesTests
             tile.AddColor(BaseColor.Blue);
             Assert.That(tile.DisplayColor, Is.EqualTo(GlobalScripts.PurpleFaceColor));
             Assert.That(face.color, Is.EqualTo(GlobalScripts.PurpleFaceColor));
+            Assert.That(tile.IsTileCorrect(), Is.False, "Mixing cannot make an unmarked tile correct.");
             Assert.That(tile.AddColor(BaseColor.Blue), Is.False);
             tile.RemoveColor(BaseColor.Blue);
             Assert.That(tile.CurrentColor, Is.EqualTo(TileColor.Red));

@@ -26,7 +26,9 @@ public static class PuzzleRules
     public static bool IsTileCorrect(TileColor current, bool hasRequiredColor, TileColor required, TileColor forbidden)
     {
         // Compare the finished color with the ban, not its ingredients.
-        return IsSupportedColor(current) && current != forbidden && (!hasRequiredColor || current == required);
+        if (!IsSupportedColor(current) || current == forbidden) return false;
+        // Unmarked tiles must finish as one of the two playable base colors.
+        return hasRequiredColor ? current == required : current == TileColor.Red || current == TileColor.Blue;
     }
     public static bool TryGetAxisStep(Vector2Int from, Vector2Int to, out Vector2Int step)
     {

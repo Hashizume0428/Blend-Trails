@@ -5,16 +5,17 @@ Unity 6000.3.24f1で `Assets/Scenes/Title.unity` を開き、Playで開始しま
 ## 画面の流れ
 
 - タイトル画面のステージ選択ボタンは1つで、Stage1、Stage2の形式で現在の進行番号を表示します。押すと表示中のステージへ直接移動します。
-- クリア画面は完成した盤面と、横並びのHOME・Stage◯ボタンを表示して選択を待ちます。HOMEはタイトルへ、Stage◯は表示された次のステージへ移動します。全10問です。
-- ステージ10のクリア画面はStage11ボタンが無効となり、HOMEからタイトルへ戻れます。
+- クリア画面は完成した盤面と、横並びのHOME・Stage◯ボタンを表示して選択を待ちます。HOMEはタイトルへ、Stage◯は表示された次のステージへ移動します。用意された問題は全30問です。
+- Stage1〜4は既存問題を使うチュートリアルで、説明UIは追加しません。Stage5〜30はノーマル26問を番号順に出題します。
 - ステージ1をクリアすると進行番号が2へ進み、HOMEで戻ったタイトルはStage2を表示します。タイトルから選ぶと、ステージ2を初期状態で開始します。
-- ステージ10をクリアするとタイトルはStage11を表示します。Stage11は未実装なのでボタンを無効にし、COMING SOONを表示します。
+- Stage30クリア後はStage31以降のエクストラへ進みます。問題5〜30から直近8問と同じ問題を除いて抽選し、Stage番号は31、32、33…と増え続けます。最初の抽選は問題23〜30を除いた問題5〜22が対象です。
 - 進行番号は端末のPlayerPrefsへ保存し、アプリのタスク終了やPlayモードの再起動後も引き継ぎます。クリアの正解判定時に次の番号を即時保存するため、紙吹雪や縮小演出中に終了しても進行を保持します。同じステージの再クリア、未クリアの判定、リロードでは余分に番号を進めません。プレイ途中の線・着色は保存せず、続きの問題は初期状態から始まります。
 - ステージ右上のホームボタンはタイトルへ戻ります。クリア演出中を除き、描画中・線の確定中でも戻ることができ、進行中の操作はシーン破棄時に終了します。
 
-Build SettingsはTitle、SampleScene（Stage1）、Stage02〜Stage10の順です。旧StageSelectシーンは現在の遷移とBuild Settingsには含めません。
+Build SettingsはTitle、SampleScene（問題1）、Stage02〜Stage30の順です。エクストラは既存ノーマルのシーンを再利用し、表示するStage番号を進行管理から取得します。旧StageSelectシーンは現在の遷移とBuild Settingsには含めません。
 既存の試作2問は、output/imagegen/stage-01-clean.png〜stage-10-clean.pngの5列×4行の問題へ置き換えています。開始点と指定色を再現し、画像の線は解答例として扱います。開始時に解答線は表示しません。
 Stage3の中央の紫指定2マスは、各マスを個別の紫枠で囲みます。両方のマスにそれぞれ赤＋青が必要です。
+問題11〜20はoutput/stage-ideas-11-20/stages-11-20.json、問題21〜30はoutput/stage-ideas-21-30/stages-21-30.jsonの開始点・指定色を転記しています。全問5列×4行、赤・青2色で、解答線は開始時に表示しません。
 ステージ入場時にシーンの番号を進行管理へ同期するため、Editorからステージを直接再生してホームへ戻った場合も、選択ボタンに同じ番号を表示します。
 
 ## 操作
@@ -33,8 +34,9 @@ Stage3の中央の紫指定2マスは、各マスを個別の紫枠で囲みま�
 
 ## 判定
 
-通常マスは着色されていれば正解です。色枠は完成色を指定します。紫枠には赤と青の両方が必要です。
-禁止マークは完成色に適用します。赤禁止では赤単体だけが不正解で、紫やオレンジは許可します。
+通常マス（色指定なし）は赤単色または青単色のみ正解です。未着色・紫を含む混色・黄色は不正解です。色指定のない開始点にもこのルールを適用します。色枠は完成色を指定し、赤枠は赤、青枠は青、紫枠には赤と青の両方が必要です。
+通常マスを混色に塗る操作は許可します。両方の線を確定した時に不正解と判定し、既存の2秒点滅を行います。色別リロードで片方の色を除去すると単色へ戻り、そのマスは再判定されます。
+禁止マークは完成色に適用します。通常マスでは単色の条件も必要です。紫指定マスに赤禁止があっても、完成色の紫は赤単体の禁止には抵触しません。
 不正解でも線と内部の構成色を保持し、面は実際の単色・混色で表示します。未着色マスはノーマルカラー（#F9F9F9）です。
 リロード後も残った色で表示・再判定するため、紫指定マスが青単色になった場合は青、赤禁止マスが赤単体になった場合は赤を表示します。
 
@@ -53,12 +55,13 @@ GameManagerのTiles Listには20枚を登録し、Board Sizeは5×4とします�
 
 Color Puzzle/Import Text ResourcesはTMP標準リソースの導入用です。
 Color Puzzle/Build Prototypeは初回の生成用で、生成済み盤面の上書きを防ぎます。普段の調整はシーンやPrefabを編集してください。
-Color Puzzle/Build Reference Stages 1-10（Build Scene Flowも同じ処理）はReferenceStageBuilderの画像転記データで10シーンの問題設定と進行先を更新します。Inspectorで独自に調整した問題設定も上書きするため、通常の微調整では実行しません。
+Color Puzzle/Build Reference Stages 1-30（Build Scene Flowも同じ処理）はReferenceStageBuilderの転記データで30シーンの問題設定と進行先を更新します。Inspectorで独自に調整した問題設定も上書きするため、通常の微調整では実行しません。Color Puzzle/Add Reference Stages 11-30は既存1〜10の問題とタイトルUIを保持して20問を追加する今回の生成用です。
+Color Puzzle/Apply Revised Stages 5,6,9,10は、確認済みの差し替え4問だけを更新します。旧配置は再生成の定義からも削除しているため、全問再生成やエクストラ出題でも差し替え後の問題を使います。
 StageClearNavigationのStage Numberでステージ番号、Next Stage Sceneで次のシーンを設定します。最終面ではNext Stage Sceneを空にします。自動遷移タイマーはありません。
-StageProgressは次のステージ番号を管理し、PlayerPrefsのColorPuzzle.CurrentStageNumberへ変更のたびに書き込み・Saveします。起動時に復元し、初回はStage1、全問クリア後はStage11です。アンインストール・アプリデータ削除や別端末への引き継ぎには対応しません。StageCatalogは番号とシーンを対応付けます。ステージを追加する場合はCount、シーン、Build Settings、解答テストを更新してください。タイトルのMenuNavigationはUse Stage ProgressとStage Label / Stage Descriptionを使用します。
+StageProgressは表示番号・選択済みの問題ID・直近8問の履歴をPlayerPrefsのColorPuzzle.StageProgress.v2へJSONとして保存します。旧ColorPuzzle.CurrentStageNumberの整数セーブは進行番号を保って移行し、以後も互換用に更新します。初回はStage1、Stage30の後も出題を続けます。HOMEやタスキルで選択済みの問題を再抽選しません。アンインストール・アプリデータ削除や別端末への引き継ぎには対応しません。StageCatalogは問題IDとシーンを対応付けます。詳細はStageProgression.mdを参照してください。
 Color Puzzle/Apply Figma Stage UIは、既存の問題配置とクリア表示を維持してステージUIを更新します。
 StageScreenLayoutはFigmaの1324×2879を基準にSafe Areaへ配置し、短い縦画面ではセクション間の余白を縮めます。盤面のSpriteRendererとColliderもUIの盤面領域へ追従します。
-Color Puzzle/Update Clear Presentationは問題配置を保持し、全10シーンのクリア演出UIだけを更新します。StageClearPresentationで演出時間、ClearConfettiで紙片数と表示時間を調整できます。詳細はClearEffects.mdを参照してください。
+Color Puzzle/Update Clear Presentationは問題配置を保持し、全30シーンのクリア演出UIだけを更新します。StageClearPresentationで演出時間、ClearConfettiで紙片数と表示時間を調整できます。詳細はClearEffects.mdを参照してください。
 
 ## テスト
 
@@ -66,7 +69,7 @@ Unity Test RunnerからColorPuzzle.EditModeTestsとColorPuzzle.PlayModeTestsを�
 EditModeは色禁止・混色・完全一致・リロード後の表示・経路・空盤面を検証します。
 PlayModeは解答経路、他色開始点、色別リロード、巻き戻し、接触判定、描画中の即時着色・混色、不正解マスの実際の面表示、他色を保持した取消、判定中のリスタートを検証します。
 PuzzleVisualTestsでは、重なった辺・交点の混色、キャンセル・リロード後の線表示、禁止マークの中央配置、全開始色の確定後の未着色マスを含む枠・面・禁止マークの同期点滅、2秒での停止、リロード・再確定・初期化時の色の復元を検証します。
-SceneNavigationTestsでは、タイトルの1ボタン、ボタン以外のタップ、連続タップ、ステージへの直接移動、クリア後の選択待ち、ホーム復帰、Stage1〜Stage10の連続クリア・全条件配置・20マスの着色、Stage11の無効ボタン、未クリア・再クリア時の番号維持と再選択後の初期化を検証します。
+SceneNavigationTestsでは、タイトルの1ボタン、ボタン以外のタップ、連続タップ、ステージへの直接移動、クリア後の選択待ち、ホーム復帰、Stage1〜Stage30の連続クリア・全条件配置・20マスの着色、Stage31/32の表示とエクストラ出題、未クリア・再クリア時の番号維持と再選択後の初期化を検証します。
 PuzzleFlowTestsとPuzzleVisualTestsの色禁止などは、製品用問題と独立したテスト専用の条件を設定して回帰確認します。
 StageHudTestsでは、Figma UIの配置・盤面へのタッチ、ALLでの初期化と条件維持、リロード操作制限、Idle・描画中・着色中のホーム復帰を検証します。
 
@@ -78,25 +81,19 @@ Stage1の赤: (0,0) → (4,0) → (4,1) → (0,1)
 
 Stage1の青: (4,3) → (0,3) → (0,2) → (4,2)
 
-全10問の転記と解答例は、ReferenceStages.mdとテスト用StageTestReference.csで確認できます。同じ行・列の中間マスは順に通ります。
+全30問の転記と解答例は、ReferenceStages.md、ReferenceStageBuilder.cs、テスト用StageTestReference.csで確認できます。同じ行・列の中間マスは順に通ります。
 
 スマートフォン実機のタッチ操作と音の聞こえ方は、別途実機で確認してください。
 
 ## Verification
 
 Unity Editor compilation: 0 errors / 0 warnings.
-Previous full run: EditMode 13 / 13 passed; PlayMode 25 / 25 passed (all ten stage solutions, start/required-color placements, progression, live painting, rollback, stage UI, mixed lines and error indicators). The latest UI adjustments use a focused check only.
-Latest focused PlayMode checks: 2 / 2 passed (visible confetti geometry before shrinking, retained solved colors/lines, horizontal HOME / Stage4 actions, final Stage11 disabled, navigation and cancellation/reset). Result: Logs/ClearEffects-PlayMode.json.
-Progress persistence PlayMode checks: 3 / 3 passed (startup restore including Stage11, no duplicate/invalid advancement, save before clear animation, restored title Stage4 button opening a fresh Stage4). Result: Logs/StageProgress-PlayMode.json. Scene tests restore the developer's previous saved progress after each test. Actual mobile task termination has not been tested on hardware.
-Earlier stage-number/frame adjustment check: 1 / 1 passed. Result: Logs/StageUiAdjustments-PlayMode.json.
-Previous 9:16 portrait previews checked stages 1, 3, 8 and 10. Stage 8's live mixed faces and lines verified at 20 / 20 correct before release.
-Error feedback: all start lines committed, empty incorrect tiles, synchronized frames/faces/markers, two-second stop, restored face colors, and reload/recommit verified.
-Live painting: start and intermediate cells colored while drawing, immediate mixing, incorrect face colors, backtrack/cancel preserving the other color, input locked during resolution, and cancellation on restart verified.
-Scene navigation: Title -> Stage1 through Stage10 -> clear HOME / Stage◯; final Stage11 disabled; final title displays disabled Stage11 with COMING SOON. Incomplete play, reload and reclearing do not advance progress.
-Stage3 uses individual purple frames. Stage entry synchronizes its number with the title button.
-Test results: Logs/TenStages-EditMode.json and Logs/TenStages-PlayMode.json.
-Manual runtime check: frame advancement and 20 / 20 correct during live painting verified. Current Unity Console: 0 errors / 0 warnings.
-Current clear previews: Logs/ClearEffects-Confetti.png and Logs/ClearEffects-Result.png. The actual solved board shrinks to 60%, keeping its color and line geometry.
-Earlier gameplay screenshots: Logs/TenStages-01.png, Logs/TenStages-08.png, Logs/TenStages-08-Mixed.png and Logs/TenStages-10.png. TenStages-03.png shows the former shared frame.
-Native iPhone/Android haptics are wired to color addition; device vibration strength and native mobile builds have not been verified on hardware.
+Latest focused run (2026-10-24): EditMode 2 / 2 passed; PlayMode 5 / 5 passed. Results: Logs/ThirtyStages-EditMode.json and Logs/ThirtyStages-PlayMode.json.
+The integration test clears all thirty authored puzzles in order, checks all starts and required colors, then verifies Stage31/32 extra navigation, title/header/button numbering, HOME/reentry and persistent puzzle selection.
+Persistence checks cover the old Stage11 integer save, the normal/extra boundary, forty successive extra draws excluding the previous eight normal puzzles, reload without rerolling, duplicate clears and saving before the clear animation. Tests restore previous user preferences.
+All twenty new board definitions and example paths were compared with the supplied JSON. Enabled scenes: Title plus thirty puzzle scenes. Stage3 retains its separate purple frames.
+Portrait previews checked Stage30, its solved board with HOME/Stage31, the reused problem18 labelled Stage31, and the title Stage31 button. Frames advanced during verification and Stage30 reached 20 / 20 correct. Files: Logs/ThirtyStages-Stage30.png, Logs/ThirtyStages-Clear30.png, Logs/ThirtyStages-Extra31.png and Logs/ThirtyStages-Title31.png.
+The full regression suite was not rerun. Earlier checks for live painting, mixed lines, two-second error feedback, clear confetti and cancellation remain recorded in Logs/TenStages-PlayMode.json and Logs/ClearEffects-PlayMode.json.
+Current Unity Console: 0 errors / 0 warnings. Editor stopped on Title after restoring the previous saved progress.
+Mobile builds, device haptics and actual mobile task termination were not tested in this change.
 Editor integration: com.unity.pipeline 0.9.1-exp.1.

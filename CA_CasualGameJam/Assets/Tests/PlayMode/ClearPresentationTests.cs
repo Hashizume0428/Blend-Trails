@@ -28,10 +28,16 @@ public class ClearPresentationTests : StageProgressTestFixture
         _board = _game.TilesList[0].transform.parent; _initialScale = _board.localScale.x;
         Assert.That(_presentation, Is.Not.Null);
     }
-    private static IEnumerator WaitUntil(System.Func<bool> condition)
+    private static IEnumerator WaitUntil(System.Func<bool> condition,
+        [System.Runtime.CompilerServices.CallerLineNumber] int callerLine = 0)
     {
         float deadline = Time.realtimeSinceStartup + 5;
-        while (!condition()) { Assert.That(Time.realtimeSinceStartup, Is.LessThan(deadline)); yield return null; }
+        while (!condition())
+        {
+            Assert.That(Time.realtimeSinceStartup, Is.LessThan(deadline),
+                $"Wait at line {callerLine}: scene={SceneManager.GetActiveScene().name}, loading={SceneNavigator.IsLoading}, stage={StageProgress.CurrentStageNumber}");
+            yield return null;
+        }
     }
     private static void Tap(UnityEngine.UI.Button button)
     {
@@ -100,7 +106,7 @@ public class ClearPresentationTests : StageProgressTestFixture
         yield return null;
         yield return StageTestReference.Solve(Object.FindFirstObjectByType<GameManager>());
         Assert.That(Button("NextStageButton").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage11"));
-        Assert.That(Button("NextStageButton").interactable, Is.False);
+        Assert.That(Button("NextStageButton").interactable, Is.True);
         Tap(Button("ClearHomeButton"));
         yield return WaitUntil(() => SceneManager.GetActiveScene().name == SceneNavigator.TitleScene && !SceneNavigator.IsLoading);
     }

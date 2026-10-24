@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using NUnit.Framework;
 using TMPro;
@@ -6,19 +7,46 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
+[Category("StageProgression")]
 public class StageProgressPersistenceTests : StageProgressTestFixture
 {
     [Test]
-    public void StartupRestoresSavedProgressIncludingAllStagesCleared()
+    public void StartupMigratesTheOldSaveIncludingStageElevenAndExtraProgress()
     {
         Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(1));
-        foreach (int number in new[] { 4, StageCatalog.Count + 1, 0 })
+        foreach (int number in new[] { 4, 11, StageCatalog.Count + 1, 0 })
         {
-            PlayerPrefs.SetInt(ProgressKey, number);
-            PlayerPrefs.Save();
-            StageProgress.ResetSession();
+            LoadLegacyProgress(number);
             Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(Mathf.Max(1, number)));
-            Assert.That(StageProgress.CanPlayCurrentStage, Is.EqualTo(number <= StageCatalog.Count));
+            Assert.That(StageProgress.CanPlayCurrentStage, Is.True);
+        }
+    }
+
+    [Test]
+    public void ExtraDrawsExcludeThePreviousEightAndSurviveRestartWithoutRerolling()
+    {
+        LoadLegacyProgress(30);
+        StageProgress.RecordClear(30);
+        CollectionAssert.AreEqual(Enumerable.Range(23, 8), StageProgress.RecentPuzzleIds);
+        Assert.That(StageProgress.CurrentPuzzleId, Is.InRange(5, 22));
+        for (int i = 0; i < 40; i++)
+        {
+            int number = StageProgress.CurrentStageNumber, puzzle = StageProgress.CurrentPuzzleId;
+            int[] history = StageProgress.RecentPuzzleIds.ToArray();
+            Assert.That(number, Is.EqualTo(31 + i));
+            Assert.That(StageProgress.CurrentKind, Is.EqualTo(StageKind.Extra));
+            Assert.That(puzzle, Is.InRange(5, 30));
+            CollectionAssert.DoesNotContain(history, puzzle);
+            StageProgress.ResetSession();
+            StageProgress.EnterStage(puzzle);
+            Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(number));
+            Assert.That(StageProgress.CurrentPuzzleId, Is.EqualTo(puzzle));
+            CollectionAssert.AreEqual(history, StageProgress.RecentPuzzleIds);
+            StageProgress.RecordClear(number);
+            StageProgress.RecordClear(number);
+            Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(number + 1));
+            Assert.That(StageProgress.RecentPuzzleIds.Last(), Is.EqualTo(puzzle));
+            Assert.That(StageProgress.RecentPuzzleIds.Count, Is.EqualTo(8));
         }
     }
 

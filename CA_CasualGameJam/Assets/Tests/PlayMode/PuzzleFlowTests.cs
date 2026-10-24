@@ -21,6 +21,19 @@ public class PuzzleFlowTests : StageProgressTestFixture
     private int Index(int x, int y) => _game.GetTile(new Vector2Int(x, y)).TileIndex;
     private void Begin(int x, int y) => Assert.That(_game.TryBeginLine(Index(x, y)), Is.True);
     private void Extend(int x, int y) => Assert.That(_game.TryExtendLine(Index(x, y)), Is.True);
+    private void DrawRedSolution()
+    {
+        Begin(0, 0);
+        Extend(0, 1); Extend(1, 1); Extend(1, 0); Extend(2, 0);
+        Extend(2, 1); Extend(2, 2); Extend(3, 2); Extend(3, 1); Extend(3, 0);
+        Extend(4, 0); Extend(4, 3);
+    }
+    private void DrawBlueSolution()
+    {
+        Begin(0, 3);
+        Extend(0, 2); Extend(1, 2); Extend(1, 3); Extend(2, 3);
+        Extend(3, 3); Extend(3, 2); Extend(3, 1);
+    }
 
     [UnityTest]
     public IEnumerator FullSolutionClearsAndRestartResetsBoard()
@@ -28,17 +41,12 @@ public class PuzzleFlowTests : StageProgressTestFixture
         int before = Time.frameCount;
         yield return null;
         Assert.That(Time.frameCount, Is.GreaterThan(before));
-        Begin(0, 0);
-        Extend(0, 1); Extend(1, 1); Extend(1, 0); Extend(2, 0);
-        Extend(2, 1); Extend(2, 2); Extend(3, 2); Extend(3, 1); Extend(3, 0);
-        Extend(4, 0); Extend(4, 3);
+        DrawRedSolution();
         Assert.That(_game.CorrectTileCount, Is.GreaterThan(0), "Drawing must paint before release.");
         yield return _game.CommitLineAsync().ToCoroutine();
         Assert.That(_game.State, Is.EqualTo(GameState.Idle));
         Assert.That(_game.TryBeginLine(Index(0, 0)), Is.False);
-        Begin(0, 3);
-        Extend(0, 2); Extend(1, 2); Extend(1, 3); Extend(2, 3);
-        Extend(3, 3); Extend(3, 2); Extend(3, 1);
+        DrawBlueSolution();
         yield return _game.CommitLineAsync().ToCoroutine();
         Assert.That(_game.State, Is.EqualTo(GameState.Cleared));
         Assert.That(_game.CorrectTileCount, Is.EqualTo(20));
@@ -49,6 +57,36 @@ public class PuzzleFlowTests : StageProgressTestFixture
         foreach (TileController tile in _game.TilesList) Assert.That(tile.CurrentColor, Is.EqualTo(TileColor.None));
         yield return new WaitForSecondsRealtime(1.1f);
         Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(SceneNavigator.StageScene));
+    }
+    [UnityTest]
+    public IEnumerator PurpleNormalTileBlocksClearAndReloadAllowsCorrection()
+    {
+        DrawRedSolution();
+        yield return _game.CommitLineAsync().ToCoroutine();
+        DrawBlueSolution();
+        Extend(2, 1);
+        TileController mixedNormal = _game.GetTile(new Vector2Int(2, 1));
+        Assert.That(mixedNormal.RequiredColor, Is.EqualTo(TileColor.None));
+        Assert.That(mixedNormal.CurrentColor, Is.EqualTo(TileColor.Purple));
+        Assert.That(mixedNormal.IsTileCorrect(), Is.False);
+        foreach (TileController tile in _game.TilesList)
+            Assert.That(tile.CurrentColor, Is.Not.EqualTo(TileColor.None), "The board must be fully painted.");
+        Assert.That(_game.CorrectTileCount, Is.EqualTo(19));
+        yield return _game.CommitLineAsync().ToCoroutine();
+        Assert.That(_game.State, Is.EqualTo(GameState.Idle));
+        Assert.That(_game.StageClearCheck(), Is.False);
+        Assert.That(mixedNormal.IsErrorBlinking, Is.True);
+        Assert.That(GameObject.Find("ClearPanel"), Is.Null);
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(1));
+
+        Assert.That(_game.ReloadColor(BaseColor.Blue), Is.True);
+        Assert.That(mixedNormal.CurrentColor, Is.EqualTo(TileColor.Red));
+        Assert.That(mixedNormal.IsTileCorrect(), Is.True);
+        Assert.That(mixedNormal.IsErrorBlinking, Is.False);
+        DrawBlueSolution();
+        yield return _game.CommitLineAsync().ToCoroutine();
+        Assert.That(_game.State, Is.EqualTo(GameState.Cleared));
+        Assert.That(_game.CorrectTileCount, Is.EqualTo(20));
     }
     [UnityTest]
     public IEnumerator OtherColorStartRemainsUsableAndReloadPreservesOtherLine()
