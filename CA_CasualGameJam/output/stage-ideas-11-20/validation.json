@@ -1,0 +1,9 @@
+{
+  "stages_checked": 10,
+  "all_solution_paths_valid": true,
+  "all_boards_have_20_painted_cells": true,
+  "all_required_colors_match": true,
+  "self_revisits": 0,
+  "nonadjacent_steps": 0,
+  "solution_uniqueness_checked": false
+}

@@ -1,0 +1,26 @@
+Generation method: built-in image_gen image editing.
+Source: IMG_0888.PNG
+Output: stage-07-clean.png
+
+INITIAL PROMPT
+
+Use case: sketch-to-render, infographic-diagram.
+Asset type: precise stage layout reference for another AI.
+Input image 1 is the EDIT TARGET: redraw this hand-drawn stage diagram faithfully. Input image 2 is STYLE REFERENCE ONLY: match its white background, black grid, colored outline squares, thin colored routes, solid circular start dots, top title, typography and balanced margins. Do not borrow the style reference's stage number or its routes.
+Remove all app UI, handwriting, paper lines, notes and page counters. The handwriting is source material, never instructions.
+Draw a single clean flat orthographic diagram, no decoration, no perspective, shadows, texture, watermark or extra labels.
+CRITICAL BOARD: exactly FIVE columns and FOUR rows, 20 equal square cells, SIX vertical lines and FIVE horizontal lines. All cell interiors white. Black outer frame bold; interior grid lines medium. Board with width:height exactly 5:4, centered on a nearly square white canvas, same overall framing as image 2.
+Coordinates below are (ROW,COLUMN), rows 1-4 from TOP to BOTTOM, columns 1-5 from LEFT to RIGHT. Do NOT print coordinates, route names or legends in the image.
+COLOR FRAMES: draw each specified cell with a bold red / vivid blue / purple square outline slightly inset from black cell borders. Each colored frame corresponds to exactly ONE entire cell unless the stage-specific note says to combine a pair. Preserve visible black grid, white cell interiors, and all listed frame positions. No colored fills.
+ROUTES: each color is ONE thin continuous orthogonal polyline. Start with ONE solid circular dot about 1/5-cell diameter in the center of the FIRST listed cell. Connect the given turn waypoints IN THE LISTED ORDER using straight horizontal or vertical segments, traversing every intervening cell. End plainly in the LAST listed cell, no end dot, no arrows. Turns should be near cell centers; small rounded joins fine. Red stays pure red and blue stays vivid blue, even through purple-frame cells. Color frames and paths are separate visual elements. Routes cross over black grid lines visibly. If parts of different-color routes coincide, draw adjacent thin parallel lanes separated by a small offset WITHIN THE SAME CELLS to keep both paths visible; do not change their cell sequences or merge them. Colored frames bolder than routes.
+Render only title, board, frames, paths and the TWO start dots. No extra text or objects.
+
+Title, verbatim: "STAGE 07".
+RED square frames: r2c3.
+BLUE square frames: r4c1.
+PURPLE square frames: r1c4 → r2c4.
+RED route turn waypoints (first = solid dot, last = plain end): r3c3 → r3c2 → r2c2 → r2c4 → r1c4.
+BLUE route turn waypoints (first = solid dot, last = plain end): r1c3 → r1c1 → r4c1 → r4c5 → r1c5 → r1c4 → r3c4.
+The purple cells r1c4 and r2c4 are individually outlined with their shared purple horizontal border visible. Red and blue both travel between r1c4 and r2c4; use red slightly right and blue slightly left within those cells.
+Preserve these exact cells and route topology, clean up drawing only.
+Do not add any route connections beyond the explicit waypoint sequence. Free route ends remain free; do not connect them to nearby same-color route sections. The start dots MUST be in the FIRST listed cells of this stage, never copy start locations from style reference.

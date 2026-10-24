@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1280" viewBox="0 0 1400 1280">
+<rect width="100%" height="100%" fill="white"/>
+<title>STAGE 14 — ふたつの混色ゲート</title>
+<text x="700" y="134" text-anchor="middle" font-family="Arial,sans-serif" font-size="66" font-weight="700" fill="#111111">STAGE 14</text>
+<path d="M140,240V1136" fill="none" stroke="#111111" stroke-width="12"/>
+<path d="M364,240V1136" fill="none" stroke="#111111" stroke-width="8"/>
+<path d="M588,240V1136" fill="none" stroke="#111111" stroke-width="8"/>
+<path d="M812,240V1136" fill="none" stroke="#111111" stroke-width="8"/>
+<path d="M1036,240V1136" fill="none" stroke="#111111" stroke-width="8"/>
+<path d="M1260,240V1136" fill="none" stroke="#111111" stroke-width="12"/>
+<path d="M140,240H1260" fill="none" stroke="#111111" stroke-width="12"/>
+<path d="M140,464H1260" fill="none" stroke="#111111" stroke-width="8"/>
+<path d="M140,688H1260" fill="none" stroke="#111111" stroke-width="8"/>
+<path d="M140,912H1260" fill="none" stroke="#111111" stroke-width="8"/>
+<path d="M140,1136H1260" fill="none" stroke="#111111" stroke-width="12"/>
+<rect x="379" y="479" width="194" height="194" fill="none" stroke="#F20D16" stroke-width="8"/>
+<rect x="1051" y="927" width="194" height="194" fill="none" stroke="#F20D16" stroke-width="8"/>
+<rect x="155" y="255" width="194" height="194" fill="none" stroke="#007BFF" stroke-width="8"/>
+<rect x="155" y="927" width="194" height="194" fill="none" stroke="#007BFF" stroke-width="8"/>
+<rect x="827" y="255" width="194" height="194" fill="none" stroke="#872DA0" stroke-width="8"/>
+<rect x="827" y="479" width="194" height="194" fill="none" stroke="#872DA0" stroke-width="8"/>
+<rect x="379" y="703" width="194" height="194" fill="none" stroke="#872DA0" stroke-width="8"/>
+<rect x="379" y="927" width="194" height="194" fill="none" stroke="#872DA0" stroke-width="8"/>
+<g id="solution" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<polyline points="693,569 917,569 917,345 1141,345 1141,569 1141,793 1141,1017 917,1017 693,1017 469,1017 469,793 469,569" stroke="white" stroke-width="12"/>
+<polyline points="693,569 917,569 917,345 1141,345 1141,569 1141,793 1141,1017 917,1017 693,1017 469,1017 469,793 469,569" stroke="#F20D16" stroke-width="7"/>
+<polyline points="483,359 707,359 931,359 931,583 931,807 707,807 483,807 483,1031 259,1031 259,807 259,583 259,359" stroke="white" stroke-width="12"/>
+<polyline points="483,359 707,359 931,359 931,583 931,807 707,807 483,807 483,1031 259,1031 259,807 259,583 259,359" stroke="#007BFF" stroke-width="7"/>
+</g>
+<circle cx="693" cy="569" r="28" fill="#F20D16"/>
+<circle cx="483" cy="359" r="28" fill="#007BFF"/>
+</svg>

@@ -1,0 +1,3 @@
+# Python caches and intermediate stage-design checkpoints.
+__pycache__/
+design-progress.json

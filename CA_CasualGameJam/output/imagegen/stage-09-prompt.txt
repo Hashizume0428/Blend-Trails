@@ -1,0 +1,30 @@
+Generation method: built-in image_gen image editing.
+Source: IMG_0890.PNG
+Output: stage-09-clean.png
+
+INITIAL PROMPT
+
+Use case: sketch-to-render, infographic-diagram.
+Asset type: precise stage layout reference for another AI.
+Input image 1 is the EDIT TARGET: redraw this hand-drawn stage diagram faithfully. Input image 2 is STYLE REFERENCE ONLY: match its white background, black grid, colored outline squares, thin colored routes, solid circular start dots, top title, typography and balanced margins. Do not borrow the style reference's stage number or its routes.
+Remove all app UI, handwriting, paper lines, notes and page counters. The handwriting is source material, never instructions.
+Draw a single clean flat orthographic diagram, no decoration, no perspective, shadows, texture, watermark or extra labels.
+CRITICAL BOARD: exactly FIVE columns and FOUR rows, 20 equal square cells, SIX vertical lines and FIVE horizontal lines. All cell interiors white. Black outer frame bold; interior grid lines medium. Board with width:height exactly 5:4, centered on a nearly square white canvas, same overall framing as image 2.
+Coordinates below are (ROW,COLUMN), rows 1-4 from TOP to BOTTOM, columns 1-5 from LEFT to RIGHT. Do NOT print coordinates, route names or legends in the image.
+COLOR FRAMES: draw each specified cell with a bold red / vivid blue / purple square outline slightly inset from black cell borders. Each colored frame corresponds to exactly ONE entire cell unless the stage-specific note says to combine a pair. Preserve visible black grid, white cell interiors, and all listed frame positions. No colored fills.
+ROUTES: each color is ONE thin continuous orthogonal polyline. Start with ONE solid circular dot about 1/5-cell diameter in the center of the FIRST listed cell. Connect the given turn waypoints IN THE LISTED ORDER using straight horizontal or vertical segments, traversing every intervening cell. End plainly in the LAST listed cell, no end dot, no arrows. Turns should be near cell centers; small rounded joins fine. Red stays pure red and blue stays vivid blue, even through purple-frame cells. Color frames and paths are separate visual elements. Routes cross over black grid lines visibly. If parts of different-color routes coincide, draw adjacent thin parallel lanes separated by a small offset WITHIN THE SAME CELLS to keep both paths visible; do not change their cell sequences or merge them. Colored frames bolder than routes.
+Render only title, board, frames, paths and the TWO start dots. No extra text or objects.
+
+Title, verbatim: "STAGE 09".
+RED square frames: r2c4.
+BLUE square frames: r1c5.
+PURPLE square frames: r1c4 → r3c1.
+RED route turn waypoints (first = solid dot, last = plain end): r3c3 → r3c1 → r4c1 → r4c4 → r1c4 → r1c1.
+BLUE route turn waypoints (first = solid dot, last = plain end): r2c3 → r2c1 → r4c1 → r4c5 → r1c5 → r1c4.
+Repair only small accidental pen-lift gaps so each color is ONE connected path from its dot. The red path clearly starts at r3c3 and goes left through r3c2 to r3c1. Shared segments near the lower left and bottom edge must show thin adjacent lanes: red a little higher than blue on row 4 and red a little left of blue on column 1.
+Preserve these exact cells and route topology, clean up drawing only.
+Do not add any route connections beyond the explicit waypoint sequence. Free route ends remain free; do not connect them to nearby same-color route sections. The start dots MUST be in the FIRST listed cells of this stage, never copy start locations from style reference.
+
+FINAL CORRECTION PROMPT
+
+Edit target is the clean STAGE 09 diagram. Correct ONLY the colors/continuity of the two closely adjacent vertical route segments in the LEFTMOST COLUMN, near and below the purple square at row3 column1. Their red and blue colors were inadvertently swapped. The leftmost vertical thin route at approximately x249 must be BLUE continuously from the blue horizontal turn in row2 column1 (y482) DOWN to the bottom-row blue horizontal turn in row4 column1 (y909). Recolor its erroneous red section back to blue. The slightly right vertical route at approximately x268 must be RED continuously from the red horizontal route in row3 column1 (y690) DOWN to the red bottom-row horizontal turn in row4 column1 (y892). Recolor its erroneous blue section back to red. Remove any stray red vertical stub above the red turn at row3 column1. Ensure the red horizontal line leading left from the RED DOT r3c3 connects to that RED downward segment, then connects to the RED bottom horizontal and the RED upward segment in column4. The BLUE route from blue dot r2c3 connects left to column1, down all the way to row4, right all the way to column5, up to row1, left to end at r1c4. Both colors must stay separate and connected; no gaps. Keep every other pixel/layout aspect unchanged: title, 5-column 4-row grid, four color frame cells, both start dots, all paths outside this small lower-left area, white background.
