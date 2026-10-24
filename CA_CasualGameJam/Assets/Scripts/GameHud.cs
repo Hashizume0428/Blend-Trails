@@ -15,6 +15,7 @@ public class GameHud : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Button _nextStage;
     [SerializeField] private TMP_Text _stageLabel;
     [SerializeField] private TMP_Text _clearMessage;
+    [SerializeField] private TMP_Text _clearStageLabel;
     [SerializeField] private TMP_Text _progress;
     [SerializeField] private TMP_Text _status;
     [SerializeField] private CanvasGroup _clearPanel;
@@ -78,6 +79,7 @@ public class GameHud : MonoBehaviour
         bool cleared = CanOperate && _gameManager.State == GameState.Cleared;
         if (_nextStage != null) _nextStage.interactable = cleared && _stageNavigation != null && _stageNavigation.HasNextStage;
         if (_nextStageLabel != null) _nextStageLabel.text = $"Stage{(_stageNavigation != null ? _stageNavigation.StageNumber + 1 : 2)}";
+        if (_clearStageLabel != null) _clearStageLabel.text = $"STAGE {(_stageNavigation != null ? _stageNavigation.StageNumber : 1)}";
         if (_stageLabel != null) _stageLabel.text = $"-Stage{(_stageNavigation != null ? _stageNavigation.StageNumber : 1)}-";
         if (_clearMessage != null) _clearMessage.text = _stageNavigation != null && !_stageNavigation.HasNextStage
             ? "ALL STAGES CLEAR" : "Every color in its place.";
@@ -89,6 +91,8 @@ public class GameHud : MonoBehaviour
     {
         if (_paletteApplied || !_gameManager.IsInitialized || _gameManager.PaletteVisuals == null) return;
         _paletteApplied = true;
+        var toon = GetComponent<ToonPaletteHud>();
+        if (toon != null) { toon.ApplyPalette(_gameManager.Palette); return; }
         // The red/blue skin is already correct; keep its original UI material.
         if (_gameManager.Palette.Mixed == TileColor.Purple) return;
         _paletteMaterial = _gameManager.PaletteVisuals.CreateUiMaterial(_gameManager.Palette);

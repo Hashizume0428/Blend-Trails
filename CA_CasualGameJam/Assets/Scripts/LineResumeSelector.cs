@@ -53,7 +53,15 @@ public class LineResumeSelector : MonoBehaviour
     }
     private static void Style(UnityEngine.UI.Button button, TMP_Text label, BaseColor color)
     {
-        button.GetComponent<UnityEngine.UI.Image>().color = StagePaletteVisuals.UiColor(PuzzleRules.ToTileColor(color));
+        var image = button.GetComponent<UnityEngine.UI.Image>();
+        var skin = ToonSkinAssets.Current;
+        if (skin != null)
+        {
+            image.sprite = skin.ColorButtons[(int)color];
+            image.color = Color.white;
+            label.color = color == BaseColor.Yellow ? ToonSkinAssets.Ink : Color.white;
+        }
+        else image.color = StagePaletteVisuals.UiColor(PuzzleRules.ToTileColor(color));
         label.text = color.ToString().ToUpperInvariant();
     }
     private void SelectFirst() => Select(_firstColor);

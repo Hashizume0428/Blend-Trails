@@ -131,6 +131,7 @@ public class SceneNavigationTests : StageProgressTestFixture
         Assert.That(Button("NextStageButton").interactable, Is.True);
         Assert.That(GameObject.Find("ClearHomeButton"), Is.Null);
         Assert.That(Button("NextStageButton").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage31"));
+        Assert.That(GameObject.Find("ToonClearStage").GetComponent<TMP_Text>().text, Is.EqualTo("STAGE 30"));
         Tap(Button("NextStageButton"));
         yield return WaitForScene(StageCatalog.SceneName(firstExtraPuzzle));
         Tap(Button("HomeButton"));
@@ -159,6 +160,7 @@ public class SceneNavigationTests : StageProgressTestFixture
         Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(32));
         CollectionAssert.DoesNotContain(StageProgress.RecentPuzzleIds, StageProgress.CurrentPuzzleId);
         Assert.That(Button("NextStageButton").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage32"));
+        Assert.That(GameObject.Find("ToonClearStage").GetComponent<TMP_Text>().text, Is.EqualTo("STAGE 31"));
         string secondExtraScene = StageProgress.CurrentScene;
         Tap(Button("NextStageButton"));
         yield return WaitForScene(secondExtraScene);

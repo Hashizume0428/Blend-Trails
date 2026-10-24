@@ -35,12 +35,12 @@ public class StagePaletteVisuals : ScriptableObject
     {
         switch (color)
         {
-            case TileColor.Red: return new Color32(229, 75, 75, 255);
-            case TileColor.Blue: return new Color32(75, 142, 229, 255);
-            case TileColor.Purple: return new Color32(191, 75, 229, 255);
-            case TileColor.Yellow: return new Color32(229, 190, 75, 255);
-            case TileColor.Orange: return new Color32(229, 148, 75, 255);
-            case TileColor.Green: return new Color32(75, 181, 101, 255);
+            case TileColor.Red: return new Color32(255, 62, 67, 255);
+            case TileColor.Blue: return new Color32(0, 104, 255, 255);
+            case TileColor.Purple: return new Color32(138, 37, 245, 255);
+            case TileColor.Yellow: return new Color32(255, 212, 42, 255);
+            case TileColor.Orange: return new Color32(255, 140, 40, 255);
+            case TileColor.Green: return new Color32(50, 191, 105, 255);
             default: return Color.white;
         }
     }

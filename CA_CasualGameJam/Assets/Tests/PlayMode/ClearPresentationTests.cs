@@ -90,6 +90,8 @@ public class ClearPresentationTests : StageProgressTestFixture
         Assert.That(_game.LineVisuals.GetComponent<MeshFilter>().sharedMesh.vertexCount, Is.GreaterThan(0));
         var next = Button("NextStageButton");
         Assert.That(next.transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage4"));
+        Assert.That(GameObject.Find("ToonClearStage").GetComponent<TMP_Text>().text, Is.EqualTo("STAGE 3"));
+        Assert.That(GameObject.Find("ToonClearBackdrop").GetComponent<CanvasGroup>().alpha, Is.EqualTo(1));
         Vector2 nextCenter = Center((RectTransform)next.transform);
         Assert.That(next.transform.parent.childCount, Is.EqualTo(1));
         Assert.That(nextCenter.x, Is.EqualTo(Screen.safeArea.center.x).Within(1));
@@ -106,6 +108,7 @@ public class ClearPresentationTests : StageProgressTestFixture
         yield return null;
         yield return StageTestReference.Solve(Object.FindFirstObjectByType<GameManager>());
         Assert.That(Button("NextStageButton").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage11"));
+        Assert.That(GameObject.Find("ToonClearStage").GetComponent<TMP_Text>().text, Is.EqualTo("STAGE 10"));
         Assert.That(Button("NextStageButton").interactable, Is.True);
         Tap(Button("NextStageButton"));
         yield return WaitUntil(() => SceneManager.GetActiveScene().name == StageCatalog.SceneName(11) && !SceneNavigator.IsLoading);
@@ -126,6 +129,7 @@ public class ClearPresentationTests : StageProgressTestFixture
         Assert.That(_board.localScale.x, Is.EqualTo(_initialScale).Within(0.001f));
         Assert.That(_game.TilesList.All(tile => tile.CurrentColor == TileColor.None), Is.True);
         Assert.That(GameObject.Find("ClearPanel"), Is.Null);
+        Assert.That(GameObject.Find("ToonClearBackdrop"), Is.Null);
         Assert.That(Button("HomeButton").interactable, Is.True);
         Assert.That(Button("ReloadAll").interactable, Is.True);
     }

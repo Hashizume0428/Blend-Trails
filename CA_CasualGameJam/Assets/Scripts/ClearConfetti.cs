@@ -21,8 +21,11 @@ public class ClearConfetti : UnityEngine.UI.MaskableGraphic
     {
         var random = new System.Random(Time.frameCount);
         float Next(float min, float max) => Mathf.Lerp(min, max, (float)random.NextDouble());
-        Color[] palette = { GlobalScripts.GetLineColor(TileColor.Red), GlobalScripts.GetLineColor(TileColor.Blue),
-            GlobalScripts.GetLineColor(TileColor.Purple), GlobalScripts.GetLineColor(TileColor.Yellow) };
+        var manager = Object.FindFirstObjectByType<GameManager>();
+        StageColorPalette active = manager != null ? manager.Palette : StageColorPalette.ForStage(1);
+        Color[] palette = { StagePaletteVisuals.UiColor(PuzzleRules.ToTileColor(active.First)),
+            StagePaletteVisuals.UiColor(PuzzleRules.ToTileColor(active.Second)),
+            StagePaletteVisuals.UiColor(active.Mixed), ToonSkinAssets.Cream };
         _pieces = new Piece[_pieceCount];
         for (int i = 0; i < _pieces.Length; i++)
             _pieces[i] = new Piece

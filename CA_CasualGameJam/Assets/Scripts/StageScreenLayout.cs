@@ -17,6 +17,9 @@ public class StageScreenLayout : MonoBehaviour
     [SerializeField] private RectTransform _clearContent;
     [SerializeField] private RectTransform _clearBoardArea;
     [SerializeField] private RectTransform _clearActions;
+    [SerializeField] private RectTransform _clearBackdropSafeArea;
+    [SerializeField] private RectTransform _clearFrame;
+    [SerializeField] private RectTransform _clearHeading;
     private float _clearProgress;
     public float ClearProgress => _clearProgress;
     private Rect _lastSafeArea, _lastCameraRect;
@@ -58,10 +61,10 @@ public class StageScreenLayout : MonoBehaviour
         Vector2 size = _safeArea.rect.size;
         if (size.x <= 0 || size.y <= 0) return;
 
-        // Preserve component sizes. Only the spaces between sections contract on shorter phones.
-        const float designWidth = 1324, designGaps = 832;
-        float boardHeight = 1192f * _boardSize.y / _boardSize.x;
-        float sectionHeights = 855 + boardHeight;
+        // B's portrait composition; extra phone height expands the section gaps.
+        const float designWidth = 941, designGaps = 190;
+        float boardHeight = 885f * (_boardSize.y + .9f) / (_boardSize.x + .7f);
+        float sectionHeights = 775 + boardHeight;
         float scale = Mathf.Min(size.x / designWidth, size.y / sectionHeights);
         float height = size.y / scale;
         float gap = Mathf.Max(0, (height - sectionHeights) / designGaps);
@@ -69,35 +72,47 @@ public class StageScreenLayout : MonoBehaviour
         _content.anchoredPosition = Vector2.zero;
         _content.sizeDelta = new Vector2(designWidth, height);
         _content.localScale = Vector3.one * scale;
-        float homeY = 55 * gap;
-        float stageY = homeY + 183 + 159 * gap;
-        float boardY = stageY + 141 + 95 * gap;
-        float legendY = boardY + boardHeight + 106 * gap;
-        float trayY = legendY + 110 + 233 * gap;
-        Place(_home, 1071, homeY, 191, 191); // Export padding contains the original shadow.
-        Place(_stageLabel, 335, stageY, 653, 141);
-        Place(_boardArea, 66, boardY, 1192, boardHeight);
-        Place(_mixLegend, 163, legendY, 470, 110);
-        Place(_reloadPanel, 57, trayY, 1200, 429);
+        float homeY = 28 * gap;
+        float stageY = 103 * gap;
+        float boardY = 285 + 115 * gap;
+        float legendY = boardY + boardHeight + 28 * gap;
+        float trayY = legendY + 140 + 28 * gap;
+        Place(_home, 778, homeY, 140, 150);
+        Place(_stageLabel, 164, stageY, 613, 275);
+        Place(_boardArea, 28, boardY, 885, boardHeight);
+        Place(_mixLegend, 214, legendY, 513, 140);
+        Place(_reloadPanel, 24, trayY, 893, 315);
 
         if (_clearContent != null)
         {
             _clearContent.anchorMin = _safeArea.anchorMin; _clearContent.anchorMax = _safeArea.anchorMax;
             _clearContent.offsetMin = _clearContent.offsetMax = Vector2.zero;
         }
-        float previewY = size.y * 0.08f;
+        if (_clearBackdropSafeArea != null)
+        {
+            _clearBackdropSafeArea.anchorMin = _safeArea.anchorMin;
+            _clearBackdropSafeArea.anchorMax = _safeArea.anchorMax;
+            _clearBackdropSafeArea.offsetMin = _clearBackdropSafeArea.offsetMax = Vector2.zero;
+        }
+        if (_clearFrame != null) Center(_clearFrame, new Vector2(0, -35 * scale), new Vector2(815, 1160) * scale);
+        if (_clearHeading != null)
+        {
+            Center(_clearHeading, Vector2.zero, new Vector2(941, 1672));
+            _clearHeading.localScale = Vector3.one * scale;
+        }
+        float previewY = -80 * scale;
         if (_clearBoardArea != null)
         {
             _clearBoardArea.anchorMin = _clearBoardArea.anchorMax = _clearBoardArea.pivot = new Vector2(0.5f, 0.5f);
-            _clearBoardArea.sizeDelta = new Vector2(1192, boardHeight) * (0.6f * scale);
+            _clearBoardArea.sizeDelta = new Vector2(885, boardHeight) * (0.6f * scale);
             _clearBoardArea.anchoredPosition = new Vector2(0, previewY);
         }
         if (_clearActions != null)
         {
             _clearActions.anchorMin = _clearActions.anchorMax = _clearActions.pivot = new Vector2(0.5f, 0.5f);
-            _clearActions.sizeDelta = new Vector2(460, 166);
+            _clearActions.sizeDelta = new Vector2(710, 184);
             _clearActions.localScale = Vector3.one * scale;
-            _clearActions.anchoredPosition = new Vector2(0, previewY - boardHeight * 0.3f * scale - 180 * scale);
+            _clearActions.anchoredPosition = new Vector2(0, -470 * scale);
         }
 
         _boardArea.GetWorldCorners(_corners);
@@ -106,7 +121,7 @@ public class StageScreenLayout : MonoBehaviour
         float depth = -_boardCamera.transform.position.z;
         Vector3 worldLeft = _boardCamera.ScreenToWorldPoint(new Vector3(topLeft.x, topLeft.y, depth));
         Vector3 worldRight = _boardCamera.ScreenToWorldPoint(new Vector3(topRight.x, topRight.y, depth));
-        float boardScale = (worldRight.x - worldLeft.x) / (_boardSize.x + 0.3f);
+        float boardScale = (worldRight.x - worldLeft.x) / (_boardSize.x + 0.7f);
         Vector2 bottomLeft = RectTransformUtility.WorldToScreenPoint(null, _corners[0]);
         Vector3 worldBottom = _boardCamera.ScreenToWorldPoint(new Vector3(bottomLeft.x, bottomLeft.y, depth));
         Vector3 boardPosition = new Vector3((worldLeft.x + worldRight.x) / 2, (worldLeft.y + worldBottom.y) / 2, 0);
@@ -119,7 +134,7 @@ public class StageScreenLayout : MonoBehaviour
             Vector3 targetUpper = _boardCamera.ScreenToWorldPoint(new Vector3(upper.x, upper.y, depth));
             Vector3 targetPosition = (targetLower + targetUpper) / 2; targetPosition.z = 0;
             boardPosition = Vector3.Lerp(boardPosition, targetPosition, _clearProgress);
-            boardScale = Mathf.Lerp(boardScale, (targetUpper.x - targetLower.x) / (_boardSize.x + 0.3f), _clearProgress);
+            boardScale = Mathf.Lerp(boardScale, (targetUpper.x - targetLower.x) / (_boardSize.x + 0.7f), _clearProgress);
         }
         _board.localScale = Vector3.one * boardScale;
         _board.position = boardPosition;
@@ -129,6 +144,12 @@ public class StageScreenLayout : MonoBehaviour
         _lastCameraRect = _boardCamera.pixelRect;
         _lastCameraSize = _boardCamera.orthographicSize;
         _dirty = false;
+    }
+
+    private static void Center(RectTransform rect, Vector2 position, Vector2 size)
+    {
+        rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(.5f, .5f);
+        rect.anchoredPosition = position; rect.sizeDelta = size; rect.localScale = Vector3.one;
     }
 
     private static void Place(RectTransform rect, float x, float y, float width, float height)

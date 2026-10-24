@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8ba27924eb740545b629ba69ac6faa9, type: 3}
+  m_Name: ToonSkin
+  m_EditorClassIdentifier: ColorPuzzle.Runtime::ToonSkinAssets
+  TitleArtwork: {fileID: 2800000, guid: 76dfe39aa47714144843536c4d51dbe8, type: 3}
+  Font: {fileID: 11400000, guid: 2009e8753b28539429398acb63b7306d, type: 2}
+  OutlinedText: {fileID: 2100000, guid: 5f085c4d6c6fee14283776264a3f36c3, type: 2}
+  CreamPanel: {fileID: 21300000, guid: 112e8db7729916348838494852fec7ee, type: 3}
+  HeaderPanel: {fileID: 21300000, guid: 22c19910074f3a340a460e9e120a2ac4, type: 3}
+  PrimaryButton: {fileID: 21300000, guid: 6ad8a7521581e7a45a03ca0dd131a547, type: 3}
+  NeutralButton: {fileID: 21300000, guid: 8be70daa5bbf0cf4e87f76cd718c0697, type: 3}
+  HomeButton: {fileID: 21300000, guid: d57f73fac7db01244a737b1498973f98, type: 3}
+  TileFace: {fileID: 21300000, guid: 154d96d4e29ec49409005b0e97b3c2bf, type: 3}
+  BoardPanel: {fileID: 21300000, guid: 112e8db7729916348838494852fec7ee, type: 3}
+  ResetIcon: {fileID: 21300000, guid: f785ff95775d1ac48a83ba3240e850b8, type: 3}
+  HomeIcon: {fileID: 21300000, guid: 721103e3652c1b44991836b2dd47a138, type: 3}
+  PlayIcon: {fileID: 21300000, guid: 29cc1565c38fdf044a071fffc0273189, type: 3}
+  NextIcon: {fileID: 21300000, guid: 4336e1dfadccc59408fb68039e6c4f68, type: 3}
+  CloseIcon: {fileID: 21300000, guid: 65f2d5e56956a6445a45e4976da5196f, type: 3}
+  Dot: {fileID: 21300000, guid: 92e8b5994a7fce64ca3fdaebaaa0711b, type: 3}
+  ColorButtons:
+  - {fileID: 21300000, guid: 74b389035ffa1774a9896a134e8a9a4a, type: 3}
+  - {fileID: 21300000, guid: e9e05c256e040a84abc2a50dcae0a222, type: 3}
+  - {fileID: 21300000, guid: 83c943fb9b1e0244cbe9aa90c353d4c4, type: 3}
+  Frames:
+  - {fileID: 21300000, guid: c429ef513cd86ff428d4734349a6262d, type: 3}
+  - {fileID: 21300000, guid: 25d96b14470431648aeef1dff0930b83, type: 3}
+  - {fileID: 21300000, guid: df6ab0d3869bc144886abafd84fb9c81, type: 3}
+  - {fileID: 21300000, guid: 51f44e61929b22541adb7359e1bcf443, type: 3}
+  - {fileID: 21300000, guid: 4728c53e3e2cc334b9fd5b502cd92ed7, type: 3}
+  - {fileID: 21300000, guid: 55df53249e5ce1146b37432041996c46, type: 3}
+  - {fileID: 21300000, guid: 5162481b4a66b6847a0ca48532e656fa, type: 3}
+  - {fileID: 21300000, guid: 2982eebd4271a46469de5cc73c315d45, type: 3}
+  Starts:
+  - {fileID: 21300000, guid: 00406be28fbda034aad298f8462a89c6, type: 3}
+  - {fileID: 21300000, guid: d98731484cbde434c85feb3e523d81d2, type: 3}
+  - {fileID: 21300000, guid: 9199fcbf8b4672848b02f3b96dfcb1f5, type: 3}

@@ -5,15 +5,15 @@ public static class GlobalScripts
     public const int Red = 0;
     public const int Blue = 1;
     public const int Yellow = 2;
-    public static readonly Color BackgroundColor = new Color32(242, 238, 238, 255);
+    public static readonly Color BackgroundColor = new Color32(46, 185, 239, 255);
     
     public static readonly Color NormalFaceColor = new Color32(249, 249, 249, 255); // #F9F9F9
     public static readonly Color RedFaceColor = new Color32(254, 159, 159, 255); // #FE9F9F
     public static readonly Color BlueFaceColor = new Color32(156, 198, 254, 255); // #9CC6FE
-    public static readonly Color YellowFaceColor = new Color32(251, 225, 138, 255); // #FBE18A
+    public static readonly Color YellowFaceColor = new Color32(255, 231, 115, 255);
     public static readonly Color PurpleFaceColor = new Color32(229, 163, 251, 255); // #E5A3FB
-    public static readonly Color GreenFaceColor = new Color32(141, 223, 130, 255); // #8DDF82
-    public static readonly Color OrangeFaceColor = new Color32(253, 196, 146, 255); // #FDC492
+    public static readonly Color GreenFaceColor = new Color32(149, 230, 177, 255);
+    public static readonly Color OrangeFaceColor = new Color32(255, 192, 119, 255);
     
     public static Sprite NormalFlameImage;
     public static Sprite RedFlameImage;
@@ -52,9 +52,9 @@ public static class GlobalScripts
     {
         switch (color)
         {
-            case BaseColor.Red: return new Color32(235, 61, 79, 255);
-            case BaseColor.Blue: return new Color32(49, 95, 235, 255);
-            default: return new Color32(232, 174, 32, 255);
+            case BaseColor.Red: return StagePaletteVisuals.UiColor(TileColor.Red);
+            case BaseColor.Blue: return StagePaletteVisuals.UiColor(TileColor.Blue);
+            default: return new Color32(244, 186, 0, 255);
         }
     }
     public static Color GetLineColor(TileColor color)
@@ -64,14 +64,15 @@ public static class GlobalScripts
             case TileColor.Red: return GetLineColor(BaseColor.Red);
             case TileColor.Blue: return GetLineColor(BaseColor.Blue);
             case TileColor.Yellow: return GetLineColor(BaseColor.Yellow);
-            case TileColor.Purple: return new Color32(164, 74, 218, 255);
-            case TileColor.Green: return new Color32(45, 166, 91, 255);
-            case TileColor.Orange: return new Color32(235, 139, 40, 255);
+            case TileColor.Purple: return StagePaletteVisuals.UiColor(TileColor.Purple);
+            case TileColor.Green: return StagePaletteVisuals.UiColor(TileColor.Green);
+            case TileColor.Orange: return StagePaletteVisuals.UiColor(TileColor.Orange);
             default: return Color.clear;
         }
     }
     public static Sprite GetFrameImage(TileColor color)
     {
+        if (ToonSkinAssets.Current != null) return ToonSkinAssets.Current.Frame(color);
         if (NormalFlameImage == null) LoadFlameImages();
         switch (color)
         {

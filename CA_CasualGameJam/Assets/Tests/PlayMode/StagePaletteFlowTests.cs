@@ -30,7 +30,17 @@ public class StagePaletteFlowTests : StageProgressTestFixture
         foreach (TileController tile in Game.TilesList.Where(tile => tile.IsStartTile))
             Assert.That(tile.transform.Find("StartMarker").GetComponent<SpriteRenderer>().sprite,
                 Is.EqualTo(Game.PaletteVisuals.StartMarker(tile.StartColor)));
-        if (mixed != TileColor.Purple)
+        var toon = Object.FindFirstObjectByType<ToonPaletteHud>();
+        if (toon != null)
+        {
+            Assert.That(toon.FirstButton.sprite, Is.EqualTo(ToonSkinAssets.Current.ColorButtons[(int)first]));
+            Assert.That(toon.SecondButton.sprite, Is.EqualTo(ToonSkinAssets.Current.ColorButtons[(int)second]));
+            Assert.That(toon.FirstSwatch.color, Is.EqualTo(StagePaletteVisuals.UiColor(PuzzleRules.ToTileColor(first))));
+            Assert.That(toon.SecondSwatch.color, Is.EqualTo(StagePaletteVisuals.UiColor(PuzzleRules.ToTileColor(second))));
+            Assert.That(toon.MixedSwatch.color, Is.EqualTo(StagePaletteVisuals.UiColor(mixed)));
+            Assert.That(toon.SecondIcon.color, Is.EqualTo(second == BaseColor.Yellow ? ToonSkinAssets.Ink : Color.white));
+        }
+        else if (mixed != TileColor.Purple)
         {
             var legend = GameObject.Find("MixPurple").GetComponent<UnityEngine.UI.Image>();
             Assert.That(legend.material.shader.name, Is.EqualTo("Color Puzzle/Stage Palette UI"));

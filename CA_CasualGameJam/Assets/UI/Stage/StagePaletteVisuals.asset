@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: StagePaletteVisuals
   m_EditorClassIdentifier: ColorPuzzle.Runtime::StagePaletteVisuals
   _startMarkers:
-  - {fileID: 7420819776627112207, guid: af6fc82c722e94d4cbcf3df79bdf570c, type: 3}
-  - {fileID: -8431169405349022564, guid: 82d80e1d078cb3544890a41212405840, type: 3}
-  - {fileID: -7272589543487527361, guid: a611ffcdab1a0f54f91173c337813e02, type: 3}
+  - {fileID: 21300000, guid: 00406be28fbda034aad298f8462a89c6, type: 3}
+  - {fileID: 21300000, guid: d98731484cbde434c85feb3e523d81d2, type: 3}
+  - {fileID: 21300000, guid: 9199fcbf8b4672848b02f3b96dfcb1f5, type: 3}
   _forbiddenMarkers:
   - {fileID: -289405526753468395, guid: 2ac4516c97c97f44f8e0e6a62c7e557c, type: 3}
   - {fileID: 7728552210749480965, guid: 930f773a5daecd24a872ecd467932a4d, type: 3}

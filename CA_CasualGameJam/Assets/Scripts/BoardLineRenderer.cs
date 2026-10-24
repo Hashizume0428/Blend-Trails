@@ -13,7 +13,7 @@ public class BoardLineRenderer : MonoBehaviour
     private readonly List<Vector2> _uvs = new List<Vector2>();
     private readonly List<int> _triangles = new List<int>();
     private Mesh _mesh;
-    private float _width = 0.085f;
+    [SerializeField] private float _width = 0.24f;
 
     public TileColor GetEdgeColor(int from, int to) =>
         _edges.TryGetValue(EdgeKey(from, to), out TileColor color) ? color : TileColor.None;
