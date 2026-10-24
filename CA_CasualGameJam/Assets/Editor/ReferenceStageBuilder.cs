@@ -117,6 +117,7 @@ public static class ReferenceStageBuilder
             Scene scene = EditorSceneManager.OpenScene(path);
             ApplyBoard(number);
             MenuSceneBuilder.UpdateClearScreen(number, StageCatalog.SceneName(number + 1));
+            StageOneTutorialBuilder.Configure(UnityEngine.Object.FindFirstObjectByType<GameManager>());
             EditorSceneManager.MarkSceneDirty(scene);
             if (!EditorSceneManager.SaveScene(scene)) throw new InvalidOperationException("Could not save " + path);
         }
