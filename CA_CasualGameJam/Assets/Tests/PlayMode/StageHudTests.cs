@@ -40,8 +40,9 @@ public class StageHudTests
     {
         Assert.That(_game.TryBeginLine(Tile(0, 0).TileIndex), Is.True);
         Assert.That(_game.TryExtendLine(Tile(0, 3).TileIndex), Is.True);
+        Assert.That(_game.TryExtendLine(Tile(4, 3).TileIndex), Is.True);
         yield return _game.CommitLineAsync().ToCoroutine();
-        Assert.That(_game.TryBeginLine(Tile(0, 3).TileIndex), Is.True);
+        Assert.That(_game.TryBeginLine(Tile(4, 3).TileIndex), Is.True);
         yield return _game.CommitLineAsync().ToCoroutine();
     }
 
@@ -81,9 +82,9 @@ public class StageHudTests
     [UnityTest]
     public IEnumerator AllReloadClearsLinesAndColorsAndPreservesPuzzleConditions()
     {
-        Sprite redFrame = Tile(3, 0).transform.Find("TileFlame").GetComponent<SpriteRenderer>().sprite;
+        Sprite redFrame = Tile(4, 0).transform.Find("TileFlame").GetComponent<SpriteRenderer>().sprite;
         yield return PaintBothStarts();
-        Assert.That(Tile(0, 3).CurrentColor, Is.EqualTo(TileColor.Purple));
+        Assert.That(Tile(4, 3).CurrentColor, Is.EqualTo(TileColor.Purple));
         Tap(Button("ReloadAll"));
         Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(SceneNavigator.StageScene));
         foreach (TileController tile in _game.TilesList)
@@ -94,9 +95,9 @@ public class StageHudTests
         Assert.That(_game.LineVisuals.GetComponent<MeshFilter>().sharedMesh.vertexCount, Is.Zero);
         Assert.That(_game.HasCommittedLine(BaseColor.Red), Is.False);
         Assert.That(_game.HasCommittedLine(BaseColor.Blue), Is.False);
-        Assert.That(Tile(3, 0).transform.Find("TileFlame").GetComponent<SpriteRenderer>().sprite, Is.EqualTo(redFrame));
-        Tile(1, 3).AddColor(BaseColor.Red);
-        Assert.That(Tile(1, 3).IsTileCorrect(), Is.False, "The red prohibition must remain after ALL.");
+        Assert.That(Tile(4, 0).transform.Find("TileFlame").GetComponent<SpriteRenderer>().sprite, Is.EqualTo(redFrame));
+        Tile(4, 0).AddColor(BaseColor.Blue);
+        Assert.That(Tile(4, 0).IsTileCorrect(), Is.False, "The red requirement must remain after ALL.");
         Assert.That(_game.TryBeginLine(Tile(0, 0).TileIndex), Is.True);
         _game.CancelLine();
     }
@@ -106,8 +107,8 @@ public class StageHudTests
     {
         yield return PaintBothStarts();
         Tap(Button("ReloadBlue"));
-        Assert.That(Tile(0, 3).CurrentColor, Is.EqualTo(TileColor.Red));
-        Assert.That(_game.TryBeginLine(Tile(0, 3).TileIndex), Is.True);
+        Assert.That(Tile(4, 3).CurrentColor, Is.EqualTo(TileColor.Red));
+        Assert.That(_game.TryBeginLine(Tile(4, 3).TileIndex), Is.True);
         Assert.That(Button("ReloadAll").interactable, Is.False);
         Assert.That(Button("ReloadRed").interactable, Is.False);
         Assert.That(Button("HomeButton").interactable, Is.True);
@@ -121,7 +122,7 @@ public class StageHudTests
         Assert.That(Button("ReloadAll").interactable, Is.True);
         Assert.That(Button("ReloadBlue").interactable, Is.True);
         Tap(Button("ReloadRed"));
-        Assert.That(Tile(0, 3).CurrentColor, Is.EqualTo(TileColor.Blue));
+        Assert.That(Tile(4, 3).CurrentColor, Is.EqualTo(TileColor.Blue));
     }
 
     private static IEnumerator WaitForTitle()

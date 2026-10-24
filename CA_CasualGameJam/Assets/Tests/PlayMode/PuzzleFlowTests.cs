@@ -14,8 +14,9 @@ public class PuzzleFlowTests
         yield return SceneManager.LoadSceneAsync("SampleScene");
         yield return null;
         _game = Object.FindFirstObjectByType<GameManager>();
+        PuzzleTestFixture.ApplyRegressionConditions(_game);
         Assert.That(_game.IsInitialized, Is.True);
-        Assert.That(_game.TilesList.Count, Is.EqualTo(16));
+        Assert.That(_game.TilesList.Count, Is.EqualTo(20));
     }
     private int Index(int x, int y) => _game.GetTile(new Vector2Int(x, y)).TileIndex;
     private void Begin(int x, int y) => Assert.That(_game.TryBeginLine(Index(x, y)), Is.True);
@@ -30,6 +31,7 @@ public class PuzzleFlowTests
         Begin(0, 0);
         Extend(0, 1); Extend(1, 1); Extend(1, 0); Extend(2, 0);
         Extend(2, 1); Extend(2, 2); Extend(3, 2); Extend(3, 1); Extend(3, 0);
+        Extend(4, 0); Extend(4, 3);
         Assert.That(_game.CorrectTileCount, Is.GreaterThan(0), "Drawing must paint before release.");
         yield return _game.CommitLineAsync().ToCoroutine();
         Assert.That(_game.State, Is.EqualTo(GameState.Idle));
@@ -39,7 +41,7 @@ public class PuzzleFlowTests
         Extend(3, 3); Extend(3, 2); Extend(3, 1);
         yield return _game.CommitLineAsync().ToCoroutine();
         Assert.That(_game.State, Is.EqualTo(GameState.Cleared));
-        Assert.That(_game.CorrectTileCount, Is.EqualTo(16));
+        Assert.That(_game.CorrectTileCount, Is.EqualTo(20));
         Assert.That(_game.StageClearCheck(), Is.True);
         _game.RestartStage();
         Assert.That(_game.State, Is.EqualTo(GameState.Idle));

@@ -14,6 +14,7 @@ public class PuzzleVisualTests
         yield return SceneManager.LoadSceneAsync("SampleScene");
         yield return null;
         _game = Object.FindFirstObjectByType<GameManager>();
+        PuzzleTestFixture.ApplyRegressionConditions(_game);
         Assert.That(_game.IsInitialized, Is.True);
     }
     private TileController Tile(int x, int y) => _game.GetTile(new Vector2Int(x, y));

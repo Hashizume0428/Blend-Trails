@@ -36,6 +36,8 @@ public class TileController : MonoBehaviour
     public BaseColor StartColor => _startColor;
     public LineController Line => _line;
     public TileColor CurrentColor => PuzzleRules.Mix(_currentColorsList);
+    public TileColor RequiredColor => _hasRequiredColors ? PuzzleRules.Mix(_requiredColors) : TileColor.None;
+    public TileColor ForbiddenColor => _forbiddenColor;
     public IReadOnlyList<BaseColor> CurrentColors => _currentColorsList;
     public Color DisplayColor => GlobalScripts.GetFaceColor(CurrentColor);
     public bool IsErrorBlinking => _invalidBlink != null && _invalidBlink.IsActive();

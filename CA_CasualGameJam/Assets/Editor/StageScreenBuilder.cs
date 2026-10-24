@@ -17,15 +17,15 @@ public static class StageScreenBuilder
     {
         if (EditorApplication.isPlaying) throw new InvalidOperationException("Stop Play mode before editing the stage.");
         Scene scene = SceneManager.GetActiveScene();
-        if (scene.path != PrototypeSceneBuilder.ScenePath)
+        if (UnityEngine.Object.FindFirstObjectByType<GameManager>() == null)
         {
             if (scene.isDirty) throw new InvalidOperationException("Save the current scene before switching to the stage.");
             scene = EditorSceneManager.OpenScene(PrototypeSceneBuilder.ScenePath);
         }
         var manager = UnityEngine.Object.FindFirstObjectByType<GameManager>();
         var hud = UnityEngine.Object.FindFirstObjectByType<GameHud>();
-        if (manager == null || manager.TilesList.Count != 16 || hud == null)
-            throw new InvalidOperationException("The existing 16-tile stage and HUD are required.");
+        if (manager == null || manager.TilesList.Count != manager.BoardSize.x * manager.BoardSize.y || hud == null)
+            throw new InvalidOperationException("A complete stage board and HUD are required.");
         foreach (string name in new[] { "BoardPanel", "ReloadPanel", "Home", "ReloadAll", "ReloadRed", "ReloadBlue", "MixPurple" })
             ImportSprite(name);
         TMP_FontAsset font = GetFont();
@@ -46,7 +46,8 @@ public static class StageScreenBuilder
         if (stage == null) throw new InvalidOperationException("The existing stage label is missing.");
         stage.SetParent(content, false);
         var label = stage.GetComponent<TMP_Text>();
-        label.text = "-Stage1-"; label.font = font; label.fontSize = 128;
+        int number = manager.GetComponent<StageClearNavigation>()?.StageNumber ?? 1;
+        label.text = $"-Stage{number}-"; label.font = font; label.fontSize = 128;
         label.fontStyle = FontStyles.Normal; label.alignment = TextAlignmentOptions.Center;
         label.color = new Color32(49, 49, 49, 255); label.raycastTarget = false;
         label.enableAutoSizing = false; label.textWrappingMode = TextWrappingModes.NoWrap;
@@ -82,6 +83,10 @@ public static class StageScreenBuilder
         Set(layout, "_safeArea", safe); Set(layout, "_content", content); Set(layout, "_home", home.transform);
         Set(layout, "_stageLabel", stage); Set(layout, "_boardArea", boardArea); Set(layout, "_mixLegend", legend);
         Set(layout, "_reloadPanel", tray); Set(layout, "_board", board); Set(layout, "_boardCamera", Camera.main);
+        var boardSettings = new SerializedObject(layout);
+        boardSettings.FindProperty("_boardSize").vector2IntValue = manager.BoardSize;
+        boardSettings.ApplyModifiedPropertiesWithoutUndo();
+        ReferenceStageBuilder.FitBoard(manager);
         Set(hud, "_allReload", all); Set(hud, "_home", home);
         Set(hud, "_progress", null); Set(hud, "_status", null);
         canvas.Find("ClearPanel").SetAsLastSibling();

@@ -9,4 +9,6 @@ public class StageClearNavigation : MonoBehaviour
     public int StageNumber => _stageNumber;
     public string NextStageScene => _nextStageScene;
     public bool HasNextStage => !string.IsNullOrEmpty(_nextStageScene);
+
+    private void Awake() => StageProgress.EnterStage(_stageNumber);
 }

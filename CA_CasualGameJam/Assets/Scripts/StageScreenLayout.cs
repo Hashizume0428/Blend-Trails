@@ -13,6 +13,7 @@ public class StageScreenLayout : MonoBehaviour
     [SerializeField] private RectTransform _reloadPanel;
     [SerializeField] private Transform _board;
     [SerializeField] private Camera _boardCamera;
+    [SerializeField] private Vector2Int _boardSize = new Vector2Int(4, 4);
     private Rect _lastSafeArea, _lastCameraRect;
     private Vector2 _lastCanvasSize;
     private float _lastCameraSize;
@@ -44,7 +45,9 @@ public class StageScreenLayout : MonoBehaviour
         if (size.x <= 0 || size.y <= 0) return;
 
         // Preserve component sizes. Only the spaces between sections contract on shorter phones.
-        const float designWidth = 1324, sectionHeights = 2047, designGaps = 832;
+        const float designWidth = 1324, designGaps = 832;
+        float boardHeight = 1192f * _boardSize.y / _boardSize.x;
+        float sectionHeights = 855 + boardHeight;
         float scale = Mathf.Min(size.x / designWidth, size.y / sectionHeights);
         float height = size.y / scale;
         float gap = Mathf.Max(0, (height - sectionHeights) / designGaps);
@@ -55,11 +58,11 @@ public class StageScreenLayout : MonoBehaviour
         float homeY = 55 * gap;
         float stageY = homeY + 183 + 159 * gap;
         float boardY = stageY + 141 + 95 * gap;
-        float legendY = boardY + 1192 + 106 * gap;
+        float legendY = boardY + boardHeight + 106 * gap;
         float trayY = legendY + 110 + 233 * gap;
         Place(_home, 1071, homeY, 191, 191); // Export padding contains the original shadow.
         Place(_stageLabel, 335, stageY, 653, 141);
-        Place(_boardArea, 66, boardY, 1192, 1192);
+        Place(_boardArea, 66, boardY, 1192, boardHeight);
         Place(_mixLegend, 163, legendY, 470, 110);
         Place(_reloadPanel, 57, trayY, 1200, 429);
 
@@ -69,10 +72,11 @@ public class StageScreenLayout : MonoBehaviour
         float depth = -_boardCamera.transform.position.z;
         Vector3 worldLeft = _boardCamera.ScreenToWorldPoint(new Vector3(topLeft.x, topLeft.y, depth));
         Vector3 worldRight = _boardCamera.ScreenToWorldPoint(new Vector3(topRight.x, topRight.y, depth));
-        float boardScale = (worldRight.x - worldLeft.x) * 277 / 1192;
-        Vector3 firstCenter = worldLeft + new Vector3(188, -190, 0) * (boardScale / 277);
+        float boardScale = (worldRight.x - worldLeft.x) / (_boardSize.x + 0.3f);
         _board.localScale = Vector3.one * boardScale;
-        _board.position = firstCenter - new Vector3(-1.5f, 1.8f, 0) * boardScale;
+        Vector2 bottomLeft = RectTransformUtility.WorldToScreenPoint(null, _corners[0]);
+        Vector3 worldBottom = _boardCamera.ScreenToWorldPoint(new Vector3(bottomLeft.x, bottomLeft.y, depth));
+        _board.position = new Vector3((worldLeft.x + worldRight.x) / 2, (worldLeft.y + worldBottom.y) / 2, 0);
         Physics2D.SyncTransforms();
         _lastSafeArea = safe;
         _lastCanvasSize = ((RectTransform)_safeArea.parent).rect.size;

@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public event Action Changed;
     public GameState State { get; private set; }
     public bool IsInitialized { get; private set; }
+    public Vector2Int BoardSize => _boardSize;
     public BoardLineRenderer LineVisuals => _lineVisuals;
     public IReadOnlyList<int> PreviewPath => _preview;
     public int CorrectTileCount

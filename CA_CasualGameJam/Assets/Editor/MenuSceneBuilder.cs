@@ -26,29 +26,20 @@ public static class MenuSceneBuilder
         _tileSprite = AssetDatabase.LoadAllAssetsAtPath("Assets/Image/tile/タイル.png").OfType<Sprite>().FirstOrDefault();
         if (_font == null || _tileSprite == null) throw new InvalidOperationException("Prototype UI assets are missing.");
 
-        Scene first = EditorSceneManager.OpenScene(PrototypeSceneBuilder.ScenePath);
-        UpdateClearScreen(1, SceneNavigator.SecondStageScene);
-        Save(first);
-        bool newSecondStage = AssetDatabase.LoadAssetAtPath<SceneAsset>(SecondStagePath) == null;
-        if (newSecondStage && !EditorSceneManager.SaveScene(first, SecondStagePath, true))
-            throw new InvalidOperationException("Could not create the second stage.");
-        Scene second = EditorSceneManager.OpenScene(SecondStagePath);
-        if (newSecondStage) ConfigureSecondPuzzle();
-        UpdateClearScreen(2, "");
-        Save(second);
+        ReferenceStageBuilder.BuildStages();
 
         if (AssetDatabase.LoadAssetAtPath<SceneAsset>(TitlePath) == null) CreateTitle();
         Scene title = EditorSceneManager.OpenScene(TitlePath);
         UpdateTitle();
         Save(title);
-        string[] paths = { TitlePath, PrototypeSceneBuilder.ScenePath, SecondStagePath };
+        string[] paths = new[] { TitlePath }.Concat(Enumerable.Range(1, StageCatalog.Count).Select(StageCatalog.ScenePath)).ToArray();
         EditorBuildSettings.scenes = paths.Select(path => new EditorBuildSettingsScene(path, true))
             .Concat(EditorBuildSettings.scenes.Where(scene => !paths.Contains(scene.path) && scene.path != StageSelectPath)).ToArray();
         AssetDatabase.SaveAssets();
-        Debug.Log("Color Puzzle: Title -> Stage 1 -> clear choice -> Stage 2 / Home is ready.");
+        Debug.Log("Color Puzzle: the ten reference stages and Title / Home / Next Stage navigation are ready.");
     }
 
-    private static void UpdateClearScreen(int stageNumber, string nextScene)
+    public static void UpdateClearScreen(int stageNumber, string nextScene)
     {
         var manager = UnityEngine.Object.FindFirstObjectByType<GameManager>();
         var hud = UnityEngine.Object.FindFirstObjectByType<GameHud>();
@@ -79,36 +70,6 @@ public static class MenuSceneBuilder
         SetReference(hud, "_stageLabel", stageLabel); SetReference(hud, "_clearMessage", message);
         panel.gameObject.SetActive(false);
         EditorUtility.SetDirty(hud); EditorUtility.SetDirty(navigation);
-    }
-
-    private static void ConfigureSecondPuzzle()
-    {
-        var manager = UnityEngine.Object.FindFirstObjectByType<GameManager>();
-        foreach (TileController tile in manager.TilesList)
-        {
-            int x = tile.Coordinate.x, y = tile.Coordinate.y;
-            BaseColor[] required = Array.Empty<BaseColor>();
-            if ((x == 0 && y == 1) || (x == 2 && y == 1)) required = new[] { BaseColor.Red };
-            if ((x == 0 && y == 2) || (x == 3 && y == 3)) required = new[] { BaseColor.Blue };
-            if ((x == 1 || x == 2) && y == 2) required = new[] { BaseColor.Red, BaseColor.Blue };
-            TileColor forbidden = x == 1 && y == 0 ? TileColor.Blue : x == 1 && y == 3 ? TileColor.Red : TileColor.None;
-            bool start = (x == 3 && y == 0) || (x == 0 && y == 3);
-            BaseColor startColor = x == 0 && y == 3 ? BaseColor.Blue : BaseColor.Red;
-            tile.Configure(tile.TileIndex, tile.Coordinate, start, startColor, required, forbidden);
-            var marker = tile.transform.Find("StartMarker").GetComponent<SpriteRenderer>();
-            string spritePath = startColor == BaseColor.Red ? "Assets/Image/startPoint/開始点赤.png" : "Assets/Image/startPoint/開始点青.png";
-            marker.sprite = AssetDatabase.LoadAllAssetsAtPath(spritePath).OfType<Sprite>().First();
-            if (start) { tile.Line.SetColor(startColor); tile.Line.ResetToStart(tile.transform.position); }
-            EditorUtility.SetDirty(tile);
-            PrefabUtility.RecordPrefabInstancePropertyModifications(tile);
-            foreach (Transform child in tile.transform)
-            {
-                PrefabUtility.RecordPrefabInstancePropertyModifications(child.gameObject);
-                PrefabUtility.RecordPrefabInstancePropertyModifications(child);
-                foreach (Component component in child.GetComponents<Component>())
-                    if (component != null) PrefabUtility.RecordPrefabInstancePropertyModifications(component);
-            }
-        }
     }
 
     private static void UpdateTitle()

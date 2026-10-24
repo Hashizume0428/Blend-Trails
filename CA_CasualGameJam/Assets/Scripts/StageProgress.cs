@@ -23,13 +23,15 @@ public static class StageProgress
         Changed?.Invoke();
     }
 
+    public static void EnterStage(int stageNumber)
+    {
+        if (string.IsNullOrEmpty(GetSceneName(stageNumber)) || stageNumber == CurrentStageNumber) return;
+        CurrentStageNumber = stageNumber;
+        Changed?.Invoke();
+    }
+
     public static string GetSceneName(int stageNumber)
     {
-        switch (stageNumber)
-        {
-            case 1: return SceneNavigator.StageScene;
-            case 2: return SceneNavigator.SecondStageScene;
-            default: return string.Empty;
-        }
+        return StageCatalog.SceneName(stageNumber);
     }
 }

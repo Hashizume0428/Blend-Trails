@@ -43,35 +43,12 @@ public class SceneNavigationTests
         Assert.That(hits[0].gameObject, Is.EqualTo(button.gameObject), "The visible button must receive taps.");
         ExecuteEvents.Execute(button.gameObject, pointer, ExecuteEvents.pointerClickHandler);
     }
-    private static IEnumerator Solve(GameManager game)
-    {
-        int[,] red, blue;
-        if (game.GetComponent<StageClearNavigation>().StageNumber == 1)
-        {
-            red = new[,] { {0,0}, {0,1}, {1,1}, {1,0}, {2,0}, {2,1}, {2,2}, {3,2}, {3,1}, {3,0} };
-            blue = new[,] { {0,3}, {0,2}, {1,2}, {1,3}, {2,3}, {3,3}, {3,2}, {3,1} };
-        }
-        else
-        {
-            red = new[,] { {3,0}, {2,0}, {1,0}, {0,0}, {0,1}, {1,1}, {1,2}, {2,2}, {2,1}, {3,1} };
-            blue = new[,] { {0,3}, {0,2}, {1,2}, {2,2}, {3,2}, {3,3}, {2,3}, {1,3} };
-        }
-        foreach (int[,] path in new[] { red, blue })
-        {
-            int Index(int i) => game.GetTile(new Vector2Int(path[i, 0], path[i, 1])).TileIndex;
-            Assert.That(game.TryBeginLine(Index(0)), Is.True);
-            for (int i = 1; i < path.GetLength(0); i++) Assert.That(game.TryExtendLine(Index(i)), Is.True);
-            Assert.That(game.State, Is.EqualTo(GameState.Drawing));
-            Assert.That(GameObject.Find("ClearPanel"), Is.Null, "Clear must wait for release.");
-            yield return game.CommitLineAsync().ToCoroutine();
-        }
-        Assert.That(game.State, Is.EqualTo(GameState.Cleared));
-        Assert.That(game.CorrectTileCount, Is.EqualTo(16));
-    }
+    private static IEnumerator Solve(GameManager game) => StageTestReference.Solve(game);
     private static void AssertFreshStage(int number)
     {
         var game = Object.FindFirstObjectByType<GameManager>();
         Assert.That(game.IsInitialized, Is.True);
+        StageTestReference.AssertLayout(game, number);
         Assert.That(game.CorrectTileCount, Is.Zero);
         Assert.That(game.GetComponent<StageClearNavigation>().StageNumber, Is.EqualTo(number));
         Assert.That(GameObject.Find("Level").GetComponent<TMP_Text>().text, Is.EqualTo($"-Stage{number}-"));
@@ -121,7 +98,7 @@ public class SceneNavigationTests
     }
 
     [UnityTest]
-    public IEnumerator NextStageOpensTheNewPuzzleAndFinalClearCanReturnHome()
+    public IEnumerator AllTenReferenceStagesClearInOrderAndFinalClearCanReturnHome()
     {
         yield return SceneManager.LoadSceneAsync(SceneNavigator.StageScene);
         yield return null;
@@ -132,25 +109,54 @@ public class SceneNavigationTests
         yield return WaitForScene(SceneNavigator.SecondStageScene);
         AssertFreshStage(2);
         var game = Object.FindFirstObjectByType<GameManager>();
-        Assert.That(game.GetTile(new Vector2Int(3, 0)).IsStartTile, Is.True);
-        Assert.That(game.GetTile(Vector2Int.zero).IsStartTile, Is.False);
-        yield return Solve(game);
-        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(3));
+        Assert.That(game.GetTile(new Vector2Int(3, 2)).IsStartTile, Is.True);
+        Assert.That(game.GetTile(Vector2Int.zero).IsStartTile, Is.True);
+        for (int number = 2; number <= StageCatalog.Count; number++)
+        {
+            AssertFreshStage(number);
+            game = Object.FindFirstObjectByType<GameManager>();
+            yield return Solve(game);
+            Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(number + 1));
+            Assert.That(Button("NextStageButton").interactable, Is.EqualTo(number < StageCatalog.Count));
+            if (number < StageCatalog.Count)
+            {
+                Tap(Button("NextStageButton"));
+                yield return WaitForScene(StageCatalog.SceneName(number + 1));
+            }
+        }
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(11));
         Assert.That(Button("NextStageButton").interactable, Is.False);
         Assert.That(Button("ClearHomeButton").interactable, Is.True);
         Assert.That(GameObject.Find("ClearMessage").GetComponent<TMP_Text>().text, Is.EqualTo("ALL STAGES CLEAR"));
         Button("NextStageButton").onClick.Invoke();
         yield return new WaitForSecondsRealtime(1.3f);
-        Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(SceneNavigator.SecondStageScene));
+        Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(StageCatalog.SceneName(10)));
         Tap(Button("ClearHomeButton"));
         yield return WaitForScene(SceneNavigator.TitleScene);
         var stage = Button("Stage01Button");
-        Assert.That(stage.transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage3"));
+        Assert.That(stage.transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage11"));
         Assert.That(stage.transform.Find("Description").GetComponent<TMP_Text>().text, Is.EqualTo("COMING SOON"));
         Assert.That(stage.interactable, Is.False);
         stage.onClick.Invoke();
         yield return null;
         Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(SceneNavigator.TitleScene));
+    }
+
+    [UnityTest]
+    public IEnumerator StageThreeUsesSeparatePurpleFramesAndHomeKeepsTheStageNumber()
+    {
+        yield return SceneManager.LoadSceneAsync(StageCatalog.SceneName(3));
+        yield return null;
+        var game = Object.FindFirstObjectByType<GameManager>();
+        StageTestReference.AssertLayout(game, 3);
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(3));
+        Assert.That(GameObject.Find("Level").GetComponent<TMP_Text>().text, Is.EqualTo("-Stage3-"));
+        Tap(Button("HomeButton"));
+        yield return WaitForScene(SceneNavigator.TitleScene);
+        Assert.That(Button("Stage01Button").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage3"));
+        Tap(Button("Stage01Button"));
+        yield return WaitForScene(StageCatalog.SceneName(3));
+        AssertFreshStage(3);
     }
 
     [UnityTest]
@@ -175,7 +181,7 @@ public class SceneNavigationTests
         yield return SceneManager.LoadSceneAsync(SceneNavigator.StageScene);
         yield return null;
         var game = Object.FindFirstObjectByType<GameManager>();
-        foreach (Vector2Int point in new[] { new Vector2Int(0, 0), new Vector2Int(0, 3) })
+        foreach (Vector2Int point in new[] { new Vector2Int(0, 0), new Vector2Int(4, 3) })
         {
             Assert.That(game.TryBeginLine(game.GetTile(point).TileIndex), Is.True);
             yield return game.CommitLineAsync().ToCoroutine();
