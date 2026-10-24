@@ -23,6 +23,15 @@ public static class PuzzleRules
     public static bool IsSupportedColor(TileColor color) => (int)color > 0 && (int)color < 7;
     public static bool CanAddColor(TileColor current, BaseColor added) =>
         Enum.IsDefined(typeof(BaseColor), added) && IsSupportedColor(current | ToTileColor(added));
+    public static bool CanAddColor(TileColor current, BaseColor added, TileColor playableColors) =>
+        CanAddColor(current, added) && ((current | ToTileColor(added)) & ~playableColors) == 0;
+    public static bool IsTileCorrect(TileColor current, bool hasRequiredColor, TileColor required,
+        TileColor forbidden, TileColor playableColors)
+    {
+        if (!IsSupportedColor(current) || (current & ~playableColors) != 0 || current == forbidden) return false;
+        bool singleColor = current == TileColor.Red || current == TileColor.Blue || current == TileColor.Yellow;
+        return hasRequiredColor ? current == required : singleColor;
+    }
     public static bool IsTileCorrect(TileColor current, bool hasRequiredColor, TileColor required, TileColor forbidden)
     {
         // Compare the finished color with the ban, not its ingredients.

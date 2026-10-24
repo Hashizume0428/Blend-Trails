@@ -184,6 +184,7 @@ public static class ReferenceStageBuilder
             }
         }
         Canvas.ForceUpdateCanvases(); layout.ApplyLayout();
+        StagePaletteBuilder.ConfigureScene();
         EditorUtility.SetDirty(manager); EditorUtility.SetDirty(layout);
     }
 

@@ -113,6 +113,7 @@ public static class PrototypeSceneBuilder
         PlayerSettings.allowedAutorotateToLandscapeLeft = false;
         PlayerSettings.allowedAutorotateToLandscapeRight = false;
         ConfigureLineVisuals(manager, board.transform, tiles);
+        StagePaletteBuilder.ConfigureScene();
         EditorUtility.SetDirty(manager);
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);

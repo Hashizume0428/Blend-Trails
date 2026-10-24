@@ -89,6 +89,7 @@ public static class StageScreenBuilder
         ReferenceStageBuilder.FitBoard(manager);
         Set(hud, "_allReload", all); Set(hud, "_home", home);
         Set(hud, "_progress", null); Set(hud, "_status", null);
+        StagePaletteBuilder.ConfigureScene();
         canvas.Find("ClearPanel").SetAsLastSibling();
         Canvas.ForceUpdateCanvases(); layout.ApplyLayout();
         EditorUtility.SetDirty(hud); EditorUtility.SetDirty(layout); EditorUtility.SetDirty(scaler);

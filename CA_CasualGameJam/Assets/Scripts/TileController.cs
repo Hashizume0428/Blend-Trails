@@ -29,15 +29,17 @@ public class TileController : MonoBehaviour
     private Color _frameBaseColor = Color.white;
     private Color _forbiddenBaseColor = Color.white;
     private bool _indicatorColorsCached;
+    private StageColorPalette _palette = StageColorPalette.ForStage(1);
+    private StagePaletteVisuals _paletteVisuals;
 
     public int TileIndex => _tileIndex;
     public Vector2Int Coordinate => _coordinate;
     public bool IsStartTile => _isStartTile;
-    public BaseColor StartColor => _startColor;
+    public BaseColor StartColor => _palette.Map(_startColor);
     public LineController Line => _line;
     public TileColor CurrentColor => PuzzleRules.Mix(_currentColorsList);
-    public TileColor RequiredColor => _hasRequiredColors ? PuzzleRules.Mix(_requiredColors) : TileColor.None;
-    public TileColor ForbiddenColor => _forbiddenColor;
+    public TileColor RequiredColor => _hasRequiredColors ? _palette.Map(PuzzleRules.Mix(_requiredColors)) : TileColor.None;
+    public TileColor ForbiddenColor => _palette.Map(_forbiddenColor);
     public IReadOnlyList<BaseColor> CurrentColors => _currentColorsList;
     public Color DisplayColor => GlobalScripts.GetFaceColor(CurrentColor);
     public bool IsErrorBlinking => _invalidBlink != null && _invalidBlink.IsActive();
@@ -72,7 +74,13 @@ public class TileController : MonoBehaviour
         if (face != null) _faceScale = face.transform.localScale;
         RefreshVisuals();
     }
-    public bool CanAddColor(BaseColor color) => PuzzleRules.CanAddColor(CurrentColor, color);
+    public void ApplyPalette(StageColorPalette palette, StagePaletteVisuals visuals = null)
+    {
+        _palette = palette;
+        _paletteVisuals = visuals;
+        RefreshVisuals();
+    }
+    public bool CanAddColor(BaseColor color) => PuzzleRules.CanAddColor(CurrentColor, color, _palette.PlayableColors);
     public bool AddColor(BaseColor color)
     {
         if (_currentColorsList.Contains(color) || !CanAddColor(color)) return false;
@@ -89,19 +97,28 @@ public class TileController : MonoBehaviour
     public bool IsTileCorrect()
     {
         _isTileCorrect = PuzzleRules.IsTileCorrect(CurrentColor, _hasRequiredColors,
-            PuzzleRules.Mix(_requiredColors), _forbiddenColor);
+            RequiredColor, ForbiddenColor, _palette.PlayableColors);
         return _isTileCorrect;
     }
     public void RefreshVisuals()
     {
         bool correct = IsTileCorrect();
         if (_frameRenderer != null)
-            _frameRenderer.sprite = GlobalScripts.GetFrameImage(_hasRequiredColors ? PuzzleRules.Mix(_requiredColors) : TileColor.None);
-        if (_startMarker != null) _startMarker.gameObject.SetActive(_isStartTile);
+            _frameRenderer.sprite = GlobalScripts.GetFrameImage(RequiredColor);
+        if (_startMarker != null)
+        {
+            _startMarker.gameObject.SetActive(_isStartTile);
+            if (_isStartTile && _paletteVisuals != null) _startMarker.sprite = _paletteVisuals.StartMarker(StartColor);
+        }
         if (_forbiddenMarker != null)
         {
             _forbiddenMarker.transform.localPosition = Vector3.zero;
-            _forbiddenMarker.gameObject.SetActive(_forbiddenColor != TileColor.None);
+            _forbiddenMarker.gameObject.SetActive(ForbiddenColor != TileColor.None);
+            if (_paletteVisuals != null && ForbiddenColor != TileColor.None)
+            {
+                Sprite marker = _paletteVisuals.ForbiddenMarker(ForbiddenColor);
+                if (marker != null) _forbiddenMarker.sprite = marker;
+            }
         }
         if (_line != null) _line.gameObject.SetActive(_isStartTile);
         if (correct) StopErrorBlink();

@@ -19,3 +19,11 @@ The file's export settings produce 4× renders except the legend. Import sizes a
 
 The stage label uses Inter Regular from the official Inter 4.1 distribution. Its font and license are in `Assets/Fonts/Inter/`.
 https://github.com/rsms/inter/releases/tag/v4.1
+
+## Runtime palette rotation
+
+The original PNGs remain the shared templates. `StagePaletteUI.shader` replaces the red, blue and purple ink with the current stage's first, second and mixed colors, preserving alpha, white icons, gray symbols, antialiasing and shadows. Red/blue stages retain the original default UI material. Each other stage creates one shared material for its two reload buttons and legend, then destroys it with the HUD.
+
+`StagePaletteVisuals.asset` references all three existing start and ban sprites and the shader, so they are included in player builds. The yellow reload and orange/green legends are rendered from the templates; separate bitmap variants are unnecessary. The historical object names `ReloadRed`, `ReloadBlue` and `MixPurple` remain to preserve scene references, but their displayed colors and actions follow the active palette. The right button uses the first color and the middle button the second.
+
+Use **Color Puzzle/Apply Stage Color Rotation** to bind the shared asset and legend references in all thirty saved stages without regenerating puzzle conditions. StageScreenBuilder, PrototypeSceneBuilder and ReferenceStageBuilder also keep these bindings when generating or updating stages.

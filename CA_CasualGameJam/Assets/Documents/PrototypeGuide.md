@@ -15,33 +15,45 @@ Unity 6000.3.24f1で `Assets/Scenes/Title.unity` を開き、Playで開始しま
 Build SettingsはTitle、SampleScene（問題1）、Stage02〜Stage30の順です。エクストラは既存ノーマルのシーンを再利用し、表示するStage番号を進行管理から取得します。旧StageSelectシーンは現在の遷移とBuild Settingsには含めません。
 既存の試作2問は、output/imagegen/stage-01-clean.png〜stage-10-clean.pngの5列×4行の問題へ置き換えています。開始点と指定色を再現し、画像の線は解答例として扱います。開始時に解答線は表示しません。
 Stage3の中央の紫指定2マスは、各マスを個別の紫枠で囲みます。両方のマスにそれぞれ赤＋青が必要です。
-問題11〜20はoutput/stage-ideas-11-20/stages-11-20.json、問題21〜30はoutput/stage-ideas-21-30/stages-21-30.jsonの開始点・指定色を転記しています。全問5列×4行、赤・青2色で、解答線は開始時に表示しません。
+問題11〜20はoutput/stage-ideas-11-20/stages-11-20.json、問題21〜30はoutput/stage-ideas-21-30/stages-21-30.jsonの開始点・指定色を転記しています。全問5列×4行で、解答線は開始時に表示しません。問題データは赤・青を基準に保持し、実行時にそのステージの色へ置き換えます。
 ステージ入場時にシーンの番号を進行管理へ同期するため、Editorからステージを直接再生してホームへ戻った場合も、選択ボタンに同じ番号を表示します。
+
+## ステージの色
+
+チュートリアルを含む表示Stage番号を基準に、5ステージごとに切り替えます。
+
+| 表示番号 | 第1色（旧赤） | 第2色（旧青） | 混色（旧紫） |
+|---|---|---|---|
+| 1〜5、16〜20、31〜35 … | 赤 | 青 | 紫 |
+| 6〜10、21〜25、36〜40 … | 赤 | 黄 | オレンジ |
+| 11〜15、26〜30、41〜45 … | 青 | 黄 | 緑 |
+
+盤面・開始位置・解法は共通です。Stage31以降も、再利用する問題IDではなく表示番号から色を決定します。入場時に色を保持し、クリアで次の番号を保存しても演出中の色は変えません。HOME・リロード・再起動後も同じ表示番号なら同じ組み合わせです。
 
 ## 操作
 
-- 赤・青の開始点を押すとそのマスを着色し、上下左右になぞると線と同時にマスを着色・混色します。マウスでも操作できます。同じ行・列を高速になぞった場合も、中間マスを順に着色します。
+- そのステージの基本2色の開始点を押すとそのマスを着色し、上下左右になぞると線と同時にマスを着色・混色します。マウスでも操作できます。同じ行・列を高速になぞった場合も、中間マスを順に着色します。
 - 着色・混色でマスに色を追加した瞬間、スマートフォンを軽く振動させます。高速移動で40ms以内に続く追加は1回にまとめます。巻き戻し・キャンセル・リロードで色を除去する際と、Editorでは振動しません。
 - 直前のマスへ戻ると線を短くし、取り消したマスから描画中の色だけを除去します。元からある別の色は保持します。
 - 指を離すと線を確定して判定します。判定とクリア表示の演出中は次の線入力とリロードを待ちます。
 - 入力キャンセル・フォーカス喪失では、描画中に加えた色と線を取り消し、他色の確定済みの状態を保持します。盤外で離した場合は最後の有効マスまで確定します。
-- 盤面下の青・赤のリロードボタンで、その色の線と構成色だけを除去します。混色マスは残った単色へ戻ります。確定した色のボタンだけが使用できます。
+- 盤面下の色別リロードボタンで、その色の線と構成色だけを除去します。中央は第2色、右は第1色です。混色マスは残った単色へ戻ります。確定した色のボタンだけが使用できます。
 - 灰色のALLボタンは、同じ問題の全ての線・色・確定状態を初期化します。描画中・着色演出中は、ALLと色別リロードを使用できません。
-- 混色早見表は、このステージで使う紫＝赤＋青だけを表示します。黄色のリロードとヒントは表示しません。
+- 混色早見表は、そのステージの混色＝第1色＋第2色を表示します。色別リロードは常に使用中の2色だけを表示します。
 - 線が同じ辺を通る部分と交点は混色で表示します。描画中の線も対象で、キャンセルやリロード後は残った線の色に戻ります。
-- 禁止マークはマスの中央に表示します。赤・青両方の線を確定すると、未着色を含む全ての不正解マスの枠と面を2秒間点滅させます。禁止マスではバツも同じタイミングで点滅し、終了後は通常表示に戻ります。面の単色・混色は保ち、透明度を変えて点滅します。色別リロードでは点滅を止め、引き直しを確定した時に再判定します。
+- 禁止マークはマスの中央に表示します。使用中の2色の線を両方確定すると、未着色を含む全ての不正解マスの枠と面を2秒間点滅させます。禁止マスではバツも同じタイミングで点滅し、終了後は通常表示に戻ります。面の単色・混色は保ち、透明度を変えて点滅します。色別リロードでは点滅を止め、引き直しを確定した時に再判定します。
 - 全20マスが正解なら紙吹雪を一度放出し、0.5秒後に盤面を0.4秒かけて60％へ縮小・移動します。完成した色と線を保ち、盤面の下にHOME・Stage◯を0.2秒で表示します。ボタンは演出完了後に操作でき、紙吹雪は自然に消えます。不正解時はこの演出を行いません。
 
 ## 判定
 
-通常マス（色指定なし）は赤単色または青単色のみ正解です。未着色・紫を含む混色・黄色は不正解です。色指定のない開始点にもこのルールを適用します。色枠は完成色を指定し、赤枠は赤、青枠は青、紫枠には赤と青の両方が必要です。
+通常マス（色指定なし）は、そのステージの基本2色のどちらか単色のみ正解です。未着色・混色・使用外の基本色は不正解です。色指定のない開始点にもこのルールを適用します。色枠は完成色を指定し、単色枠はその単色、混色枠には使用中の2色の両方が必要です。
 通常マスを混色に塗る操作は許可します。両方の線を確定した時に不正解と判定し、既存の2秒点滅を行います。色別リロードで片方の色を除去すると単色へ戻り、そのマスは再判定されます。
 禁止マークは完成色に適用します。通常マスでは単色の条件も必要です。紫指定マスに赤禁止があっても、完成色の紫は赤単体の禁止には抵触しません。
 不正解でも線と内部の構成色を保持し、面は実際の単色・混色で表示します。未着色マスはノーマルカラー（#F9F9F9）です。
 リロード後も残った色で表示・再判定するため、紫指定マスが青単色になった場合は青、赤禁止マスが赤単体になった場合は赤を表示します。
 
 他色で塗られた開始点も、その点の本来の色で開始できます。一度確定した色は、色別リロード後に再使用できます。
-内部の基本色は赤・青・黄です。同じ色の重複と3色目の追加を防ぎます。
+内部の基本色は赤・青・黄です。同じ色の重複と、そのステージで使用しない色の追加を防ぎます。
 
 ## Inspectorでの調整
 
@@ -49,6 +61,7 @@ Stage3の中央の紫指定2マスは、各マスを個別の紫枠で囲みま�
 TileControllerのCoordinate、Is Start Tile、Start Color、Required Colors、Forbidden Colorで条件を設定します。
 Has Required Colorsを有効にするとRequired Colorsの集合と完全一致で判定します。
 Current Colors Listは実行中の状態で、開始時・全体リスタート時に初期化します。
+保存されたStart Color・Required Colors・Forbidden Colorは基準の赤・青・紫です。実行中のStartColor・RequiredColor・ForbiddenColorは変換後の色を返し、Current Colors Listは実際に塗った色を保持します。基準の色へ黄を直接追加することで3色ステージを作る構成にはしていません。
 
 GameManagerのTiles Listには20枚を登録し、Board Sizeは5×4とします。StageScreenLayoutのBoard Sizeも一致させます。
 素材、音量、UI参照は各コンポーネントのInspectorから確認できます。
@@ -60,6 +73,7 @@ Color Puzzle/Apply Revised Stages 5,6,9,10は、確認済みの差し替え4問�
 StageClearNavigationのStage Numberでステージ番号、Next Stage Sceneで次のシーンを設定します。最終面ではNext Stage Sceneを空にします。自動遷移タイマーはありません。
 StageProgressは表示番号・選択済みの問題ID・直近8問の履歴をPlayerPrefsのColorPuzzle.StageProgress.v2へJSONとして保存します。旧ColorPuzzle.CurrentStageNumberの整数セーブは進行番号を保って移行し、以後も互換用に更新します。初回はStage1、Stage30の後も出題を続けます。HOMEやタスキルで選択済みの問題を再抽選しません。アンインストール・アプリデータ削除や別端末への引き継ぎには対応しません。StageCatalogは問題IDとシーンを対応付けます。詳細はStageProgression.mdを参照してください。
 Color Puzzle/Apply Figma Stage UIは、既存の問題配置とクリア表示を維持してステージUIを更新します。
+Color Puzzle/Apply Stage Color Rotationは、保存済みの全30シーンに共有素材・早見表の参照だけを設定します。盤面条件は再生成しません。共有素材はAssets/UI/Stage/StagePaletteVisuals.assetです。既存PNGの色部分はStagePaletteUI.shaderで切り替え、白い矢印・灰色の記号・影は維持します。
 StageScreenLayoutはFigmaの1324×2879を基準にSafe Areaへ配置し、短い縦画面ではセクション間の余白を縮めます。盤面のSpriteRendererとColliderもUIの盤面領域へ追従します。
 Color Puzzle/Update Clear Presentationは問題配置を保持し、全30シーンのクリア演出UIだけを更新します。StageClearPresentationで演出時間、ClearConfettiで紙片数と表示時間を調整できます。詳細はClearEffects.mdを参照してください。
 
@@ -72,6 +86,7 @@ PuzzleVisualTestsでは、重なった辺・交点の混色、キャンセル・
 SceneNavigationTestsでは、タイトルの1ボタン、ボタン以外のタップ、連続タップ、ステージへの直接移動、クリア後の選択待ち、ホーム復帰、Stage1〜Stage30の連続クリア・全条件配置・20マスの着色、Stage31/32の表示とエクストラ出題、未クリア・再クリア時の番号維持と再選択後の初期化を検証します。
 PuzzleFlowTestsとPuzzleVisualTestsの色禁止などは、製品用問題と独立したテスト専用の条件を設定して回帰確認します。
 StageHudTestsでは、Figma UIの配置・盤面へのタッチ、ALLでの初期化と条件維持、リロード操作制限、Idle・描画中・着色中のホーム復帰を検証します。
+StageColorPaletteTestsでは、5ステージ周期、3組の通常マス・指定色・禁止色、使用外の色の拒否、繰り返し適用時の基準データ維持を検証します。StagePaletteFlowTestsでは、黄のリロード、オレンジ・緑の線混色とキャンセル、Stage31/36/41での同一問題の再利用、切り替え境界でのクリア演出と再初期化を検証します。
 
 ### 解答例
 
@@ -88,12 +103,12 @@ Stage1の青: (4,3) → (0,3) → (0,2) → (4,2)
 ## Verification
 
 Unity Editor compilation: 0 errors / 0 warnings.
-Latest focused run (2026-10-24): EditMode 2 / 2 passed; PlayMode 5 / 5 passed. Results: Logs/ThirtyStages-EditMode.json and Logs/ThirtyStages-PlayMode.json.
-The integration test clears all thirty authored puzzles in order, checks all starts and required colors, then verifies Stage31/32 extra navigation, title/header/button numbering, HOME/reentry and persistent puzzle selection.
-Persistence checks cover the old Stage11 integer save, the normal/extra boundary, forty successive extra draws excluding the previous eight normal puzzles, reload without rerolling, duplicate clears and saving before the clear animation. Tests restore previous user preferences.
-All twenty new board definitions and example paths were compared with the supplied JSON. Enabled scenes: Title plus thirty puzzle scenes. Stage3 retains its separate purple frames.
-Portrait previews checked Stage30, its solved board with HOME/Stage31, the reused problem18 labelled Stage31, and the title Stage31 button. Frames advanced during verification and Stage30 reached 20 / 20 correct. Files: Logs/ThirtyStages-Stage30.png, Logs/ThirtyStages-Clear30.png, Logs/ThirtyStages-Extra31.png and Logs/ThirtyStages-Title31.png.
-The full regression suite was not rerun. Earlier checks for live painting, mixed lines, two-second error feedback, clear confetti and cancellation remain recorded in Logs/TenStages-PlayMode.json and Logs/ClearEffects-PlayMode.json.
-Current Unity Console: 0 errors / 0 warnings. Editor stopped on Title after restoring the previous saved progress.
+Full suite (2026-10-25): EditMode 46 / 46 passed; PlayMode 42 / 42 passed. Results: Logs/ColorPalette-EditMode.json and Logs/ColorPalette-PlayMode.json.
+The integration test clears all thirty authored puzzles with their rotating palettes, checks all starts and required colors, then verifies Stage31/32 extra navigation, title/header/button numbering, HOME/reentry and persistent puzzle selection. Existing input, tutorial, error feedback and clear presentation tests also pass.
+Palette regressions cover yellow reloads, orange/green line mixing and cancellation, all six tested palette boundaries (5, 10, 15, 30, 35 and 40), and replaying puzzle11 at display stages31, 36 and 41. Reinitialization does not remap colors cumulatively or adopt the already-saved next stage's palette.
+Persistence checks cover the old Stage11 integer save, forty successive extra draws excluding the previous eight normal puzzles, reload without rerolling, duplicate clears and saving before the clear animation. Tests restore previous user preferences.
+Each of the thirty scene diffs adds only the shared visuals and HUD legend references. Board conditions, authored paths and original PNGs are unchanged. The new UI shader reports no compile errors.
+Portrait previews at 540 × 960 visually verified Stage6 (red/yellow/orange) and Stage11 (blue/yellow/green), including start dots, required frames, legends and reload buttons. Frames advanced during inspection. Files: Logs/ColorPalette-Stage06.png and Logs/ColorPalette-Stage11.png.
+Current Unity Console: 0 errors / 0 warnings. Editor stopped on Title and the exact previous saved progress keys were restored after previewing.
 Mobile builds, device haptics and actual mobile task termination were not tested in this change.
 Editor integration: com.unity.pipeline 0.9.1-exp.1.

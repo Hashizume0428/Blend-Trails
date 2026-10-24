@@ -2893,6 +2893,7 @@ MonoBehaviour:
   - {fileID: 562654927}
   _boardSize: {x: 5, y: 4}
   _hud: {fileID: 1791368534}
+  _paletteVisuals: {fileID: 11400000, guid: 33d857b17cc21fa4b8258596ad62344a, type: 2}
   _lineVisuals: {fileID: 1573293824}
   _audioSource: {fileID: 856013074}
   _tileSound: {fileID: 8300000, guid: 17e436315d71a9e41b43a91ac1b30739, type: 3}
@@ -6022,6 +6023,7 @@ MonoBehaviour:
   _clearPanel: {fileID: 1949019831}
   _clearPresentation: {fileID: 1791368540}
   _nextStageLabel: {fileID: 1000034949}
+  _mixLegend: {fileID: 1783787763}
 --- !u!114 &1791368535
 MonoBehaviour:
   m_ObjectHideFlags: 0

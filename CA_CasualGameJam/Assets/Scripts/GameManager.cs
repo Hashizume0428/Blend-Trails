@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public List<TileController> TilesList = new List<TileController>();
     [SerializeField] private Vector2Int _boardSize = new Vector2Int(4, 4);
     [SerializeField] private GameHud _hud;
+    [SerializeField] private StagePaletteVisuals _paletteVisuals;
     [SerializeField] private BoardLineRenderer _lineVisuals;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _tileSound;
@@ -23,10 +24,13 @@ public class GameManager : MonoBehaviour
     private readonly HashSet<int> _drawingPaintedTiles = new HashSet<int>();
     private BaseColor _activeColor;
     private CancellationTokenSource _operation;
+    private bool _paletteResolved;
 
     public event Action Changed;
     public GameState State { get; private set; }
     public bool IsInitialized { get; private set; }
+    public StageColorPalette Palette { get; private set; } = StageColorPalette.ForStage(1);
+    public StagePaletteVisuals PaletteVisuals => _paletteVisuals;
     public Vector2Int BoardSize => _boardSize;
     public BoardLineRenderer LineVisuals => _lineVisuals;
     public IReadOnlyList<int> PreviewPath => _preview;
@@ -38,6 +42,12 @@ public class GameManager : MonoBehaviour
     public bool Initialize()
     {
         IsInitialized = false;
+        if (!_paletteResolved)
+        {
+            var navigation = GetComponent<StageClearNavigation>();
+            Palette = StageColorPalette.ForStage(navigation != null ? navigation.StageNumber : 1);
+            _paletteResolved = true;
+        }
         _grid.Clear(); _starts.Clear();
         if (_boardSize.x <= 0 || _boardSize.y <= 0 || TilesList.Count != _boardSize.x * _boardSize.y)
             return InvalidBoard("The board must contain one tile for every cell.");
@@ -48,9 +58,10 @@ public class GameManager : MonoBehaviour
                 tile.Coordinate.x >= _boardSize.x || tile.Coordinate.y >= _boardSize.y || _grid.ContainsKey(tile.Coordinate))
                 return InvalidBoard("Missing, duplicate or out-of-bounds tile.");
             tile.SetTileIndex(i);
+            tile.ApplyPalette(Palette, _paletteVisuals);
             _grid.Add(tile.Coordinate, tile);
             if (!tile.IsStartTile) continue;
-            if (tile.Line == null || _starts.ContainsKey(tile.StartColor))
+            if (tile.Line == null || !Palette.Contains(tile.StartColor) || _starts.ContainsKey(tile.StartColor))
                 return InvalidBoard("Each color needs a unique start and line.");
             _starts.Add(tile.StartColor, tile);
         }

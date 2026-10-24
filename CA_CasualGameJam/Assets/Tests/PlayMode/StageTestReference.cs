@@ -53,6 +53,7 @@ public static class StageTestReference
     public static void AssertLayout(GameManager game, int number)
     {
         Reference reference = Stages[number - 1];
+        StageColorPalette palette = game.Palette;
         Assert.That(game.BoardSize, Is.EqualTo(new Vector2Int(5, 4)));
         Assert.That(game.TilesList.Count, Is.EqualTo(20));
         var red = Cells(reference.RedFrames); var blue = Cells(reference.BlueFrames); var purple = Cells(reference.PurpleFrames);
@@ -64,9 +65,10 @@ public static class StageTestReference
             Assert.That(Screen.safeArea.Contains(point), Is.True, $"Stage{number} {tile.name} must fit the screen");
             Assert.That(Physics2D.OverlapPoint(tile.transform.position)?.GetComponent<TileController>(), Is.EqualTo(tile));
             Assert.That(tile.IsStartTile, Is.EqualTo(tile.Coordinate == redStart || tile.Coordinate == blueStart), tile.name);
-            if (tile.IsStartTile) Assert.That(tile.StartColor, Is.EqualTo(tile.Coordinate == redStart ? BaseColor.Red : BaseColor.Blue));
+            if (tile.IsStartTile) Assert.That(tile.StartColor, Is.EqualTo(tile.Coordinate == redStart ? palette.First : palette.Second));
             TileColor expected = purple.Contains(tile.Coordinate) ? TileColor.Purple : red.Contains(tile.Coordinate) ? TileColor.Red :
                 blue.Contains(tile.Coordinate) ? TileColor.Blue : TileColor.None;
+            expected = palette.Map(expected);
             Assert.That(tile.RequiredColor, Is.EqualTo(expected), $"Stage{number} {tile.name} frame");
             Assert.That(tile.ForbiddenColor, Is.EqualTo(TileColor.None));
             Assert.That(tile.transform.Find("TileFlame").GetComponent<SpriteRenderer>().sprite, Is.EqualTo(GlobalScripts.GetFrameImage(expected)));
