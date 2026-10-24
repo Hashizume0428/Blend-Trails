@@ -17,6 +17,7 @@ public class StageOneTutorialGuide : MonoBehaviour
     [SerializeField] private Vector2Int[] _blueRoute = Array.Empty<Vector2Int>();
     [SerializeField, Min(0)] private float _entryDelay = 0.8f;
     [SerializeField, Min(0)] private float _resumeDelay = 1.5f;
+    [SerializeField, Min(0)] private float _blueGuideDelay = 0.5f;
     [SerializeField, Min(0)] private float _startHold = 0.4f;
     [SerializeField, Min(0.05f)] private float _secondsPerCell = 0.28f;
     [SerializeField, Min(0)] private float _endHold = 0.4f;
@@ -26,6 +27,9 @@ public class StageOneTutorialGuide : MonoBehaviour
     private Vector2[] _points;
     private BaseColor? _guideColor;
     private float _elapsed;
+    private float _lastReleaseAt = float.NegativeInfinity;
+    private GameState _previousState;
+    private bool _redWasCommitted;
     private bool _firstIdle = true, _focused = true, _paused;
 
     public bool IsVisible => _group != null && _group.alpha > 0;
@@ -37,6 +41,9 @@ public class StageOneTutorialGuide : MonoBehaviour
         _rect = (RectTransform)transform;
         _points = new Vector2[Mathf.Max(_redRoute.Length, _blueRoute.Length)];
         _firstIdle = true;
+        _lastReleaseAt = float.NegativeInfinity;
+        _previousState = _game != null ? _game.State : GameState.Idle;
+        _redWasCommitted = _game != null && _game.HasCommittedLine(BaseColor.Red);
         if (_game != null) _game.Changed += RefreshState;
         SceneNavigator.LoadingChanged += RefreshState;
         Canvas.willRenderCanvases += UpdatePose;
@@ -59,9 +66,16 @@ public class StageOneTutorialGuide : MonoBehaviour
 
     private void RefreshState()
     {
+        if (_game != null && _game.State == GameState.Resolving && _previousState == GameState.Drawing)
+            _lastReleaseAt = Time.unscaledTime;
+        if (_game != null) _previousState = _game.State;
+        bool redCommitted = _game != null && _game.HasCommittedLine(BaseColor.Red);
         Hide();
         _guideColor = CanGuide ? SelectColor() : null;
         _elapsed = -(_firstIdle ? _entryDelay : _resumeDelay);
+        if (_guideColor == BaseColor.Blue && redCommitted && !_redWasCommitted && !float.IsNegativeInfinity(_lastReleaseAt))
+            _elapsed = -Mathf.Max(0, _blueGuideDelay - (Time.unscaledTime - _lastReleaseAt));
+        _redWasCommitted = redCommitted;
         if (CanGuide) _firstIdle = false;
     }
 

@@ -60,9 +60,16 @@ public static class ToonSkinBuilder
         RectTransform safe = Rect(canvas, "ToonSafeArea"); Stretch(safe);
         RectTransform content = Rect(safe, "ToonTitleContent");
         content.sizeDelta = new Vector2(941, 1672);
-        // Display only the artwork above/below the source button; no baked stage number is rendered.
-        Artwork(content, "ApprovedLogoAndMix", 0, 0, 941, 1248, new Rect(0, 424f / 1672, 1, 1248f / 1672));
-        Artwork(content, "ApprovedFooter", 0, 1560, 941, 112, new Rect(0, 0, 1, 112f / 1672));
+        foreach (string name in new[] { "ApprovedLogoAndMix", "ApprovedFooter" })
+        {
+            var old = content.Find(name);
+            if (old == null) continue;
+            var oldImage = old.GetComponent<UnityEngine.UI.RawImage>();
+            if (oldImage != null) oldImage.texture = null;
+            old.gameObject.SetActive(false);
+        }
+        Icon(content, "ToonTitleLogo", _skin.TitleLogo, 85, 140, 771, 560, Color.white).preserveAspect = true;
+        Icon(content, "ToonTitleMix", _skin.TitleMix, 135, 710, 671, 534, Color.white).preserveAspect = true;
         var settings = new SerializedObject(menu);
         var button = settings.FindProperty("_continueButton").objectReferenceValue as UnityEngine.UI.Button;
         if (button == null) throw new InvalidOperationException("The current-stage title button is missing.");
@@ -183,7 +190,8 @@ public static class ToonSkinBuilder
         var badge = Rect(heading, "SuccessBadge"); Place(badge, 340.5f, 149, 260, 272);
         Get<ToonClearBadge>(badge.gameObject).Configure(StageColorPalette.ForStage(number));
         Get<ToonClearBadge>(badge.gameObject).raycastTarget = false;
-        Label(heading, "ToonClearTitle", "STAGE CLEAR!", 112, 85, 376, 771, 132, true);
+        var clearTitle = Label(heading, "ToonClearTitle", "STAGE CLEAR!", 112, 85, 376, 771, 132, true);
+        Set(presentation, "_clearTitle", clearTitle.rectTransform);
         var stage = Label(heading, "ToonClearStage", $"STAGE {number}", 68, 180, 507, 581, 89, true);
         var message = Label(heading, "ToonClearMessage", "Every color in its place.", 38, 100, 602, 741, 53, false);
         hs.FindProperty("_clearStageLabel").objectReferenceValue = stage;
@@ -238,7 +246,7 @@ public static class ToonSkinBuilder
         foreach (Transform child in button.transform) child.gameObject.SetActive(false);
         StyleButton(button, all ? _skin.NeutralButton : _skin.ColorButtons[0]);
         Place((RectTransform)button.transform, x, 76, 240, 212);
-        Icon(button.transform, "ToonResetIcon", _skin.ResetIcon, 64, all ? 24 : 45, 113, 113, Color.white);
+        Icon(button.transform, "ToonResetIcon", _skin.ResetIcon, 52, all ? 12 : 34, 136, 136, Color.white).preserveAspect = true;
         if (all) Label(button.transform, "ToonAllLabel", "ALL", 44, 30, 137, 180, 57, true);
     }
 
@@ -248,11 +256,8 @@ public static class ToonSkinBuilder
         AssetDatabase.Refresh();
         var skin = AssetDatabase.LoadAssetAtPath<ToonSkinAssets>(AssetPath);
         if (skin == null) { skin = ScriptableObject.CreateInstance<ToonSkinAssets>(); AssetDatabase.CreateAsset(skin, AssetPath); }
-        string titlePath = Folder + (File.Exists(Folder + "BlendTrailsTitle.png") ? "BlendTrailsTitle.png" : "ApprovedTitle.png");
-        var titleImporter = (TextureImporter)AssetImporter.GetAtPath(titlePath);
-        titleImporter.textureType = TextureImporterType.Default; titleImporter.mipmapEnabled = false;
-        titleImporter.maxTextureSize = 2048; titleImporter.textureCompression = TextureImporterCompression.Uncompressed; titleImporter.SaveAndReimport();
-        skin.TitleArtwork = AssetDatabase.LoadAssetAtPath<Texture2D>(titlePath);
+        skin.TitleLogo = ImportArtwork("BlendTrailsLogo");
+        skin.TitleMix = ImportArtwork("BlendTrailsMix");
         skin.Font = Font();
         string materialPath = Folder + "OutlinedText.mat";
         skin.OutlinedText = AssetDatabase.LoadAssetAtPath<Material>(materialPath);
@@ -287,19 +292,7 @@ public static class ToonSkinBuilder
         }
         skin.BoardPanel = skin.CreamPanel;
         skin.Dot = Sprite("Dot", 128, 128, (x, y) => Alpha(Color.white, 62 - Vector2.Distance(new Vector2(x, y), new Vector2(64, 64))), Vector4.zero, 128);
-        skin.ResetIcon = Sprite("ResetIcon", 128, 128, (x, y) =>
-        {
-            Vector2 p = new Vector2(x - 64, y - 64);
-            float angle = Mathf.Atan2(p.y, p.x) * Mathf.Rad2Deg;
-            if (angle < 0) angle += 360;
-            Vector2 start = new Vector2(Mathf.Cos(50 * Mathf.Deg2Rad), Mathf.Sin(50 * Mathf.Deg2Rad)) * 43;
-            Vector2 end = new Vector2(Mathf.Cos(327 * Mathf.Deg2Rad), Mathf.Sin(327 * Mathf.Deg2Rad)) * 43;
-            float arcDistance = angle >= 50 && angle <= 327 ? Mathf.Abs(p.magnitude - 43) : Mathf.Min(Vector2.Distance(p, start), Vector2.Distance(p, end));
-            Vector2 point = new Vector2(x, y), a = new Vector2(82, 91), b = new Vector2(107, 116), c = new Vector2(113, 79);
-            float edge = Mathf.Min(Segment(point, a, b), Mathf.Min(Segment(point, b, c), Segment(point, c, a)));
-            float head = (Triangle(point, a, b, c) ? edge : -edge) + 2;
-            return Alpha(Color.white, Mathf.Max(10 - arcDistance, head));
-        }, Vector4.zero, 128);
+        skin.ResetIcon = ImportArtwork("ResetArrowGenerated", 256);
         skin.NextIcon = Sprite("NextIcon", 128, 128, (x, y) =>
         {
             Vector2 p = new Vector2(x, y), tip = new Vector2(106, 64);
@@ -346,6 +339,19 @@ public static class ToonSkinBuilder
         foreach (Texture2D texture in font.atlasTextures) AssetDatabase.AddObjectToAsset(texture, font);
         EditorUtility.SetDirty(font);
         return font;
+    }
+    private static Sprite ImportArtwork(string name, int maximumSize = 2048)
+    {
+        string file = Folder + name + ".png";
+        if (!File.Exists(file)) throw new FileNotFoundException("Generated UI artwork is required.", file);
+        var importer = (TextureImporter)AssetImporter.GetAtPath(file);
+        importer.textureType = TextureImporterType.Sprite; importer.spriteImportMode = SpriteImportMode.Single;
+        importer.spritePixelsPerUnit = 100; importer.spriteBorder = Vector4.zero;
+        importer.alphaIsTransparency = true; importer.mipmapEnabled = false;
+        importer.maxTextureSize = maximumSize; importer.textureCompression = TextureImporterCompression.Uncompressed;
+        var settings = new TextureImporterSettings(); importer.ReadTextureSettings(settings);
+        settings.spriteMeshType = SpriteMeshType.FullRect; importer.SetTextureSettings(settings); importer.SaveAndReimport();
+        return AssetDatabase.LoadAssetAtPath<Sprite>(file);
     }
     private static Sprite PanelSprite(string name, Color fill, bool creamRim, float radius)
     {
@@ -421,11 +427,6 @@ public static class ToonSkinBuilder
         sky.SetParent(background.transform, false); Stretch(sky); Get<CanvasRenderer>(sky.gameObject);
         Get<ToonSkyGraphic>(sky.gameObject).raycastTarget = false;
         if (Camera.main != null) Camera.main.backgroundColor = GlobalScripts.BackgroundColor;
-    }
-    private static void Artwork(Transform parent, string name, float x, float y, float w, float h, Rect uv)
-    {
-        var rect = Rect(parent, name); Place(rect, x, y, w, h);
-        var image = Get<UnityEngine.UI.RawImage>(rect.gameObject); image.texture = _skin.TitleArtwork; image.uvRect = uv; image.raycastTarget = false;
     }
     private static void StyleButton(UnityEngine.UI.Button button, Sprite sprite)
     {

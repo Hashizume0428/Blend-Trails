@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>The approved B skin. References keep every UI asset available in player builds.</summary>
 public sealed class ToonSkinAssets : ScriptableObject
 {
-    public Texture2D TitleArtwork;
+    public Sprite TitleLogo, TitleMix;
     public TMP_FontAsset Font;
     public Material OutlinedText;
     public Sprite CreamPanel, HeaderPanel, PrimaryButton, NeutralButton, HomeButton;

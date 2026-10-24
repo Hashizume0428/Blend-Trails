@@ -82,9 +82,13 @@ public class StageOneTutorialTests : StageProgressTestFixture
     {
         Draw("11 21 22 23 24 25 15 14 13 12");
         Assert.That(_guide.IsVisible, Is.False);
+        float releasedAt = Time.unscaledTime;
         yield return _game.CommitLineAsync().ToCoroutine();
         Assert.That(_guide.GuideColor, Is.EqualTo(BaseColor.Blue));
+        yield return new WaitForSecondsRealtime(.25f);
+        Assert.That(_guide.IsVisible, Is.False, "Do not start the blue guide before the release delay.");
         yield return WaitForGuide();
+        Assert.That(Time.unscaledTime - releasedAt, Is.InRange(.45f, .8f), "Blue guidance starts about half a second after releasing red.");
         _guide.SendMessage("OnApplicationFocus", false);
         Assert.That(_guide.IsVisible, Is.False);
         _guide.SendMessage("OnApplicationFocus", true);

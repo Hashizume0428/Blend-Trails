@@ -98,6 +98,11 @@ public class ClearPresentationTests : StageProgressTestFixture
         float boardBottom = Camera.main.WorldToScreenPoint(_board.Find("BoardBackground").GetComponent<SpriteRenderer>().bounds.min).y;
         Assert.That(nextCenter.y, Is.LessThan(boardBottom), "The next-stage action belongs below the solved board.");
         Assert.That(Screen.safeArea.Contains(nextCenter), Is.True);
+        var title = GameObject.Find("ToonClearTitle").transform;
+        float titleScale = title.localScale.x;
+        yield return new WaitForSecondsRealtime(.2f);
+        Assert.That(title.localScale.x, Is.InRange(.95f, 1.05f));
+        Assert.That(Mathf.Abs(title.localScale.x - titleScale), Is.GreaterThan(.001f), "The clear heading keeps pulsing while the card is displayed.");
         yield return WaitUntil(() => !_presentation.Confetti.IsPlaying);
         Tap(next);
         yield return WaitUntil(() => SceneManager.GetActiveScene().name == StageCatalog.SceneName(4) && !SceneNavigator.IsLoading);
@@ -120,12 +125,14 @@ public class ClearPresentationTests : StageProgressTestFixture
         yield return PrepareSolution();
         UniTask clear = _game.CommitLineAsync();
         yield return WaitUntil(() => _layout.ClearProgress > 0);
+        var title = GameObject.Find("ToonClearTitle").transform;
         _game.RestartStage();
         yield return clear.ToCoroutine();
         yield return new WaitForSecondsRealtime(0.3f);
         Assert.That(_game.State, Is.EqualTo(GameState.Idle));
         Assert.That(_presentation.IsPlaying || _presentation.IsPresented || _presentation.Confetti.IsPlaying, Is.False);
         Assert.That(_layout.ClearProgress, Is.Zero);
+        Assert.That(title.localScale, Is.EqualTo(Vector3.one), "Restart stops the heading pulse and restores its resting scale.");
         Assert.That(_board.localScale.x, Is.EqualTo(_initialScale).Within(0.001f));
         Assert.That(_game.TilesList.All(tile => tile.CurrentColor == TileColor.None), Is.True);
         Assert.That(GameObject.Find("ClearPanel"), Is.Null);

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ba27924eb740545b629ba69ac6faa9, type: 3}
   m_Name: ToonSkin
   m_EditorClassIdentifier: ColorPuzzle.Runtime::ToonSkinAssets
-  TitleArtwork: {fileID: 2800000, guid: 76dfe39aa47714144843536c4d51dbe8, type: 3}
+  TitleLogo: {fileID: 21300000, guid: 0680c23b989931d449033b36648a46db, type: 3}
+  TitleMix: {fileID: 21300000, guid: 5f106933cf8dee94cb90ee03f23386db, type: 3}
   Font: {fileID: 11400000, guid: 2009e8753b28539429398acb63b7306d, type: 2}
   OutlinedText: {fileID: 2100000, guid: 5f085c4d6c6fee14283776264a3f36c3, type: 2}
   CreamPanel: {fileID: 21300000, guid: 112e8db7729916348838494852fec7ee, type: 3}
@@ -22,7 +23,7 @@ MonoBehaviour:
   HomeButton: {fileID: 21300000, guid: d57f73fac7db01244a737b1498973f98, type: 3}
   TileFace: {fileID: 21300000, guid: 154d96d4e29ec49409005b0e97b3c2bf, type: 3}
   BoardPanel: {fileID: 21300000, guid: 112e8db7729916348838494852fec7ee, type: 3}
-  ResetIcon: {fileID: 21300000, guid: f785ff95775d1ac48a83ba3240e850b8, type: 3}
+  ResetIcon: {fileID: 21300000, guid: f00033cf89c76d948a3bc36108248705, type: 3}
   HomeIcon: {fileID: 21300000, guid: 721103e3652c1b44991836b2dd47a138, type: 3}
   PlayIcon: {fileID: 21300000, guid: 29cc1565c38fdf044a071fffc0273189, type: 3}
   NextIcon: {fileID: 21300000, guid: 4336e1dfadccc59408fb68039e6c4f68, type: 3}

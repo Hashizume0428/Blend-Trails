@@ -11,11 +11,13 @@ public class StageClearPresentation : MonoBehaviour
     [SerializeField] private CanvasGroup _actions;
     [SerializeField] private CanvasGroup _cardBackdrop;
     [SerializeField] private CanvasGroup _cardHeading;
+    [SerializeField] private RectTransform _clearTitle;
     [SerializeField] private ClearConfetti _confetti;
     [SerializeField, Min(0)] private float _celebrationDelay = 0.5f;
     [SerializeField, Min(0.05f)] private float _shrinkDuration = 0.4f;
     [SerializeField, Min(0.05f)] private float _buttonFadeDuration = 0.2f;
     private Tween _boardTween, _buttonTween;
+    private Tween _titlePulse;
     private int _version;
     public bool IsPlaying { get; private set; }
     public bool IsPresented { get; private set; }
@@ -34,6 +36,7 @@ public class StageClearPresentation : MonoBehaviour
         try
         {
             await UniTask.Delay(System.TimeSpan.FromSeconds(_celebrationDelay), ignoreTimeScale: true, cancellationToken: token);
+            StartTitlePulse();
             _boardTween = DOTween.To(() => _layout.ClearProgress, SetProgress, 1, _shrinkDuration)
                 .SetEase(Ease.InOutCubic).SetUpdate(true).SetLink(gameObject);
             await UniTask.Delay(System.TimeSpan.FromSeconds(_shrinkDuration), ignoreTimeScale: true, cancellationToken: token);
@@ -55,6 +58,19 @@ public class StageClearPresentation : MonoBehaviour
             }
         }
     }
+    private void StartTitlePulse()
+    {
+        StopTitlePulse();
+        if (_clearTitle == null) return;
+        _clearTitle.localScale = Vector3.one * .96f;
+        _titlePulse = _clearTitle.DOScale(Vector3.one * 1.04f, .65f)
+            .SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo).SetUpdate(true).SetLink(gameObject);
+    }
+    private void StopTitlePulse()
+    {
+        _titlePulse?.Kill(); _titlePulse = null;
+        if (_clearTitle != null) _clearTitle.localScale = Vector3.one;
+    }
     private void SetProgress(float progress)
     {
         _layout.SetClearProgress(progress);
@@ -65,6 +81,7 @@ public class StageClearPresentation : MonoBehaviour
     {
         _version++;
         _boardTween?.Kill(); _buttonTween?.Kill(); _boardTween = _buttonTween = null;
+        StopTitlePulse();
         IsPlaying = IsPresented = false;
         if (_confetti != null) _confetti.Stop();
         if (_layout != null) { _layout.SetClearProgress(0); _layout.SetPlayControlsVisible(true); }
@@ -73,5 +90,6 @@ public class StageClearPresentation : MonoBehaviour
         if (_cardBackdrop != null) { _cardBackdrop.alpha = 0; _cardBackdrop.gameObject.SetActive(false); }
         if (_cardHeading != null) _cardHeading.alpha = 0;
     }
-    private void OnDestroy() { _version++; _boardTween?.Kill(); _buttonTween?.Kill(); }
+    private void OnDisable() => StopTitlePulse();
+    private void OnDestroy() { _version++; _boardTween?.Kill(); _buttonTween?.Kill(); StopTitlePulse(); }
 }
