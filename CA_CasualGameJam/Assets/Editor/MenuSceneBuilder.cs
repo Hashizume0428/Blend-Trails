@@ -128,11 +128,14 @@ public static class MenuSceneBuilder
         StyleButton(button, new Vector2(0, -430), new Vector2(840, 240), GlobalScripts.NormalFaceColor);
         Transform oldPrompt = button.transform.Find("Prompt");
         if (oldPrompt != null) oldPrompt.name = "Label";
-        TMP_Text label = Label(button.transform, "Label", "STAGE 01", 56, new Vector2(0, 40), new Vector2(760, 95));
+        TMP_Text label = Label(button.transform, "Label", "Stage1", 56, new Vector2(0, 40), new Vector2(760, 95));
         label.color = new Color32(49, 49, 49, 255);
         TMP_Text description = Label(button.transform, "Description", "STAGE SELECT", 28, new Vector2(0, -55), new Vector2(760, 65));
         description.color = new Color32(104, 104, 104, 255);
         serialized.FindProperty("_nextScene").stringValue = SceneNavigator.StageScene;
+        serialized.FindProperty("_useStageProgress").boolValue = true;
+        serialized.FindProperty("_stageLabel").objectReferenceValue = label;
+        serialized.FindProperty("_stageDescription").objectReferenceValue = description;
         serialized.ApplyModifiedPropertiesWithoutUndo();
     }
 

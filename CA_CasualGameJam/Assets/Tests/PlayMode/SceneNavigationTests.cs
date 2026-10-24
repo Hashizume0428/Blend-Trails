@@ -10,6 +10,9 @@ using UnityEngine.TestTools;
 
 public class SceneNavigationTests
 {
+    [SetUp]
+    public void ResetProgress() => StageProgress.ResetSession();
+
     private static IEnumerator WaitForScene(string name)
     {
         float deadline = Time.realtimeSinceStartup + 10;
@@ -91,6 +94,7 @@ public class SceneNavigationTests
         EventSystem.current.RaycastAll(outside, hits);
         Assert.That(hits, Is.Empty, "Only the stage button should receive taps.");
         var stage = Button("Stage01Button");
+        Assert.That(stage.transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage1"));
         Tap(stage);
         stage.onClick.Invoke();
         yield return WaitForScene(SceneNavigator.StageScene);
@@ -98,20 +102,22 @@ public class SceneNavigationTests
     }
 
     [UnityTest]
-    public IEnumerator ClearWaitsForAChoiceAndHomeCanStartAFreshGame()
+    public IEnumerator ClearingStageOneUpdatesTheTitleToStageTwoAndStartsThatStage()
     {
         yield return SceneManager.LoadSceneAsync(SceneNavigator.StageScene);
         yield return null;
         yield return Solve(Object.FindFirstObjectByType<GameManager>());
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(2));
         Assert.That(Button("ClearHomeButton").interactable, Is.True);
         Assert.That(Button("NextStageButton").interactable, Is.True);
         yield return new WaitForSecondsRealtime(1.3f);
         Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(SceneNavigator.StageScene), "Clear must not navigate automatically.");
         Tap(Button("ClearHomeButton"));
         yield return WaitForScene(SceneNavigator.TitleScene);
+        Assert.That(Button("Stage01Button").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage2"));
         Tap(Button("Stage01Button"));
-        yield return WaitForScene(SceneNavigator.StageScene);
-        AssertFreshStage(1);
+        yield return WaitForScene(SceneNavigator.SecondStageScene);
+        AssertFreshStage(2);
     }
 
     [UnityTest]
@@ -129,6 +135,7 @@ public class SceneNavigationTests
         Assert.That(game.GetTile(new Vector2Int(3, 0)).IsStartTile, Is.True);
         Assert.That(game.GetTile(Vector2Int.zero).IsStartTile, Is.False);
         yield return Solve(game);
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(3));
         Assert.That(Button("NextStageButton").interactable, Is.False);
         Assert.That(Button("ClearHomeButton").interactable, Is.True);
         Assert.That(GameObject.Find("ClearMessage").GetComponent<TMP_Text>().text, Is.EqualTo("ALL STAGES CLEAR"));
@@ -137,6 +144,13 @@ public class SceneNavigationTests
         Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(SceneNavigator.SecondStageScene));
         Tap(Button("ClearHomeButton"));
         yield return WaitForScene(SceneNavigator.TitleScene);
+        var stage = Button("Stage01Button");
+        Assert.That(stage.transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage3"));
+        Assert.That(stage.transform.Find("Description").GetComponent<TMP_Text>().text, Is.EqualTo("COMING SOON"));
+        Assert.That(stage.interactable, Is.False);
+        stage.onClick.Invoke();
+        yield return null;
+        Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(SceneNavigator.TitleScene));
     }
 
     [UnityTest]
@@ -150,7 +164,45 @@ public class SceneNavigationTests
             if (button.name == "NextStageButton" || button.name == "ClearHomeButton") button.onClick.Invoke();
         yield return null;
         Assert.That(game.State, Is.EqualTo(GameState.Drawing));
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(1));
         Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(SceneNavigator.StageScene));
         game.CancelLine();
+    }
+
+    [UnityTest]
+    public IEnumerator IncompleteLinesAndReloadDoNotAdvanceTheTitleStage()
+    {
+        yield return SceneManager.LoadSceneAsync(SceneNavigator.StageScene);
+        yield return null;
+        var game = Object.FindFirstObjectByType<GameManager>();
+        foreach (Vector2Int point in new[] { new Vector2Int(0, 0), new Vector2Int(0, 3) })
+        {
+            Assert.That(game.TryBeginLine(game.GetTile(point).TileIndex), Is.True);
+            yield return game.CommitLineAsync().ToCoroutine();
+        }
+        Assert.That(game.State, Is.EqualTo(GameState.Idle));
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(1));
+        Assert.That(game.ReloadAll(), Is.True);
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(1));
+        Tap(Button("HomeButton"));
+        yield return WaitForScene(SceneNavigator.TitleScene);
+        Assert.That(Button("Stage01Button").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage1"));
+        Assert.That(Button("Stage01Button").interactable, Is.True);
+    }
+
+    [UnityTest]
+    public IEnumerator ReclearingTheSameStageDoesNotAdvanceTheNumberTwice()
+    {
+        yield return SceneManager.LoadSceneAsync(SceneNavigator.StageScene);
+        yield return null;
+        var game = Object.FindFirstObjectByType<GameManager>();
+        yield return Solve(game);
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(2));
+        game.RestartStage();
+        yield return Solve(game);
+        Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(2));
+        Tap(Button("ClearHomeButton"));
+        yield return WaitForScene(SceneNavigator.TitleScene);
+        Assert.That(Button("Stage01Button").transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage2"));
     }
 }

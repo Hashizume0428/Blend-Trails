@@ -4,10 +4,12 @@ Unity 6000.3.24f1で `Assets/Scenes/Title.unity` を開き、Playで開始しま
 
 ## 画面の流れ
 
-- タイトル画面のステージ選択ボタンはSTAGE 01の1つです。押すと直接ステージ1（SampleScene）へ移動します。
+- タイトル画面のステージ選択ボタンは1つで、Stage1、Stage2の形式で現在の進行番号を表示します。押すと表示中のステージへ直接移動します。
 - クリア画面は選択を待ちます。HOMEはタイトルへ、NEXT STAGEは追加したステージ2（Stage02）へ移動します。
 - ステージ2のクリア画面はALL STAGES CLEARを表示します。NEXT STAGEは無効で、HOMEからタイトルへ戻れます。
-- タイトルから再びSTAGE 01を選ぶと、ステージ1を初期状態から開始します。
+- ステージ1をクリアすると進行番号が2へ進み、HOMEで戻ったタイトルはStage2を表示します。タイトルから選ぶと、ステージ2を初期状態で開始します。
+- ステージ2をクリアするとタイトルはStage3を表示します。Stage3は未実装なのでボタンを無効にし、COMING SOONを表示します。
+- 進行番号はシーン移動中も保持します。同じステージの再クリア、未クリアの判定、リロードでは余分に番号を進めません。保存機能は対象外のため、アプリやPlayモードを再起動するとStage1から始まります。
 - ステージ右上のホームボタンはタイトルへ戻ります。描画中・着色演出中でも戻ることができ、進行中の操作はシーン破棄時に終了します。
 
 Build SettingsはTitle、SampleScene、Stage02の順です。旧StageSelectシーンは現在の遷移とBuild Settingsには含めません。
@@ -49,6 +51,7 @@ Color Puzzle/Import Text ResourcesはTMP標準リソースの導入用です。
 Color Puzzle/Build Prototypeは初回の生成用で、生成済み盤面の上書きを防ぎます。普段の調整はシーンやPrefabを編集してください。
 Color Puzzle/Build Scene FlowはタイトルとクリアUIを更新し、不足していればステージ2を生成します。既存のステージ1・2の問題設定は維持します。
 StageClearNavigationのStage Numberでステージ番号、Next Stage Sceneで次のシーンを設定します。最終面ではNext Stage Sceneを空にします。自動遷移タイマーはありません。
+StageProgressはプレイ中の次のステージ番号と、番号に対応するシーンを管理します。ステージ追加時はGetSceneNameにもシーンを登録してください。タイトルのMenuNavigationはUse Stage ProgressとStage Label / Stage Descriptionを使用します。
 Color Puzzle/Apply Figma Stage UIは、既存の問題配置とクリア表示を維持してステージUIを更新します。
 StageScreenLayoutはFigmaの1324×2879を基準にSafe Areaへ配置し、短い縦画面ではセクション間の余白を縮めます。盤面のSpriteRendererとColliderもUIの盤面領域へ追従します。
 
@@ -58,7 +61,7 @@ Unity Test RunnerからColorPuzzle.EditModeTestsとColorPuzzle.PlayModeTestsを�
 EditModeは色禁止・混色・完全一致・リロード後の表示・経路・空盤面を検証します。
 PlayModeは解答経路、他色開始点、色別リロード、巻き戻し、接触判定、描画中の即時着色・混色、不正解マスの実際の面表示、他色を保持した取消、判定中のリスタートを検証します。
 PuzzleVisualTestsでは、重なった辺・交点の混色、キャンセル・リロード後の線表示、禁止マークの中央配置、全開始色の確定後の未着色マスを含む枠・面・禁止マークの同期点滅、2秒での停止、リロード・再確定・初期化時の色の復元を検証します。
-SceneNavigationTestsでは、タイトルの1ボタン、ボタン以外のタップ、連続タップ、ステージへの直接移動、クリア後の選択待ち、ホーム復帰、ステージ2への移動、最終面の無効ボタン、両方の解答経路と再選択後の初期化を検証します。
+SceneNavigationTestsでは、タイトルの1ボタン、ボタン以外のタップ、連続タップ、ステージへの直接移動、クリア後の選択待ち、ホーム復帰、Stage1→Stage2→Stage3の表示・移動先、未実装ステージの無効ボタン、未クリア・再クリア時の番号維持、両方の解答経路と再選択後の初期化を検証します。
 StageHudTestsでは、Figma UIの配置・盤面へのタッチ、ALLでの初期化と条件維持、リロード操作制限、Idle・描画中・着色中のホーム復帰を検証します。
 
 ### 解答例
@@ -78,15 +81,16 @@ StageHudTestsでは、Figma UIの配置・盤面へのタッチ、ALLでの初�
 ## Verification
 
 Unity Editor compilation: 0 errors / 0 warnings.
-EditMode: 12 / 12 passed. PlayMode: 22 / 22 passed (including live painting, rollback, both stage solutions, clear choices, stage UI, mixed lines and error indicators).
+EditMode color/path rules (unchanged; previous run): 12 / 12 passed. PlayMode: 24 / 24 passed (including stage progression, live painting, rollback, both stage solutions, clear choices, stage UI, mixed lines and error indicators).
 9:16 portrait title, drawing, clear choices and stage 2 visually checked.
 Error feedback: all start lines committed, empty incorrect tiles, synchronized frames/faces/markers, two-second stop, restored face colors, and reload/recommit verified.
 Live painting: start and intermediate cells colored while drawing, immediate mixing, incorrect face colors, backtrack/cancel preserving the other color, input locked during resolution, and cancellation on restart verified.
-Scene navigation: one title button directly opens stage 1; clear waits for HOME / NEXT STAGE; stage 2 starts fresh and is solvable; final NEXT STAGE is disabled; HOME and replay return to a fresh stage 1.
-Test results: Logs/LivePaintFlow-EditMode.json and Logs/LivePaintFlow-PlayMode.json.
+Scene navigation: the title button displays Stage1 / Stage2 and opens the corresponding stage; clear advances the session progress once; HOME retains progress; final title displays disabled Stage3 with COMING SOON; incomplete play, reload and reclearing do not advance it.
+Test results: Logs/LivePaintFlow-EditMode.json (unchanged color/path rules) and Logs/StageProgress-PlayMode.json.
 Figma stage previews: Logs/FigmaStage-Phone.png and Logs/FigmaStage-Reference.png.
 Manual runtime check: frame advancement, 16 / 16 clear, and restart verified.
 Screenshots: Logs/Prototype-Portrait.png and Logs/Prototype-Clear.png.
 Visual improvements: Logs/VisualImprovements.png (mixed lines, centered forbidden markers and error indicators).
-Current previews: Logs/LivePaintFlow-Title.png, Logs/LivePaintFlow-Drawing.png, Logs/LivePaintFlow-Clear.png and Logs/LivePaintFlow-Stage02.png.
+Title progress previews: Logs/StageProgress-Stage1.png, Logs/StageProgress-Stage2.png and Logs/StageProgress-Stage3.png.
+Gameplay previews: Logs/LivePaintFlow-Drawing.png, Logs/LivePaintFlow-Clear.png and Logs/LivePaintFlow-Stage02.png.
 Editor integration: com.unity.pipeline 0.9.1-exp.1.

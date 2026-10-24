@@ -153,6 +153,8 @@ public class GameManager : MonoBehaviour
                 if (_hud != null) await _hud.PlayClearAsync(token);
                 token.ThrowIfCancellationRequested();
                 State = GameState.Cleared;
+                var navigation = GetComponent<StageClearNavigation>();
+                if (navigation != null) StageProgress.RecordClear(navigation.StageNumber);
             }
             else State = GameState.Idle;
             Changed?.Invoke();
