@@ -1,0 +1,214 @@
+{
+  "version": 1,
+  "date": "2026-10-25",
+  "timezone": "Asia/Tokyo",
+  "status": "静止画確認用・動画未生成",
+  "video": {
+    "width": 1400,
+    "height": 1800,
+    "durationSeconds": 45,
+    "proposedFps": 30,
+    "allowedDurationSeconds": [
+      30,
+      59
+    ]
+  },
+  "imageGeneration": {
+    "tool": "built-in image_gen",
+    "asset": "assets/swipe-hand.png",
+    "promptFile": "hand-prompt.txt",
+    "source": "C:/Users/robor/.codex/generated_images/01a170d1-e31c-7700-83fb-483caf54c98a/exec-5a417f70-54a9-49d2-af9e-00a28ddf72bb.png"
+  },
+  "renderer": "Native code-authored 2D board, typography, panels, arrows and rings, rendered with @napi-rs/canvas. Generated hand composited consistently across keyframes.",
+  "grid": {
+    "rows": 50,
+    "columns": 50,
+    "total": 2500,
+    "hole": {
+      "row": 26,
+      "column": 26,
+      "coordinates": "1-based"
+    }
+  },
+  "invariants": {
+    "routesValidated": true,
+    "routeAVisits": 2500,
+    "routeBVisits": 2500,
+    "noDiagonalConnections": true,
+    "last50CellsAreLastColumnA": true,
+    "finalBoardBWhiteCells": 1
+  },
+  "scenes": [
+    {
+      "id": "01",
+      "file": "01-fill-every-tile.png",
+      "time": "0–4秒",
+      "title": "接写・ジッパースワイプ",
+      "copy": "FILL EVERY TILE.",
+      "board": "A",
+      "filled": 484,
+      "viewport": {
+        "x": -4610.5,
+        "y": -5345.5,
+        "pitch": 163,
+        "clip": {
+          "x": 83,
+          "y": 377,
+          "w": 1234,
+          "h": 1124
+        }
+      },
+      "contactTile": {
+        "r": 38,
+        "c": 33
+      },
+      "width": 1400,
+      "height": 1800,
+      "bytes": 304224,
+      "sha256": "b8a7152539614591a036529d5bba368c8547d416ec68eeb4513e68e9f8cc3bb0",
+      "empty": 2016
+    },
+    {
+      "id": "02",
+      "file": "02-keep-going.png",
+      "time": "4–15秒",
+      "title": "引き・50×50の巨大盤面",
+      "copy": "KEEP GOING...",
+      "board": "A",
+      "filled": 1625,
+      "viewport": {
+        "x": 150,
+        "y": 435,
+        "pitch": 22
+      },
+      "width": 1400,
+      "height": 1800,
+      "bytes": 353320,
+      "sha256": "6ff2e9ef4dc887a2e0236ecc491452bc6c0bc0ed55a7c364cc38a57a32fae963",
+      "empty": 875
+    },
+    {
+      "id": "03",
+      "file": "03-last-column.png",
+      "time": "15–17秒",
+      "title": "最後の列を埋める",
+      "copy": "2500 / 2500 へのカウントアップ",
+      "board": "A",
+      "filled": 2475,
+      "viewport": {
+        "x": 150,
+        "y": 435,
+        "pitch": 22
+      },
+      "width": 1400,
+      "height": 1800,
+      "bytes": 354077,
+      "sha256": "21194f9067432c8696d5ee270e1adefc0727feae940ff2838389bc1c8119fac3",
+      "empty": 25
+    },
+    {
+      "id": "04",
+      "file": "04-perfect.png",
+      "time": "17–19秒",
+      "title": "2500マス完成",
+      "copy": "2500 / 2500 → PERFECT!",
+      "board": "A",
+      "filled": 2500,
+      "viewport": {
+        "x": 150,
+        "y": 435,
+        "pitch": 22
+      },
+      "width": 1400,
+      "height": 1800,
+      "bytes": 294888,
+      "sha256": "ace4b84b314713b67fffb36bbdafa5f1fa8efb84db901589438ed2160b31808b",
+      "empty": 0
+    },
+    {
+      "id": "05",
+      "file": "05-2499-stop.png",
+      "time": "19–32秒",
+      "title": "新盤面・2499で停止",
+      "copy": "2499 / 2500",
+      "board": "B",
+      "filled": 2499,
+      "viewport": {
+        "x": 150,
+        "y": 435,
+        "pitch": 22
+      },
+      "width": 1400,
+      "height": 1800,
+      "bytes": 295449,
+      "sha256": "badcc61670d04890f9ddbeeb8b8f9a66c4c6b32118fa908ea1909aac52d48bcc",
+      "empty": 1
+    },
+    {
+      "id": "06",
+      "file": "06-one-white-tile.png",
+      "time": "32–35秒",
+      "title": "中央の白い1マスへズーム",
+      "copy": "HOW DID YOU MISS THAT?",
+      "board": "B",
+      "filled": 2499,
+      "viewport": {
+        "x": -3201.5,
+        "y": -2927.5,
+        "pitch": 153
+      },
+      "width": 1400,
+      "height": 1800,
+      "bytes": 261619,
+      "sha256": "69ce2e13c7594674f097f0e86f67a2fb9c5169fc2e071c670617b05d4396cc17",
+      "empty": 1
+    },
+    {
+      "id": "07",
+      "file": "07-wrong-turn-again.png",
+      "time": "35–41秒",
+      "title": "引き直し・曲がる場所を間違える",
+      "copy": "HOW DID YOU MISS THAT?",
+      "board": "B",
+      "filled": 2499,
+      "viewport": {
+        "x": -3201.5,
+        "y": -2927.5,
+        "pitch": 153
+      },
+      "width": 1400,
+      "height": 1800,
+      "bytes": 302941,
+      "sha256": "5cfb75078df8b3f492d66ff28edb6b46d02710fc18d4fe6bd269745860702ddf",
+      "empty": 1
+    },
+    {
+      "id": "08",
+      "file": "08-play-now.png",
+      "time": "41–45秒",
+      "title": "白い穴を残してCTA",
+      "copy": "CAN YOU GET ALL 2500? / PLAY NOW",
+      "board": "B",
+      "filled": 2499,
+      "viewport": {
+        "x": -2615,
+        "y": -2432,
+        "pitch": 130
+      },
+      "width": 1400,
+      "height": 1800,
+      "bytes": 334442,
+      "sha256": "022ae0dadb7c2dde6834bd9cfeed363a6727b26cd95a859ed1ea278f4d476b8a",
+      "empty": 1
+    }
+  ],
+  "videoDirections": [
+    "0–4秒: 接写で指先と着色先端を同期。接触リングは指先に固定し、細い残像と矢印でスワイプ方向を示す。",
+    "4–15秒: 50×50盤面へ連続ズームアウト。複数色の長い連続経路を順番に高速着色。",
+    "15–19秒: 最後の列を塗り切り、2500 / 2500 を約0.4秒保持してから PERFECT!。完成時は手を退場。",
+    "19–32秒: 別の巨大盤面へ切り替え、高速着色後に2499 / 2500で約1秒停止。白い穴は中央付近の1マスだけ。",
+    "32–35秒: 全体の2499カウンターを維持し、r26c26の白い穴へ連続ズーム。",
+    "35–41秒: 赤色の最後の9マスを一度巻き戻して再スワイプ。r27c26で上へ曲がるべきところを右へ進み、外周8マスだけが再着色される。静止画07は引き直し軌跡の見せ方を合成したキーフレームで、再着色の途中フレームそのものではない。最後に2499へ戻る。",
+    "41–45秒: 白い穴を残した拡大盤面とCTAを保持。PLAY NOWを軽く脈動させる。"
+  ]
+}
