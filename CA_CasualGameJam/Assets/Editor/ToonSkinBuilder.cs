@@ -266,6 +266,7 @@ public static class ToonSkinBuilder
         AssetDatabase.Refresh();
         var skin = AssetDatabase.LoadAssetAtPath<ToonSkinAssets>(AssetPath);
         if (skin == null) { skin = ScriptableObject.CreateInstance<ToonSkinAssets>(); AssetDatabase.CreateAsset(skin, AssetPath); }
+        skin.DisabledReloadShader = AssetDatabase.LoadAssetAtPath<Shader>("Assets/Shaders/ToonReloadDisabled.shader");
         skin.TitleLogo = ImportArtwork("BlendTrailsLogo");
         skin.TitleMix = ImportArtwork("BlendTrailsMix");
         skin.Font = Font();

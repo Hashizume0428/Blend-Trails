@@ -7,6 +7,7 @@ public sealed class ToonSkinAssets : ScriptableObject
     public Sprite TitleLogo, TitleMix;
     public TMP_FontAsset Font;
     public Material OutlinedText;
+    public Shader DisabledReloadShader;
     public Sprite CreamPanel, HeaderPanel, PrimaryButton, NeutralButton, HomeButton;
     public Sprite TileFace, BoardPanel, ResetIcon, HomeIcon, PlayIcon, NextIcon, CloseIcon, Dot;
     public Sprite[] ColorButtons = new Sprite[3];

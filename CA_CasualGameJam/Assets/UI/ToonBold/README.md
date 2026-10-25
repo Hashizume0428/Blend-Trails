@@ -6,6 +6,8 @@ The title's logo and mixing motif stay red/yellow/orange regardless of progressi
 
 `ResetArrowGenerated.png` is a standalone white circular arrow generated with genuine transparent alpha, shared by all three reset buttons and tinted navy for yellow. Unity imports it at a maximum of 256 pixels to retain smooth edges at its small UI display size. The other panels, tile faces/frames, buttons and navigation icons are code-native primitives authored by `Assets/Editor/ToonSkinBuilder.cs`. They use full-rectangle sprites with uncompressed alpha, no mipmaps, and sliced borders for responsive panels. No screenshot is used as the interactive board.
 
+When the yellow reset button is disabled, `ToonPaletteHud` applies the same 40% white wash to its face, border, shadow and arrow through `ToonReloadDisabled.shader`. Enabling the button removes the wash. The shader is referenced by `ToonSkin.asset` so it is included in player builds; red, blue and ALL retain their existing styling.
+
 `Assets/Resources/ToonSkin.asset` references the shared assets. `StagePaletteVisuals.asset` references the three new start markers. Every tile retains its authored coordinates, start color roles, target colors, colliders and existing state logic.
 
 The background is a separate camera-space Canvas, sorted behind the world-space board. It has no raycaster. Buttons and other controls remain on the existing interactive Canvas, and decorative graphics do not intercept input.

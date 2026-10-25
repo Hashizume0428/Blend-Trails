@@ -16,6 +16,7 @@ MonoBehaviour:
   TitleMix: {fileID: 21300000, guid: 5f106933cf8dee94cb90ee03f23386db, type: 3}
   Font: {fileID: 11400000, guid: 2009e8753b28539429398acb63b7306d, type: 2}
   OutlinedText: {fileID: 2100000, guid: 5f085c4d6c6fee14283776264a3f36c3, type: 2}
+  DisabledReloadShader: {fileID: 4800000, guid: e276d04f4e6604246ac371ee7d35b3a0, type: 3}
   CreamPanel: {fileID: 21300000, guid: 112e8db7729916348838494852fec7ee, type: 3}
   HeaderPanel: {fileID: 21300000, guid: 22c19910074f3a340a460e9e120a2ac4, type: 3}
   PrimaryButton: {fileID: 21300000, guid: 6ad8a7521581e7a45a03ca0dd131a547, type: 3}
