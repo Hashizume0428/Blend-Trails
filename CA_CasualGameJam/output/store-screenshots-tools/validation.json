@@ -1,0 +1,158 @@
+{
+  "count": 20,
+  "dimensions": "1080x1920",
+  "format": "PNG",
+  "mode": "RGB",
+  "uniqueImages": 20,
+  "maxBytes": 911135,
+  "totalBytes": 5365083,
+  "zipBytes": 5107503,
+  "palettes": [
+    "Blue+Yellow",
+    "Red+Blue",
+    "Red+Yellow"
+  ],
+  "allChecksPassed": true,
+  "files": [
+    {
+      "file": "01_title.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 911135,
+      "sha256": "7b4ad8f8145c172a34d9b658d93a879c66cadd12dedbfaa135f2e33ecc1bb403"
+    },
+    {
+      "file": "02_stage01_tutorial.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 227584,
+      "sha256": "c82bfe206fb2c08eef3becc25ad2086c5ed7558ed25d8a0aa35d860b79d2ac61"
+    },
+    {
+      "file": "03_stage03_start.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 249502,
+      "sha256": "9612fd41001659c6b252de6c6195f32f805d7923c9813d11a7eefe37a2f39600"
+    },
+    {
+      "file": "04_stage03_mixing.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 248703,
+      "sha256": "30eb67bb166cc153f4864266eea7bd6bdd142bd1cd6b5f3b7f83a5a5e0cdb576"
+    },
+    {
+      "file": "05_stage05_mixing.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 246779,
+      "sha256": "6289191ff67c739b8e6b9a39f6d50157fcc76dec6e2607752376e0a992d9902a"
+    },
+    {
+      "file": "06_stage06_start.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 247411,
+      "sha256": "711e703a4ea871bb297ab53f1a8015629f40e2f281cf1df88645df3ce273b376"
+    },
+    {
+      "file": "07_stage08_mixing.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 245459,
+      "sha256": "1b5774961b690b68897a0db3c1c63bd9ac2220ab3ad38deb91ed38c543123207"
+    },
+    {
+      "file": "08_stage10_mixing.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 248342,
+      "sha256": "6dba54ca6b920d324ff8041745e7386734a998c605929900af48ab60b05d5e4a"
+    },
+    {
+      "file": "09_stage11_start.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 243731,
+      "sha256": "6bba0fdd79dccefea2345a2df146c1acfb45b015f06c55de79ceb66e5c242e44"
+    },
+    {
+      "file": "10_stage13_mixing.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 247852,
+      "sha256": "0c4abed7cf2aa89b1f2445b51a9d6680b9db25b949e6bed153e69f5f42b8058b"
+    },
+    {
+      "file": "11_stage15_mixing.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 246857,
+      "sha256": "093220977baf32144b146b0526a9ad0fb7ef5e975ce062c45139fd1804aea3fe"
+    },
+    {
+      "file": "12_stage21_start.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 246481,
+      "sha256": "40d759dddd38da8e9291790caa058718ce04aede4ffb107cd2894180b87572e9"
+    },
+    {
+      "file": "13_stage24_mixing.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 248793,
+      "sha256": "37c01e5fd47efd3e55bd543d788445ea9da5120fe2ea3c88278857adde45418c"
+    },
+    {
+      "file": "14_stage32_mixing.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 252886,
+      "sha256": "a4be6c0af673c65afa0da665183d906b5ca8decd1bb6e36be096f78007534599"
+    },
+    {
+      "file": "15_stage40_mixing.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 249312,
+      "sha256": "91b806c3ae43eeb66ee6e21a4bfdf2e0765e5672d6410f42d7b61c3649ef013d"
+    },
+    {
+      "file": "16_stage45_mixing.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 248810,
+      "sha256": "19fc990a5c445cad31b45084f84b8920b50293c56c622db5f9531352609388f3"
+    },
+    {
+      "file": "17_stage60_mixing.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 251881,
+      "sha256": "5a416b63fa139af399bcb4a86201185001d454618e51a21eb72c4d18f0edd639"
+    },
+    {
+      "file": "18_stage03_celebration.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 139559,
+      "sha256": "a2f8b7ee8186cf428d97e15a80ec0e086d26a7e81b89aadc50335ee1eef91bee"
+    },
+    {
+      "file": "19_stage08_clear.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 181986,
+      "sha256": "8075317ec13971ac457294e124b41943d7e509410030d35e5d27e06163927c89"
+    },
+    {
+      "file": "20_stage13_clear.png",
+      "width": 1080,
+      "height": 1920,
+      "bytes": 182020,
+      "sha256": "6e924ac116219a2686caeadf33a0eb84b6b98a5d9a1218c02fa521594ca4083b"
+    }
+  ]
+}

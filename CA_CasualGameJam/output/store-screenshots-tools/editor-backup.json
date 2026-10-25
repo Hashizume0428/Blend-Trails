@@ -1,0 +1,12 @@
+{
+  "scene": "Assets/Scenes/Stage05.unity",
+  "oldIndex": 19,
+  "captureIndex": 21,
+  "background": true,
+  "progressPresent": true,
+  "progress": 6,
+  "statePresent": true,
+  "progressState": "{\"stageNumber\":6,\"puzzleId\":6,\"recentPuzzleIds\":[5]}",
+  "autoTick": true,
+  "autoInterval": 16
+}
