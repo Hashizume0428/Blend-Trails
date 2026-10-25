@@ -18,7 +18,5 @@ Mix your two colors in the following combinations:
 PLAN, TRACE, TRY AGAIN
 Where should the paths overlap? Which tiles need just one color? Explore different routes, backtrack while drawing, or reset one color while keeping the other. You can also clear the board for a fresh start.
 
-KEEP THE COLORS FLOWING
-Play through 30 puzzles, then keep going as familiar puzzles return in a randomized order. Your stage progress is saved, so you can return to your current stage later and start that puzzle fresh.
 
 Find your path. Mix it right. Color every tile!
