@@ -16,7 +16,7 @@ public static class StageTestReference
     }
     private static readonly Reference[] Stages =
     {
-        new Reference("11 15 25 21", "45 41 31 35", "15 21", "41 35", ""),
+        new Reference("11 15 25 21", "45 41 31 35", "15 22", "41 34", ""),
         new Reference("11 15 45 44", "34 24 23 43 42 22 21 41", "15 45", "43", ""),
         new Reference("15 45 44 14 13 33", "41 11 12 42 43 23", "13", "43", "23 33"),
         new Reference("22 23 13 11 41 44", "32 33 13 15 45 44 24", "11", "15 33", "13 23 44"),

@@ -34,7 +34,7 @@ public static class ReferenceStageBuilder
     }
     private static readonly Plan[] Plans =
     {
-        new Plan("11", "45", "15 21", "41 35", ""),
+        new Plan("11", "45", "15 22", "41 34", ""),
         new Plan("11", "34", "15 45", "43", ""),
         new Plan("15", "41", "13", "43", "23 33"),
         new Plan("22", "32", "11", "15 33", "13 23 44"),

@@ -47,6 +47,32 @@ public class StageOneTutorialTests : StageProgressTestFixture
     }
 
     [UnityTest]
+    public IEnumerator UpdatedReferenceFramesAndActualGuideRoutesClearTheBoard()
+    {
+        StageTestReference.AssertLayout(_game, 1);
+        CollectionAssert.AreEquivalent(new[] { new Vector2Int(4,0), new Vector2Int(1,1) },
+            _game.TilesList.Where(tile => tile.RequiredColor == TileColor.Red).Select(tile => tile.Coordinate));
+        CollectionAssert.AreEquivalent(new[] { new Vector2Int(0,3), new Vector2Int(3,2) },
+            _game.TilesList.Where(tile => tile.RequiredColor == TileColor.Blue).Select(tile => tile.Coordinate));
+        Assert.That(_game.GetTile(new Vector2Int(0,1)).RequiredColor, Is.EqualTo(TileColor.None));
+        Assert.That(_game.GetTile(new Vector2Int(4,2)).RequiredColor, Is.EqualTo(TileColor.None));
+        foreach (string field in new[] { "_redRoute", "_blueRoute" })
+        {
+            // Exercise the routes actually shown by the hand, independently of the solver fixture.
+            var route = (Vector2Int[])typeof(StageOneTutorialGuide).GetField(field,
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).GetValue(_guide);
+            Assert.That(route.Length, Is.EqualTo(10));
+            Assert.That(_game.TryBeginLine(_game.GetTile(route[0]).TileIndex), Is.True);
+            for (int i=1; i<route.Length; i++)
+                Assert.That(_game.TryExtendLine(_game.GetTile(route[i]).TileIndex), Is.True, route[i].ToString());
+            yield return _game.CommitLineAsync().ToCoroutine();
+        }
+        Assert.That(_game.State, Is.EqualTo(GameState.Cleared));
+        Assert.That(_game.CorrectTileCount, Is.EqualTo(20));
+        Assert.That(_guide.IsVisible, Is.False);
+    }
+
+    [UnityTest]
     public IEnumerator PreviewMovesWithoutPaintingAndAllowsInputThroughEveryGraphic()
     {
         yield return WaitForGuide();
