@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(CanvasRenderer))]
 public sealed class ToonSkyGraphic : UnityEngine.UI.MaskableGraphic
 {
+    private float _seconds = -1;
+    public void SetTime(float seconds) { if (_seconds == seconds) return; _seconds = seconds; SetVerticesDirty(); }
     protected override void Awake() { base.Awake(); raycastTarget = false; }
     protected override void OnPopulateMesh(UnityEngine.UI.VertexHelper vh)
     {
@@ -15,16 +17,21 @@ public sealed class ToonSkyGraphic : UnityEngine.UI.MaskableGraphic
         vh.AddVert(new Vector2(r.xMax, r.yMax), top, Vector2.one);
         vh.AddVert(new Vector2(r.xMax, r.yMin), bottom, Vector2.right);
         vh.AddTriangle(0, 1, 2); vh.AddTriangle(0, 2, 3);
-        Cloud(vh, r, -.025f, .91f, .20f);
-        Cloud(vh, r, .99f, .81f, .18f);
-        Cloud(vh, r, .02f, .79f, .12f);
-        Cloud(vh, r, 1.02f, .29f, .20f);
-        Cloud(vh, r, -.035f, .23f, .18f);
-        Cloud(vh, r, .98f, .05f, .19f);
+        Cloud(vh, r, -.025f, .91f, .20f, 0);
+        Cloud(vh, r, .99f, .81f, .18f, 1);
+        Cloud(vh, r, .02f, .79f, .12f, 2);
+        Cloud(vh, r, 1.02f, .29f, .20f, 3);
+        Cloud(vh, r, -.035f, .23f, .18f, 4);
+        Cloud(vh, r, .98f, .05f, .19f, 5);
     }
-    private static void Cloud(UnityEngine.UI.VertexHelper vh, Rect r, float x, float y, float width)
+    private void Cloud(UnityEngine.UI.VertexHelper vh, Rect r, float x, float y, float width, int index)
     {
         Vector2 p = r.min + Vector2.Scale(r.size, new Vector2(x, y));
+        if (_seconds >= 0)
+        {
+            float phase = _seconds * Mathf.PI * 2 / 6, unit = r.width / 941;
+            p += new Vector2(Mathf.Sin(phase + index * .72f) * 11, -Mathf.Sin(phase + index * .47f) * 3) * unit;
+        }
         float w = r.width * width;
         Color tint = new Color32(174, 229, 250, 255);
         Disc(vh, p + new Vector2(-w * .29f, 0), new Vector2(w * .38f, w * .22f), tint);

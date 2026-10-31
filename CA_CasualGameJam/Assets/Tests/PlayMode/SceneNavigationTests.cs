@@ -19,6 +19,7 @@ public class SceneNavigationTests : StageProgressTestFixture
             yield return null;
         }
         yield return null;
+        if (name == SceneNavigator.TitleScene) yield return WaitForTitleReady();
     }
     private static UnityEngine.UI.Button Button(string name) => GameObject.Find(name).GetComponent<UnityEngine.UI.Button>();
     private static void Tap(UnityEngine.UI.Button button)
@@ -60,6 +61,7 @@ public class SceneNavigationTests : StageProgressTestFixture
     {
         yield return SceneManager.LoadSceneAsync(SceneNavigator.TitleScene);
         yield return null;
+        yield return WaitForTitleReady();
         Assert.That(Object.FindObjectsByType<UnityEngine.UI.Button>(FindObjectsSortMode.None).Length, Is.EqualTo(1));
         Assert.That(GameObject.Find("TapToStart"), Is.Null);
         Canvas.ForceUpdateCanvases();
@@ -97,7 +99,8 @@ public class SceneNavigationTests : StageProgressTestFixture
         AssertFreshStage(2);
     }
 
-    [UnityTest, Category("StageProgression")]
+    // Sixty real clear animations already exceed the default 180-second test limit.
+    [UnityTest, Category("StageProgression"), Timeout(420000)]
     public IEnumerator AllSixtyReferenceStagesClearInOrderAndContinueIntoPersistentExtras()
     {
         yield return SceneManager.LoadSceneAsync(SceneNavigator.StageScene);

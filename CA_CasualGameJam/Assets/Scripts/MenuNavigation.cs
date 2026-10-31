@@ -9,6 +9,7 @@ public class MenuNavigation : MonoBehaviour
     [SerializeField] private bool _useStageProgress;
     [SerializeField] private TMP_Text _stageLabel;
     [SerializeField] private TMP_Text _stageDescription;
+    [SerializeField] private TitlePresentation _titlePresentation;
     private bool _opening;
 
     private void OnEnable()
@@ -16,6 +17,7 @@ public class MenuNavigation : MonoBehaviour
         if (_continueButton != null) _continueButton.onClick.AddListener(Continue);
         StageProgress.Changed += Refresh;
         SceneNavigator.LoadingChanged += Refresh;
+        if (_titlePresentation != null) _titlePresentation.ReadinessChanged += Refresh;
         Refresh();
     }
     private void OnDisable()
@@ -23,6 +25,7 @@ public class MenuNavigation : MonoBehaviour
         if (_continueButton != null) _continueButton.onClick.RemoveListener(Continue);
         StageProgress.Changed -= Refresh;
         SceneNavigator.LoadingChanged -= Refresh;
+        if (_titlePresentation != null) _titlePresentation.ReadinessChanged -= Refresh;
     }
     private void Refresh()
     {
@@ -32,7 +35,9 @@ public class MenuNavigation : MonoBehaviour
             if (_stageDescription != null) _stageDescription.text = StageProgress.CanPlayCurrentStage ? "STAGE SELECT" : "COMING SOON";
         }
         if (_continueButton != null)
-            _continueButton.interactable = !_opening && !SceneNavigator.IsLoading && (!_useStageProgress || StageProgress.CanPlayCurrentStage);
+            _continueButton.interactable = !_opening && !SceneNavigator.IsLoading &&
+                (_titlePresentation == null || !_titlePresentation.enabled || _titlePresentation.IsReady) &&
+                (!_useStageProgress || StageProgress.CanPlayCurrentStage);
     }
     private void Continue() => ContinueAsync().Forget();
     private async UniTask ContinueAsync()

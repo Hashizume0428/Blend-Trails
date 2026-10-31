@@ -86,6 +86,7 @@ public static class ToonSkinBuilder
         var layout = Get<ToonTitleLayout>(canvas.gameObject);
         Set(layout, "_safeArea", safe); Set(layout, "_content", content);
         Canvas.ForceUpdateCanvases(); layout.Apply();
+        TitleMotionBuilder.Apply(menu);
         EditorUtility.SetDirty(menu);
     }
 

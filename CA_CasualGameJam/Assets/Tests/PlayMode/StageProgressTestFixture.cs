@@ -54,4 +54,17 @@ public abstract class StageProgressTestFixture
         PlayerPrefs.Save();
         StageProgress.ResetSession();
     }
+
+    protected static IEnumerator WaitForTitleReady()
+    {
+        var presentation = Object.FindFirstObjectByType<TitlePresentation>();
+        Assert.That(presentation, Is.Not.Null, "The title must include the approved presentation.");
+        float deadline = Time.realtimeSinceStartup + 6;
+        while (!presentation.IsReady)
+        {
+            Assert.That(Time.realtimeSinceStartup, Is.LessThan(deadline), "Title entrance did not finish.");
+            yield return null;
+        }
+        yield return null;
+    }
 }

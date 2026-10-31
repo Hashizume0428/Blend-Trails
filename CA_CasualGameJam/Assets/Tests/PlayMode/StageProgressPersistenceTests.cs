@@ -117,6 +117,7 @@ public class StageProgressPersistenceTests : StageProgressTestFixture
         StageProgress.ResetSession();
         yield return SceneManager.LoadSceneAsync(SceneNavigator.TitleScene);
         yield return null;
+        yield return WaitForTitleReady();
         var stage = GameObject.Find("Stage01Button").GetComponent<UnityEngine.UI.Button>();
         Assert.That(stage.transform.Find("Label").GetComponent<TMP_Text>().text, Is.EqualTo("Stage4"));
         Assert.That(stage.interactable, Is.True);
