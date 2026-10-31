@@ -1,0 +1,10 @@
+{
+  "Assets/Scenes/Title.unity": "f5fbe81579896f08d328f6cde8271b56e89a1a54ff91ace7547b533af377b262",
+  "Assets/Scripts/ToonTitleLayout.cs": "7c838b805a718ac11a254f2b30aabd450da02f8724546bdedb74b76fa36b36ec",
+  "Assets/Scripts/ToonSkyGraphic.cs": "bfa8a9c5c0320d82b5861cafe6ff7584962dad156965daf35a6dad85fc83b07c",
+  "Assets/Fonts/LilitaOne/LilitaOne-Regular.ttf": "f5b641c45c69d772ee4eda687bc9fda411d5cad6b0b45371491da4580cbc8d59",
+  "Assets/UI/ToonBold/BlendTrailsLogo.png": "1164468335ec21d9ba4c9e3f536523367733ba4a99e0ccfd0768fef105b91d47",
+  "Assets/UI/ToonBold/BlendTrailsMix.png": "cfc9f4c3a44bff19848a2463cd502a29834199a5da45ea13d93d33d581e246b4",
+  "Assets/UI/ToonBold/PrimaryButton.png": "57bbef4a9678d9c8f73c47e6102683c25a7021dc830925d3bd8789bb4e83752f",
+  "Assets/UI/ToonBold/PlayIcon.png": "ccf2e1509eef546f258da7eb7c8ab194abd59cd1fc52cfccc3f848b4519eed48"
+}

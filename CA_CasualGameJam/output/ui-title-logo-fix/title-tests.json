@@ -1,0 +1,63 @@
+{
+  "success": true,
+  "command": "command",
+  "data": {
+    "command": "test status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 21.7,
+      "summary": {
+        "total": 5,
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "TitlePresentationTests.DisablingRestoresTheLayoutAndReenablingDoesNotAccumulateOffsets",
+          "Status": "Passed",
+          "Duration": 3.3361241,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "TitlePresentationTests.EntranceBlocksEarlyClicksAndFinishesWithTimeScaleZero",
+          "Status": "Passed",
+          "Duration": 2.9994293,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "TitlePresentationTests.IdleContinuesAnimatingWhileTheStartButtonStaysAvailable",
+          "Status": "Passed",
+          "Duration": 3.8530422,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "TitlePresentationTests.ReadyButtonReceivesRealRaycastsAndOpensSavedStageOnlyOnce",
+          "Status": "Passed",
+          "Duration": 7.4019178,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "TitlePresentationTests.SceneLoadingDelayDoesNotConsumeTheLogoEntrance",
+          "Status": "Passed",
+          "Duration": 4.0575333,
+          "Message": null,
+          "StackTrace": null
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

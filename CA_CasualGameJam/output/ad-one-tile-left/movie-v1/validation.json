@@ -1,0 +1,54 @@
+{
+  "file": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam\\output\\ad-one-tile-left\\movie-v1\\BlendTrails_ONE_TILE_LEFT_1400x1800_36s_final.mp4",
+  "width": 1400,
+  "height": 1800,
+  "fps": 30,
+  "durationSeconds": 36,
+  "decodedFrames": 1080,
+  "decodeErrors": 0,
+  "codec": "H.264",
+  "pixelFormat": "yuv420p",
+  "audio": {
+    "codec": "AAC",
+    "sampleRate": 48000,
+    "channels": 2,
+    "integratedLoudnessLUFS": -16.45,
+    "truePeakDBTP": -1.38
+  },
+  "bytes": 7122435,
+  "puzzleAudit": {
+    "A": {
+      "empty": 0,
+      "mixed": 2,
+      "invalid": 0
+    },
+    "BFirst": {
+      "empty": 1,
+      "mixed": 0,
+      "invalid": 0
+    },
+    "BReset": {
+      "empty": 11,
+      "mixed": 0,
+      "invalid": 0
+    },
+    "BRepeat": {
+      "empty": 1,
+      "mixed": 0,
+      "invalid": 0
+    },
+    "hole": [
+      4,
+      1
+    ]
+  },
+  "sampledSeconds": [
+    2.7,
+    11.65,
+    12.6,
+    25,
+    26.9,
+    32.4,
+    35
+  ]
+}

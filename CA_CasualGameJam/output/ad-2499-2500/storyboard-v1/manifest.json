@@ -64,8 +64,8 @@
       },
       "width": 1400,
       "height": 1800,
-      "bytes": 304224,
-      "sha256": "b8a7152539614591a036529d5bba368c8547d416ec68eeb4513e68e9f8cc3bb0",
+      "bytes": 305780,
+      "sha256": "368370dc541fa9ccd20197484a0842ecce383298125189538fd6b2541206c318",
       "empty": 2016
     },
     {
@@ -83,8 +83,8 @@
       },
       "width": 1400,
       "height": 1800,
-      "bytes": 353320,
-      "sha256": "6ff2e9ef4dc887a2e0236ecc491452bc6c0bc0ed55a7c364cc38a57a32fae963",
+      "bytes": 354381,
+      "sha256": "ae54492b38ce5e27c37e5e8bdc2868d3109e95d16836a206b393149ca756b491",
       "empty": 875
     },
     {
@@ -102,8 +102,8 @@
       },
       "width": 1400,
       "height": 1800,
-      "bytes": 354077,
-      "sha256": "21194f9067432c8696d5ee270e1adefc0727feae940ff2838389bc1c8119fac3",
+      "bytes": 354070,
+      "sha256": "5d6459ee46d596ec7801b89b248c3674dd32dfd0d71a242f4417dfc558fdd168",
       "empty": 25
     },
     {
@@ -178,8 +178,8 @@
       },
       "width": 1400,
       "height": 1800,
-      "bytes": 302941,
-      "sha256": "5cfb75078df8b3f492d66ff28edb6b46d02710fc18d4fe6bd269745860702ddf",
+      "bytes": 304234,
+      "sha256": "cfa524a7f2af43e9eefb523ccd7ffcc80c6574d86bbb6dd9c8b93a1b20370411",
       "empty": 1
     },
     {
@@ -197,8 +197,8 @@
       },
       "width": 1400,
       "height": 1800,
-      "bytes": 334442,
-      "sha256": "022ae0dadb7c2dde6834bd9cfeed363a6727b26cd95a859ed1ea278f4d476b8a",
+      "bytes": 291156,
+      "sha256": "256c8be20a5d131df62dc7fa9502a3c769ee25be162823d5f078b98630acc0fd",
       "empty": 1
     }
   ],

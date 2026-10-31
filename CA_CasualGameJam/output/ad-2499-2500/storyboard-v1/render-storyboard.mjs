@@ -159,7 +159,10 @@ function drawHand(ctx,tip,height=365,{ghosts=[],angle=0,opacity=1}={}){
   ghosts.forEach((p,i)=>paint(p,opacity*(.09+i*.06)));paint(tip,opacity);
 }
 function swipe(ctx,points,{height=365,angle=0}={}){
-  arrow(ctx,points,'#FFFFFF',points.length>3?10:9);const tip=points.at(-1);ring(ctx,tip.x,tip.y,25);
+  const tip=points.at(-1),before=points.at(-2),length=Math.hypot(tip.x-before.x,tip.y-before.y)||1;
+  const pullback=Math.min(58,length*.64),guide=points.map(p=>({...p}));
+  guide[guide.length-1]={x:tip.x-(tip.x-before.x)/length*pullback,y:tip.y-(tip.y-before.y)/length*pullback};
+  arrow(ctx,guide,'#FFFFFF',points.length>3?10:9);ring(ctx,tip.x,tip.y,25);
   const a=points.at(-2),dx=tip.x-a.x,dy=tip.y-a.y;
   const d=Math.hypot(dx,dy)||1;
   drawHand(ctx,tip,height,{angle,ghosts:[{x:tip.x-dx/d*82,y:tip.y-dy/d*82},{x:tip.x-dx/d*43,y:tip.y-dy/d*43}]});
@@ -257,8 +260,8 @@ for(const scene of scenes){
     rr(ctx,310,1506,780,168,63,'#0C77B5');rr(ctx,310,1488,780,168,63,'#FFCF36',NAVY,14);
     text(ctx,'PLAY NOW',700,1570,109,NAVY,false);
     // Existing official logo stays compact, below the CTA, leaving the challenge central.
-    const ratio=logoImage.width/logoImage.height,lw=330,lh=lw/ratio;
-    ctx.drawImage(logoImage,700-lw/2,1726-lh/2,lw,lh);scene.viewport=view;
+    const ratio=logoImage.width/logoImage.height,lw=190,lh=lw/ratio;
+    ctx.drawImage(logoImage,700-lw/2,1718-lh/2,lw,lh);scene.viewport=view;
   }
   const output=path.join(root,scene.file);await fs.writeFile(output,canvas.toBuffer('image/png'));
   const meta=await sharp(output).metadata();const data=await fs.readFile(output);

@@ -1,0 +1,52 @@
+{
+  "status": "passed",
+  "verifiedAt": "2026-10-30T08:40:00.207Z",
+  "tests": {
+    "editMode": {
+      "passed": 48,
+      "failed": 0
+    },
+    "playMode": {
+      "passed": 60,
+      "failed": 0
+    },
+    "totalPassed": 108,
+    "titleCases": 4,
+    "fullSixtyStageProgression": "passed",
+    "timeoutAdjustment": "The existing sixty-stage test now allows 420 seconds to include all real-time clear and title animations."
+  },
+  "sceneChanges": [
+    "C:\\GitHub\\CGJ_8\\CA_CasualGameJam\\Assets\\Scenes\\Title.unity"
+  ],
+  "gameplayScenesUnchanged": true,
+  "editorAndProgressRestored": true,
+  "video": {
+    "status": "passed",
+    "source": "Unity GameView render target, real-time sampling",
+    "seconds": 12,
+    "width": 720,
+    "height": 1280,
+    "fps": 30,
+    "decodedFrames": 360,
+    "capturedFrames": 183,
+    "firstReadySeconds": 2.5868477821350098,
+    "decodeErrors": 0,
+    "audio": false,
+    "bytes": 3055588
+  },
+  "uniqueCapturedFrames": 183,
+  "aspectRatios": [
+    {
+      "width": 941,
+      "height": 1672
+    },
+    {
+      "width": 941,
+      "height": 2039
+    },
+    {
+      "width": 1254,
+      "height": 1672
+    }
+  ]
+}

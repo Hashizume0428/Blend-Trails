@@ -1,0 +1,40 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {spawnSync} from 'node:child_process';
+const root=path.dirname(fileURLToPath(import.meta.url));
+const ffmpeg=path.resolve(root,'../ui-clear-motion/_tools/imageio_ffmpeg/binaries/ffmpeg-win-x86_64-v7.1.exe');
+const read=async file=>JSON.parse((await fs.readFile(path.join(root,file),'utf8')).replace(/^\uFEFF/,''));
+const samples=await read('capture-samples.json');
+const assert=(v,message)=>{if(!v)throw new Error(message);};
+assert(samples.length>=40,'Capture must contain independent Unity frames.');
+assert(samples.every((s,i)=>!i||s.frame>samples[i-1].frame),'Unity frames must keep advancing.');
+assert(samples.some(s=>s.pose<.08&&s.logoAlpha<.01),'Record the hidden logo before its entrance.');
+assert(samples.some(s=>s.pose>.12&&s.pose<.5&&s.logoAlpha>.2&&s.logoScale>.8),'Record the logo growing into view.');
+assert(samples.some(s=>s.pose>.86&&Math.abs(s.logoScale-1)<.01&&s.logoAlpha>.99),'The logo must settle after its entrance.');
+assert(samples.every(s=>s.ready===s.interactable),'Input must follow the entrance.');
+const concat=['ffconcat version 1.0'];
+for(let i=0;i<samples.length;i++){
+  const s=samples[i],end=i+1<samples.length?samples[i+1].elapsed:6;
+  concat.push(`file '${path.join(root,s.file).replaceAll('\\','/')}'`,`duration ${Math.max(.001,end-(i===0?0:s.elapsed)).toFixed(7)}`);
+}
+concat.push(`file '${path.join(root,samples.at(-1).file).replaceAll('\\','/')}'`);
+await fs.writeFile(path.join(root,'native-frames.ffconcat'),concat.join('\n'));
+function run(args){const r=spawnSync(ffmpeg,args,{encoding:'utf8',windowsHide:true,maxBuffer:8*1024*1024});if(r.status!==0)throw new Error(r.stderr);return r;}
+const video=path.join(root,'blend-trails-logo-entrance-fixed.mp4');
+run(['-hide_banner','-loglevel','error','-y','-f','concat','-safe','0','-i',path.join(root,'native-frames.ffconcat'),'-r','30','-t','6','-an','-c:v','libx264','-preset','fast','-crf','18','-pix_fmt','yuv420p','-movflags','+faststart',video]);
+const decode=run(['-hide_banner','-i',video,'-nostats','-progress','pipe:1','-f','null','NUL']);
+const decoded=Number([...decode.stdout.matchAll(/^frame=(\d+)/gm)].at(-1)?.[1]);
+assert(decoded===180,'Expected 180 decoded frames.');
+assert(decode.stderr.includes('720x1280')&&decode.stderr.includes('30 fps'),'Expected 720x1280 at 30fps.');
+await fs.writeFile(path.join(root,'video-decode.log'),decode.stderr+'\n'+decode.stdout);
+const checkpoints=[.03,.13,.25,.4,.65,1,1.7,2.9];
+const selector=checkpoints.map(t=>`eq(n\\,${Math.round(t*30)})`).join('+');
+run(['-hide_banner','-loglevel','error','-y','-i',video,'-vf',`select=${selector},scale=240:-2,tile=4x2:padding=12:margin=12:color=0x071631`,'-frames:v','1','-fps_mode','vfr',path.join(root,'logo-entrance-storyboard.png')]);
+run(['-hide_banner','-loglevel','error','-y','-ss','0.25','-i',video,'-frames:v','1',path.join(root,'poster.png')]);
+const tests=(await read('title-tests.json')).data.result;
+assert(tests.status==='completed'&&tests.summary.failed===0&&tests.summary.passed===5,'Title tests must pass.');
+const report={status:'passed',format:{width:720,height:1280,seconds:6,fps:30,decodedFrames:decoded},source:'Actual title scene reload; no manual animation restart',startupDelayMs:1100,capturedFrames:samples.length,firstLogoFrame:samples.find(s=>s.logoAlpha>.01),firstReadySeconds:samples.find(s=>s.ready)?.elapsed,tests:tests.summary};
+await fs.writeFile(path.join(root,'validation-summary.json'),JSON.stringify(report,null,2));
+await fs.writeFile(path.join(root,'README.md'),`# タイトルロゴの登場 修正\n\n初回読み込み中に登場アニメーションが進み、最初の表示で既にロゴが出終わる問題を修正しました。再現テストでは修正前の初回表示が1.6秒まで進んでいました。\n\n最初の描画を初期状態で保持し、表示するフレームに合わせて演出を進めます。起動時の長いフレームでも登場が飛ばされないよう、登場中に進める時間を制限しています。\n\n修正後のタイトル専用テスト5件通過。1.1秒の読み込み遅延を入れた実際のタイトルシーン再ロードから録画し、非表示→拡大しながら登場→着地を確認しました。\n\n[修正後の実画面動画](blend-trails-logo-entrance-fixed.mp4) / [コマ送り](logo-entrance-storyboard.png) / [検証結果](validation-summary.json)\n`);
+console.log(JSON.stringify({status:'passed',capturedFrames:samples.length,decodedFrames:decoded,firstReadySeconds:report.firstReadySeconds,tests:tests.summary},null,2));

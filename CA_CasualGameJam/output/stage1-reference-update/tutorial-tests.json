@@ -1,0 +1,77 @@
+{
+  "success": true,
+  "command": "command",
+  "data": {
+    "command": "test status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 38.87,
+      "summary": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "StageOneTutorialTests.BlueFirstAndReferenceSolutionClearWithoutGuideDuringResolution",
+          "Status": "Passed",
+          "Duration": 7.0695722,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageOneTutorialTests.DifferentFinalColorPartitionClearsWithoutConflictingGuidance",
+          "Status": "Passed",
+          "Duration": 4.6035299,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageOneTutorialTests.DifferentStrokeShapeStillGuidesBlueAndResetsAndInterruptionsResume",
+          "Status": "Passed",
+          "Duration": 7.7270715,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageOneTutorialTests.HomeHidesGuideBeforeLoadingAndLeavesNoTutorial",
+          "Status": "Passed",
+          "Duration": 2.5277856,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageOneTutorialTests.OtherPuzzlesAndPersistentExtrasHaveNoTutorial",
+          "Status": "Passed",
+          "Duration": 4.0857648,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageOneTutorialTests.PreviewMovesWithoutPaintingAndAllowsInputThroughEveryGraphic",
+          "Status": "Passed",
+          "Duration": 8.2003236,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageOneTutorialTests.UpdatedReferenceFramesAndActualGuideRoutesClearTheBoard",
+          "Status": "Passed",
+          "Duration": 4.6361686,
+          "Message": null,
+          "StackTrace": null
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

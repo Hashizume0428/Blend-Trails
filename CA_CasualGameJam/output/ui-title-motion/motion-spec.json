@@ -1,0 +1,84 @@
+{
+  "title": "Blend Trails — タイトル画面アニメーション案",
+  "type": "既存素材を使った実装前の動画モックアップ",
+  "date": "2026-10-30",
+  "format": {
+    "width": 720,
+    "height": 1280,
+    "fps": 60,
+    "seconds": 12,
+    "codec": "H.264",
+    "audio": false
+  },
+  "source": {
+    "scene": "Assets/Scenes/Title.unity",
+    "designResolution": [
+      941,
+      1672
+    ],
+    "assets": {
+      "logo": "Assets/UI/ToonBold/BlendTrailsLogo.png",
+      "mix": "Assets/UI/ToonBold/BlendTrailsMix.png",
+      "button": "Assets/UI/ToonBold/PrimaryButton.png",
+      "play": "Assets/UI/ToonBold/PlayIcon.png"
+    },
+    "stageLabel": "STAGE 1（保存シーンの初期表示）"
+  },
+  "timeline": [
+    {
+      "seconds": [
+        0.08,
+        0.86
+      ],
+      "motion": "ロゴを70%から軽くオーバーシュートして100%へ。少し傾けた状態から水平へ着地"
+    },
+    {
+      "seconds": [
+        0.48,
+        1.22
+      ],
+      "motion": "混色イラストが下から浮かび上がる"
+    },
+    {
+      "seconds": [
+        1.25,
+        2.56
+      ],
+      "motion": "赤と黄の既存の経路に光を流し、合流後にオレンジへ送る"
+    },
+    {
+      "seconds": [
+        1.98,
+        2.58
+      ],
+      "motion": "ステージ開始ボタンが下から弾んで登場。約2.6秒で操作可能にする想定"
+    },
+    {
+      "seconds": [
+        2.58,
+        12
+      ],
+      "motion": "ロゴ上下±5px、イラスト上下±4px、ボタン±0.4%のゆるやかな呼吸。6秒ごとに混色の光と控えめなツヤ"
+    }
+  ],
+  "loop": {
+    "file": "blend-trails-title-idle-loop.mp4",
+    "seconds": 6,
+    "seamless": true,
+    "sourceSeconds": [
+      6,
+      12
+    ],
+    "allTracksPeriodSeconds": [
+      3,
+      6
+    ]
+  },
+  "implementationNotes": [
+    "待機中の動きを小さくし、文字とステージボタンの読みやすさを保つ",
+    "初回の登場と待機ループを別シーケンスにする",
+    "ボタンの登場演出完了から入力可能にする想定。動画では操作を実装していない",
+    "経路の光は既存イラストへ重ねるエフェクトで、元のPNGは変更しない",
+    "シーン、スクリプト、プレイヤーの進行情報には変更を加えていない"
+  ]
+}

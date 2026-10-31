@@ -1,0 +1,35 @@
+{
+  "success": true,
+  "command": "command",
+  "data": {
+    "command": "test status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 11.28,
+      "summary": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "SceneNavigationTests.ClearingStageOneUpdatesTheTitleToStageTwoAndStartsThatStage",
+          "Status": "Passed",
+          "Duration": 11.2561051,
+          "Message": null,
+          "StackTrace": null
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

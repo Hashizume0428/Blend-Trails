@@ -1,0 +1,90 @@
+{
+  "title": "ONE TILE LEFT",
+  "file": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam\\output\\ad-one-tile-left\\movie-v1\\BlendTrails_ONE_TILE_LEFT_1400x1800_36s.mp4",
+  "width": 1400,
+  "height": 1800,
+  "fps": 30,
+  "duration": 36,
+  "codec": "H.264",
+  "pixelFormat": "yuv420p",
+  "audio": "AAC stereo 48kHz 192kbps",
+  "originalAudio": true,
+  "soundPeak": 0.35042086379033754,
+  "gameSourceChanged": false,
+  "timeline": [
+    {
+      "seconds": [
+        0,
+        3
+      ],
+      "text": "SO SATISFYING!",
+      "action": "Red swipe begins immediately"
+    },
+    {
+      "seconds": [
+        3,
+        12
+      ],
+      "text": "TRACE. MIX. FILL.",
+      "action": "Red complete, blue fills and mixes two purple tiles"
+    },
+    {
+      "seconds": [
+        12,
+        16
+      ],
+      "text": "PERFECT!",
+      "action": "20 correct tiles, bounce, sheen, confetti and clear chime"
+    },
+    {
+      "seconds": [
+        16,
+        26
+      ],
+      "text": "ONE TILE LEFT...",
+      "action": "Next puzzle, 19 colored tiles; bottom-left white remains, slow push-in"
+    },
+    {
+      "seconds": [
+        26,
+        33
+      ],
+      "text": "NOT AGAIN!",
+      "action": "Hand taps only blue reset; blue erases, red remains; same blue route misses same corner"
+    },
+    {
+      "seconds": [
+        33,
+        36
+      ],
+      "text": "CAN YOU FINISH IT? / PLAY NOW",
+      "action": "Logo and CTA, unresolved board remains"
+    }
+  ],
+  "puzzleAudit": {
+    "A": {
+      "empty": 0,
+      "mixed": 2,
+      "invalid": 0
+    },
+    "BFirst": {
+      "empty": 1,
+      "mixed": 0,
+      "invalid": 0
+    },
+    "BReset": {
+      "empty": 11,
+      "mixed": 0,
+      "invalid": 0
+    },
+    "BRepeat": {
+      "empty": 1,
+      "mixed": 0,
+      "invalid": 0
+    },
+    "hole": [
+      4,
+      1
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "format": {
+    "width": 720,
+    "height": 1280,
+    "seconds": 6,
+    "fps": 30,
+    "decodedFrames": 180
+  },
+  "source": "Actual title scene reload; no manual animation restart",
+  "startupDelayMs": 1100,
+  "capturedFrames": 100,
+  "firstLogoFrame": {
+    "file": "frames/frame-0001.png",
+    "elapsed": 0.21379439999873284,
+    "pose": 0.1,
+    "frame": 7830,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 0.229745448,
+    "logoScale": 0.732714236
+  },
+  "firstReadySeconds": 3.1214917999986938,
+  "tests": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "inconclusive": 0
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "status": "saved-and-verified",
+  "destination": "C:/CA_movie/blend-trails-2499-2500-1400x1800-45s.mp4",
+  "width": 1400,
+  "height": 1800,
+  "durationSeconds": 45,
+  "fps": 30,
+  "audio": true,
+  "bytes": 20212759,
+  "sha256": "f748b252cdf608fdceff9290149afd68258ae85b61ae88a24368eece7e69f268",
+  "copyHashVerified": true
+}
