@@ -11,6 +11,34 @@ using UnityEngine.TestTools;
 public class StageProgressPersistenceTests : StageProgressTestFixture
 {
     [Test]
+    public void RankingCountsCompletedStagesAndNotifiesOnlyAfterSavingAValidClear()
+    {
+        Assert.That(StageProgress.ClearedStageCount, Is.Zero);
+        int notifications = 0;
+        int clearedCount = 0;
+        StageProgress.Cleared += score =>
+        {
+            notifications++;
+            clearedCount = score;
+            Assert.That(PlayerPrefs.GetInt(ProgressKey), Is.EqualTo(score + 1));
+        };
+        StageProgress.RecordClear(0);
+        Assert.That(notifications, Is.Zero);
+        StageProgress.RecordClear(1);
+        StageProgress.RecordClear(1);
+        StageProgress.RecordClear(3);
+        Assert.That(notifications, Is.EqualTo(1));
+        Assert.That(clearedCount, Is.EqualTo(1));
+        Assert.That(StageProgress.ClearedStageCount, Is.EqualTo(1));
+        StageProgress.ResetSession();
+        Assert.That(StageProgress.ClearedStageCount, Is.EqualTo(1));
+        LoadLegacyProgress(61);
+        Assert.That(StageProgress.ClearedStageCount, Is.EqualTo(60));
+        StageProgress.RecordClear(61);
+        Assert.That(StageProgress.ClearedStageCount, Is.EqualTo(61));
+    }
+
+    [Test]
     public void StartupMigratesTheOldSaveIncludingStageElevenAndExtraProgress()
     {
         Assert.That(StageProgress.CurrentStageNumber, Is.EqualTo(1));

@@ -17,17 +17,20 @@ public static class StageProgress
     private static readonly List<int> Recent = new List<int>();
     private static readonly IReadOnlyList<int> RecentView = Recent.AsReadOnly();
     public static int CurrentStageNumber { get; private set; } = 1;
+    public static int ClearedStageCount => CurrentStageNumber - 1;
     public static int CurrentPuzzleId { get; private set; } = 1;
     public static IReadOnlyList<int> RecentPuzzleIds => RecentView;
     public static StageKind CurrentKind => StageCatalog.Kind(CurrentStageNumber);
     public static string CurrentScene => StageCatalog.SceneName(CurrentPuzzleId);
     public static bool CanPlayCurrentStage => !string.IsNullOrEmpty(CurrentScene);
     public static event Action Changed;
+    public static event Action<int> Cleared;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     public static void ResetSession()
     {
         Changed = null;
+        Cleared = null;
         Recent.Clear();
         SavedState saved = null;
         if (PlayerPrefs.HasKey(StateKey))
@@ -81,6 +84,7 @@ public static class StageProgress
         CurrentStageNumber++;
         SelectPuzzle();
         Save();
+        Cleared?.Invoke(ClearedStageCount);
         Changed?.Invoke();
     }
 
