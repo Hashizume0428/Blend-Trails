@@ -1,0 +1,11 @@
+{
+  "status": "completed",
+  "buildId": "build_d2c54bd9efcb",
+  "result": "Succeeded",
+  "platform": "WebGL",
+  "outputPath": "C:/GitHub/CGJ_8/CA_CasualGameJam/Build/WebGLPortrait",
+  "totalSizeBytes": 23848924,
+  "buildTimeMs": 73818,
+  "totalWarnings": 0,
+  "totalErrors": 0
+}
