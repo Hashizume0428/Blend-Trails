@@ -1,0 +1,4 @@
+# Reproducible render frames, QA images, and duplicate delivery archive.
+frames/
+**/qa/*.png
+/blend-trails-gif-01-04.zip

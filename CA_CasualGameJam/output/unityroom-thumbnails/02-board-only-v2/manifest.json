@@ -1,0 +1,29 @@
+{
+  "game": "Blend Trails: Color Puzzle",
+  "fps": 20,
+  "method": "Existing approved logo/motif plus canvas motion; 3x3 board is a valid promotional demonstration, not a recorded game stage.",
+  "exports": [
+    {
+      "id": "02-board-only",
+      "title": "② 盤面だけ",
+      "file": "02-board-only-512.gif",
+      "width": 512,
+      "height": 512,
+      "frames": 96,
+      "durationSeconds": 4.8,
+      "bytes": 112227,
+      "loop": "infinite"
+    },
+    {
+      "id": "02-board-only",
+      "title": "② 盤面だけ",
+      "file": "02-board-only-256.gif",
+      "width": 256,
+      "height": 256,
+      "frames": 96,
+      "durationSeconds": 4.8,
+      "bytes": 71396,
+      "loop": "infinite"
+    }
+  ]
+}

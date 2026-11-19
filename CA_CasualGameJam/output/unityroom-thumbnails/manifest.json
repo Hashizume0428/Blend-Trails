@@ -1,0 +1,95 @@
+{
+  "game": "Blend Trails: Color Puzzle",
+  "fps": 20,
+  "method": "Existing approved logo/motif plus canvas motion; 3x3 board is a valid promotional demonstration, not a recorded game stage.",
+  "exports": [
+    {
+      "id": "01-mix-colors",
+      "title": "混ざる瞬間",
+      "file": "01-mix-colors-512.gif",
+      "width": 512,
+      "height": 512,
+      "frames": 72,
+      "durationSeconds": 3.6,
+      "bytes": 118642,
+      "loop": "infinite"
+    },
+    {
+      "id": "01-mix-colors",
+      "title": "混ざる瞬間",
+      "file": "01-mix-colors-256.gif",
+      "width": 256,
+      "height": 256,
+      "frames": 72,
+      "durationSeconds": 3.6,
+      "bytes": 76981,
+      "loop": "infinite"
+    },
+    {
+      "id": "02-trace-and-clear",
+      "title": "小さな盤面を一気にクリア",
+      "file": "02-trace-and-clear-512.gif",
+      "width": 512,
+      "height": 512,
+      "frames": 96,
+      "durationSeconds": 4.8,
+      "bytes": 174281,
+      "loop": "infinite"
+    },
+    {
+      "id": "02-trace-and-clear",
+      "title": "小さな盤面を一気にクリア",
+      "file": "02-trace-and-clear-256.gif",
+      "width": 256,
+      "height": 256,
+      "frames": 96,
+      "durationSeconds": 4.8,
+      "bytes": 105255,
+      "loop": "infinite"
+    },
+    {
+      "id": "03-one-tile-left",
+      "title": "あと1マス！",
+      "file": "03-one-tile-left-512.gif",
+      "width": 512,
+      "height": 512,
+      "frames": 72,
+      "durationSeconds": 3.6,
+      "bytes": 143733,
+      "loop": "infinite"
+    },
+    {
+      "id": "03-one-tile-left",
+      "title": "あと1マス！",
+      "file": "03-one-tile-left-256.gif",
+      "width": 256,
+      "height": 256,
+      "frames": 72,
+      "durationSeconds": 3.6,
+      "bytes": 78150,
+      "loop": "infinite"
+    },
+    {
+      "id": "04-logo-motion",
+      "title": "ロゴの混色マークが動く",
+      "file": "04-logo-motion-512.gif",
+      "width": 512,
+      "height": 512,
+      "frames": 72,
+      "durationSeconds": 3.6,
+      "bytes": 982894,
+      "loop": "infinite"
+    },
+    {
+      "id": "04-logo-motion",
+      "title": "ロゴの混色マークが動く",
+      "file": "04-logo-motion-256.gif",
+      "width": 256,
+      "height": 256,
+      "frames": 72,
+      "durationSeconds": 3.6,
+      "bytes": 296094,
+      "loop": "infinite"
+    }
+  ]
+}
