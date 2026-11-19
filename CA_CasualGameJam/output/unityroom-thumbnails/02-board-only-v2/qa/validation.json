@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "file": "02-board-only-512.gif",
+      "fullDecode": "passed",
+      "frames": 96,
+      "bytes": 112227
+    },
+    {
+      "file": "02-board-only-256.gif",
+      "fullDecode": "passed",
+      "frames": 96,
+      "bytes": 71396
+    }
+  ],
+  "dimensionsAndTiming": "Validated against manifest during export",
+  "loop": "All exports have infinite GIF loop flag",
+  "preview": "Decoded images inspected at 512px / 128px and six points in each sequence"
+}

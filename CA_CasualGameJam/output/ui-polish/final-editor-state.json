@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "command": "command script eval",
+  "data": {
+    "command": "script eval",
+    "parameters": {
+      "code": "const string p=\"UiPolish.\";\nif (UnityEditor.SessionState.GetBool(p+\"HasState\",false)) UnityEngine.PlayerPrefs.SetString(\"ColorPuzzle.StageProgress.v2\",UnityEditor.SessionState.GetString(p+\"State\",\"\"));\nelse UnityEngine.PlayerPrefs.DeleteKey(\"ColorPuzzle.StageProgress.v2\");\nif (UnityEditor.SessionState.GetBool(p+\"HasNumber\",false)) UnityEngine.PlayerPrefs.SetInt(\"ColorPuzzle.CurrentStageNumber\",UnityEditor.SessionState.GetInt(p+\"Number\",1));\nelse UnityEngine.PlayerPrefs.DeleteKey(\"ColorPuzzle.CurrentStageNumber\");\nUnityEngine.PlayerPrefs.Save(); StageProgress.ResetSession();\nUnityEngine.Application.runInBackground = UnityEditor.SessionState.GetBool(p+\"RunBackground\",true);\nvar viewType = typeof(UnityEditor.Editor).Assembly.GetType(\"UnityEditor.GameView\");\nvar view = UnityEditor.EditorWindow.GetWindow(viewType);\nviewType.GetProperty(\"selectedSizeIndex\",System.Reflection.BindingFlags.Public|System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance).SetValue(view,UnityEditor.SessionState.GetInt(p+\"ViewSize\",17)); view.Repaint();\nUnityEditor.SceneManagement.EditorSceneManager.OpenScene(UnityEditor.SessionState.GetString(p+\"Scene\",\"Assets/Scenes/Title.unity\"));\nreturn new {stage=StageProgress.CurrentStageNumber,puzzle=StageProgress.CurrentPuzzleId,history=StageProgress.RecentPuzzleIds.Count,scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().path,dirty=UnityEngine.SceneManagement.SceneManager.GetActiveScene().isDirty};\n"
+    },
+    "result": {
+      "output": null,
+      "diagnostics": [],
+      "success": true,
+      "result": {
+        "stage": 3,
+        "puzzle": 3,
+        "history": 0,
+        "scene": "Assets/Scenes/Title.unity",
+        "dirty": false
+      }
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

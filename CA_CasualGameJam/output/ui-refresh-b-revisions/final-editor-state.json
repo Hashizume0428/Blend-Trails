@@ -1,0 +1,28 @@
+{
+  "success": true,
+  "command": "command script eval",
+  "data": {
+    "command": "script eval",
+    "parameters": {
+      "code": "const string prefix = \"BlendRevision.\";\nif (UnityEditor.SessionState.GetBool(prefix + \"HasState\", false)) UnityEngine.PlayerPrefs.SetString(\"ColorPuzzle.StageProgress.v2\", UnityEditor.SessionState.GetString(prefix + \"State\", \"\"));\nelse UnityEngine.PlayerPrefs.DeleteKey(\"ColorPuzzle.StageProgress.v2\");\nif (UnityEditor.SessionState.GetBool(prefix + \"HasNumber\", false)) UnityEngine.PlayerPrefs.SetInt(\"ColorPuzzle.CurrentStageNumber\", UnityEditor.SessionState.GetInt(prefix + \"Number\", 1));\nelse UnityEngine.PlayerPrefs.DeleteKey(\"ColorPuzzle.CurrentStageNumber\");\nUnityEngine.PlayerPrefs.Save(); StageProgress.ResetSession();\nUnityEngine.Application.runInBackground = UnityEditor.SessionState.GetBool(prefix + \"RunBackground\", true);\nvar assembly = typeof(UnityEditor.Editor).Assembly;\nvar viewType = assembly.GetType(\"UnityEditor.GameView\");\nvar view = UnityEditor.EditorWindow.GetWindow(viewType);\nviewType.GetProperty(\"selectedSizeIndex\", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(view, UnityEditor.SessionState.GetInt(prefix + \"ViewSize\", 17));\nview.Repaint();\nUnityEditor.SceneManagement.EditorSceneManager.OpenScene(UnityEditor.SessionState.GetString(prefix + \"Scene\", \"Assets/Scenes/Title.unity\"));\nreturn new { stage = StageProgress.CurrentStageNumber, puzzle = StageProgress.CurrentPuzzleId, scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().path, dirty = UnityEngine.SceneManagement.SceneManager.GetActiveScene().isDirty };\n"
+    },
+    "result": {
+      "output": null,
+      "diagnostics": [],
+      "success": true,
+      "result": {
+        "stage": 11,
+        "puzzle": 11,
+        "scene": "Assets/Scenes/Title.unity",
+        "dirty": false
+      }
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

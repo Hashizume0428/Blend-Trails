@@ -1,0 +1,5 @@
+{
+  "name": "ColorPuzzle.Editor",
+  "references": ["ColorPuzzle.Runtime", "Unity.ugui", "Unity.TextMeshPro"],
+  "includePlatforms": ["Editor"]
+}

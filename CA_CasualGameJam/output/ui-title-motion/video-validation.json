@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "videos": [
+    {
+      "file": "blend-trails-title-proposal.mp4",
+      "seconds": 12,
+      "width": 720,
+      "height": 1280,
+      "fps": 60,
+      "decodedFrames": 720,
+      "decodeErrors": 0,
+      "codec": "H.264",
+      "pixelFormat": "yuv420p",
+      "faststart": true,
+      "audio": false,
+      "bytes": 3671584,
+      "sha256": "cd41a49e7d165d9998146d058adb97cd40e2b7c487cbc863f5720e01dcbecb57"
+    },
+    {
+      "file": "blend-trails-title-idle-loop.mp4",
+      "seconds": 6,
+      "width": 720,
+      "height": 1280,
+      "fps": 60,
+      "decodedFrames": 360,
+      "decodeErrors": 0,
+      "codec": "H.264",
+      "pixelFormat": "yuv420p",
+      "faststart": true,
+      "audio": false,
+      "bytes": 1835879,
+      "sha256": "888715ae2dfb04030742f043603fcc538c0933b500450a796f290136ccb53228"
+    }
+  ],
+  "idleLoopBoundary": {
+    "meanChannelDifference": 0,
+    "maxChannelDifference": 0,
+    "periodSeconds": 6
+  },
+  "projectSourceUnchanged": true,
+  "visualReview": "qa/encoded-storyboard.png"
+}

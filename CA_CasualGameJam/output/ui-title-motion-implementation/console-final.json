@@ -1,0 +1,51 @@
+{
+  "success": true,
+  "command": "command",
+  "data": {
+    "command": "console get",
+    "parameters": {
+      "tail": "100",
+      "level": "error"
+    },
+    "result": {
+      "entries": [
+        {
+          "seq": 2,
+          "timestampUtc": "2026-10-30T07:30:25.836989Z",
+          "level": "error",
+          "logType": "Exception",
+          "message": "NullReferenceException: Object reference not set to an instance of an object",
+          "stackTrace": "MaxSdkUtils.CompareVersions (System.String versionA, System.String versionB) (at Assets/MaxSdk/Scripts/MaxSdkUtils.cs:511)\nAppLovinMax.Scripts.IntegrationManager.Editor.AppLovinPackageManager.UpdateCurrentVersions (AppLovinMax.Scripts.IntegrationManager.Editor.Network network) (at Assets/MaxSdk/Scripts/IntegrationManager/Editor/AppLovinPackageManager.cs:183)\nAppLovinMax.Scripts.IntegrationManager.Editor.AppLovinIntegrationManager.CreatePluginDataFromWebResponse (AppLovinMax.Internal.WebResponse webResponse) (at Assets/MaxSdk/Scripts/IntegrationManager/Editor/AppLovinIntegrationManager.cs:396)\nAppLovinMax.Scripts.IntegrationManager.Editor.AppLovinIntegrationManager+<>c__DisplayClass31_0.<LoadPluginData>b__0 (AppLovinMax.Internal.WebResponse webResponse) (at Assets/MaxSdk/Scripts/IntegrationManager/Editor/AppLovinIntegrationManager.cs:367)\nAppLovinMax.Internal.MaxWebRequest+<>c__DisplayClass5_0.<Send>b__1 (AppLovinMax.Internal.WebResponse response) (at Assets/MaxSdk/Scripts/MaxWebRequest.cs:139)\nAppLovinMax.Internal.MaxWebRequest+<SendInternal>d__8.MoveNext () (at Assets/MaxSdk/Scripts/MaxWebRequest.cs:208)\nAppLovinMax.Scripts.IntegrationManager.Editor.AppLovinEditorCoroutine.OnEditorUpdate () (at Assets/MaxSdk/Scripts/IntegrationManager/Editor/AppLovinEditorCoroutine.cs:64)\nUnityEditor.EditorApplication.Internal_CallUpdateFunctions () (at <8c0bcab5a3cf47549b7148fa2785366a>:0)\n",
+          "seeded": false
+        }
+      ],
+      "cursor": 61,
+      "session": "89053e2052b34d5598d30dc55b9b8326",
+      "returned": 1,
+      "dropped": false,
+      "reset": false,
+      "counts": {
+        "error": 1,
+        "warn": 1,
+        "log": 59
+      },
+      "groundTruth": {
+        "sampledUtc": "2026-10-30T08:39:38.4077314Z",
+        "ageMs": 170,
+        "compilationFailed": false,
+        "compiling": false,
+        "consoleErrors": 0,
+        "consoleWarnings": 0,
+        "consoleLogs": 6,
+        "seeded": true
+      }
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

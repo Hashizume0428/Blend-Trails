@@ -1,0 +1,56 @@
+{
+  "success": true,
+  "command": "command",
+  "data": {
+    "command": "test status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 15.26,
+      "summary": {
+        "total": 4,
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "TitlePresentationTests.DisablingRestoresTheLayoutAndReenablingDoesNotAccumulateOffsets",
+          "Status": "Passed",
+          "Duration": 3.3861691,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "TitlePresentationTests.EntranceBlocksEarlyClicksAndFinishesWithTimeScaleZero",
+          "Status": "Passed",
+          "Duration": 2.641834,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "TitlePresentationTests.IdleContinuesAnimatingWhileTheStartButtonStaysAvailable",
+          "Status": "Passed",
+          "Duration": 3.0793477,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "TitlePresentationTests.ReadyButtonReceivesRealRaycastsAndOpensSavedStageOnlyOnce",
+          "Status": "Passed",
+          "Duration": 6.058921,
+          "Message": null,
+          "StackTrace": null
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

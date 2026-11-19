@@ -1,0 +1,35 @@
+{
+  "success": true,
+  "command": "command test run",
+  "data": {
+    "command": "test run",
+    "parameters": {
+      "mode": "all",
+      "async_tests": "true",
+      "timeout": "600"
+    },
+    "result": {
+      "Summary": {
+        "Total": 0,
+        "Passed": 0,
+        "Failed": 0,
+        "Skipped": 0,
+        "Inconclusive": 0
+      },
+      "Results": [],
+      "Duration": 0,
+      "StatusPath": null,
+      "Mode": null,
+      "FilterApplied": null,
+      "success": false,
+      "error": "Async mode is not supported for 'all' mode. Use 'editor' or 'playmode' for async execution."
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

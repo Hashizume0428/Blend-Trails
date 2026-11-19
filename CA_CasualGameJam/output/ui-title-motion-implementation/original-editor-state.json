@@ -1,0 +1,14 @@
+{
+  "playing": false,
+  "scenes": [
+    {
+      "path": "Assets/Scenes/Stage05.unity",
+      "dirty": false
+    }
+  ],
+  "background": true,
+  "hadProgress": false,
+  "progress": 0,
+  "hadState": false,
+  "state": ""
+}

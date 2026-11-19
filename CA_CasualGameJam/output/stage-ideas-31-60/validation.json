@@ -1,0 +1,349 @@
+{
+  "stages_checked": 30,
+  "comparison_puzzles": 30,
+  "all_solution_paths_valid": true,
+  "all_boards_have_20_painted_cells": true,
+  "all_required_colors_match": true,
+  "mixed_normal_cells": 0,
+  "forbidden_cells": 0,
+  "self_revisits": 0,
+  "nonadjacent_steps": 0,
+  "other_color_start_visits": 0,
+  "no_duplicates_under_axis_reflections_and_color_swap": true,
+  "solution_uniqueness_checked": false,
+  "player_difficulty_tested": false,
+  "implemented_in_game": true,
+  "data_sha256": "fcac5a73bda8129bae3090326d468c9732a9842fd0937ea9e47c1c3dc5d1dcea",
+  "checks": [
+    {
+      "id": 31,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 2,
+      "turns": {
+        "red": 5,
+        "blue": 5
+      }
+    },
+    {
+      "id": 32,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 3,
+      "turns": {
+        "red": 5,
+        "blue": 5
+      }
+    },
+    {
+      "id": 33,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 4,
+      "turns": {
+        "red": 6,
+        "blue": 5
+      }
+    },
+    {
+      "id": 34,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 3,
+      "turns": {
+        "red": 6,
+        "blue": 6
+      }
+    },
+    {
+      "id": 35,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 4,
+      "turns": {
+        "red": 6,
+        "blue": 6
+      }
+    },
+    {
+      "id": 36,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 3,
+      "turns": {
+        "red": 6,
+        "blue": 7
+      }
+    },
+    {
+      "id": 37,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 4,
+      "turns": {
+        "red": 6,
+        "blue": 6
+      }
+    },
+    {
+      "id": 38,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 4,
+      "turns": {
+        "red": 6,
+        "blue": 6
+      }
+    },
+    {
+      "id": 39,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 4,
+      "turns": {
+        "red": 7,
+        "blue": 7
+      }
+    },
+    {
+      "id": 40,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 5,
+      "turns": {
+        "red": 7,
+        "blue": 7
+      }
+    },
+    {
+      "id": 41,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 5,
+      "turns": {
+        "red": 7,
+        "blue": 7
+      }
+    },
+    {
+      "id": 42,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 5,
+      "turns": {
+        "red": 7,
+        "blue": 7
+      }
+    },
+    {
+      "id": 43,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 6,
+      "turns": {
+        "red": 7,
+        "blue": 7
+      }
+    },
+    {
+      "id": 44,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 4,
+      "turns": {
+        "red": 7,
+        "blue": 7
+      }
+    },
+    {
+      "id": 45,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 6,
+      "turns": {
+        "red": 9,
+        "blue": 8
+      }
+    },
+    {
+      "id": 46,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 6,
+      "turns": {
+        "red": 8,
+        "blue": 8
+      }
+    },
+    {
+      "id": 47,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 5,
+      "turns": {
+        "red": 8,
+        "blue": 8
+      }
+    },
+    {
+      "id": 48,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 7,
+      "turns": {
+        "red": 8,
+        "blue": 8
+      }
+    },
+    {
+      "id": 49,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 6,
+      "turns": {
+        "red": 9,
+        "blue": 8
+      }
+    },
+    {
+      "id": 50,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 7,
+      "turns": {
+        "red": 8,
+        "blue": 8
+      }
+    },
+    {
+      "id": 51,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 8,
+      "turns": {
+        "red": 8,
+        "blue": 8
+      }
+    },
+    {
+      "id": 52,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 6,
+      "turns": {
+        "red": 8,
+        "blue": 8
+      }
+    },
+    {
+      "id": 53,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 8,
+      "turns": {
+        "red": 9,
+        "blue": 9
+      }
+    },
+    {
+      "id": 54,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 7,
+      "turns": {
+        "red": 9,
+        "blue": 9
+      }
+    },
+    {
+      "id": 55,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 8,
+      "turns": {
+        "red": 9,
+        "blue": 9
+      }
+    },
+    {
+      "id": 56,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 7,
+      "turns": {
+        "red": 9,
+        "blue": 9
+      }
+    },
+    {
+      "id": 57,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 8,
+      "turns": {
+        "red": 9,
+        "blue": 9
+      }
+    },
+    {
+      "id": 58,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 8,
+      "turns": {
+        "red": 9,
+        "blue": 9
+      }
+    },
+    {
+      "id": 59,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 8,
+      "turns": {
+        "red": 10,
+        "blue": 10
+      }
+    },
+    {
+      "id": 60,
+      "passed": true,
+      "painted_cells": 20,
+      "mixed_normal_cells": 0,
+      "purple_cells": 8,
+      "turns": {
+        "red": 10,
+        "blue": 9
+      }
+    }
+  ]
+}

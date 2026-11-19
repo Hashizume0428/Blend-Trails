@@ -1,0 +1,10 @@
+Use case: precise-object-edit / ui-mockup.
+Edit the supplied Stage 1 tutorial comparison image. This is a targeted TEXT REMOVAL / ENGLISH LABEL correction. Preserve the sky blue / cream / navy cartoon style, BOTH 5-column x 4-row boards, every tile position, start dots and required colored borders, both finger icons and contact halos, both ghost dashed paths and arrows, the committed red paint in the right screen, home icons, legends and reset controls exactly.
+Required edits:
+1. REMOVE the Japanese instructional sentence immediately below "STAGE 1" in BOTH screens. Do NOT translate it. Do NOT replace it with ANY instruction or any other text. Leave this narrow region as clean sky-blue background with natural spacing.
+2. The review sheet heading at the very top must be English only: "STAGE 1 TUTORIAL".
+3. Replace the outside-screen left comparison label with "RED GUIDE" and the right comparison label with "BLUE GUIDE". No Japanese and no circled Japanese numbering.
+4. DELETE BOTH Japanese footer sentences at the bottom of the comparison sheet entirely. Do not translate or replace them. Finish the bottom edge with clean blue background and a small appropriate margin beneath reset trays.
+5. Keep the in-game labels "STAGE 1", "RESET", "ALL" and the plus/equals symbols exactly.
+Text constraints: ZERO JAPANESE CHARACTERS anywhere in output. There must be NO instructional caption below stage headers, in English or any other language. The hand gestures and ghost trails visually explain the interaction.
+Critical invariants: exactly five columns and four rows on each board; red start top-left r1c1; blue start bottom-right r4c5; red required outlines at r1c5/r2c1; blue outlines at r4c1/r3c5. Left guide r1c1->r1c5->r2c5->r2c1, right guide r4c5->r4c1->r3c1->r3c5. All puzzle geometry and colors unchanged. Do not add any new game feature, tooltip, lock, tutorial button, or caption.

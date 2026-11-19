@@ -1,0 +1,12 @@
+{
+  "fullScreenSky": true,
+  "activeSkyBitmaps": 0,
+  "portrait": "941x1672",
+  "tall": "941x2039",
+  "tablet": "1254x1672",
+  "blueGuideSeconds": 0.494125366,
+  "headingScaleLarge": 1.03602934,
+  "headingScaleSmall": 0.9647575,
+  "correctTiles": 20,
+  "vibrationVerification": "deferred by user"
+}

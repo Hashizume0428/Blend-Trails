@@ -1,0 +1,219 @@
+{
+  "date": "2026-10-25",
+  "game": "Blend Trails: Color Puzzle",
+  "method": "built-in image_gen",
+  "exports": [
+    {
+      "concept": "01",
+      "name": "A / Sunshine Mix",
+      "type": "icon",
+      "file": "icons/01-sunshine-mix-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 870762,
+      "format": "png",
+      "channels": 4,
+      "alpha": true,
+      "bitDepth": 8,
+      "colourSpace": "srgb",
+      "reducedColours": null,
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "d84c5627e76ec866dfdbaffe69295a737b7d7317d21f24f8f23e67ef046aa016"
+    },
+    {
+      "concept": "01",
+      "name": "A / Sunshine Mix",
+      "type": "icon",
+      "file": "google-play/icons/01-sunshine-mix-512.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 271060,
+      "format": "png",
+      "channels": 4,
+      "alpha": true,
+      "bitDepth": 8,
+      "colourSpace": "srgb",
+      "reducedColours": null,
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "85be5e7e9bc06cd726511c3f76fd06da41a2af4d1f454ae91ab5b6b94a81d345"
+    },
+    {
+      "concept": "02",
+      "name": "B / Puzzle Cross",
+      "type": "icon",
+      "file": "icons/02-puzzle-cross-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 843364,
+      "format": "png",
+      "channels": 4,
+      "alpha": true,
+      "bitDepth": 8,
+      "colourSpace": "srgb",
+      "reducedColours": null,
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "558f87f8a8ebd50df4c33f35a6af31f9446813d9230a00726ccb1465848cdf8b"
+    },
+    {
+      "concept": "02",
+      "name": "B / Puzzle Cross",
+      "type": "icon",
+      "file": "google-play/icons/02-puzzle-cross-512.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 263139,
+      "format": "png",
+      "channels": 4,
+      "alpha": true,
+      "bitDepth": 8,
+      "colourSpace": "srgb",
+      "reducedColours": null,
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "2a479c77a81add492b5156bb5696cd16d8fe734afa2263ba7b3f897ac161778c"
+    },
+    {
+      "concept": "03",
+      "name": "C / Fresh Trails",
+      "type": "icon",
+      "file": "icons/03-fresh-trails-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 929792,
+      "format": "png",
+      "channels": 4,
+      "alpha": true,
+      "bitDepth": 8,
+      "colourSpace": "srgb",
+      "reducedColours": null,
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "0941b1ad04e7652fc356665be21da69ce7214b03b343f44a59cf836b74d8f169"
+    },
+    {
+      "concept": "03",
+      "name": "C / Fresh Trails",
+      "type": "icon",
+      "file": "google-play/icons/03-fresh-trails-512.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 285731,
+      "format": "png",
+      "channels": 4,
+      "alpha": true,
+      "bitDepth": 8,
+      "colourSpace": "srgb",
+      "reducedColours": null,
+      "sourceDimensions": [
+        1254,
+        1254
+      ],
+      "sha256": "78f086a8cac5db4c324684fb9273c8ea8d62db5d9bc3995c86f368d59773b830"
+    },
+    {
+      "concept": "01",
+      "name": "A / Sunshine Mix",
+      "type": "feature",
+      "file": "feature-graphics/01-sunshine-mix-1024x500.png",
+      "width": 1024,
+      "height": 500,
+      "bytes": 505808,
+      "format": "png",
+      "channels": 3,
+      "alpha": false,
+      "bitDepth": 8,
+      "colourSpace": "srgb",
+      "reducedColours": null,
+      "sourceDimensions": [
+        1794,
+        877
+      ],
+      "sha256": "a2651ea796e3390d6125784aaa2b195f47a7f13d7653874cf281c1c730c54db1"
+    },
+    {
+      "concept": "02",
+      "name": "B / Puzzle Cross",
+      "type": "feature",
+      "file": "feature-graphics/02-puzzle-cross-1024x500.png",
+      "width": 1024,
+      "height": 500,
+      "bytes": 503587,
+      "format": "png",
+      "channels": 3,
+      "alpha": false,
+      "bitDepth": 8,
+      "colourSpace": "srgb",
+      "reducedColours": null,
+      "sourceDimensions": [
+        1794,
+        877
+      ],
+      "sha256": "d35350f90dbd191555599ac7713d2058f7d1fe2a0de585806461790cad5e96f4"
+    },
+    {
+      "concept": "03",
+      "name": "C / Fresh Trails",
+      "type": "feature",
+      "file": "feature-graphics/03-fresh-trails-1024x500.png",
+      "width": 1024,
+      "height": 500,
+      "bytes": 482694,
+      "format": "png",
+      "channels": 3,
+      "alpha": false,
+      "bitDepth": 8,
+      "colourSpace": "srgb",
+      "reducedColours": null,
+      "sourceDimensions": [
+        1794,
+        877
+      ],
+      "sha256": "c43181585aef76d4efb0755e1402e5a9159d92a6dbfe69f361b88bd81eaa1868"
+    },
+    {
+      "concept": "04",
+      "name": "Fresh Trails — Red + Yellow = Orange",
+      "type": "icon",
+      "file": "icons/04-fresh-trails-orange-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 954235,
+      "format": "png",
+      "channels": 4,
+      "alpha": true,
+      "bitDepth": 8,
+      "colourSpace": "srgb",
+      "reducedColours": null,
+      "sha256": "c3dad2bc7893793bffd1f449ae7799558f7f05b8d56c9d9bd1f1200daee7ee2c"
+    },
+    {
+      "concept": "04",
+      "name": "Fresh Trails — Red + Yellow = Orange",
+      "type": "icon",
+      "file": "google-play/icons/04-fresh-trails-orange-512.png",
+      "width": 512,
+      "height": 512,
+      "bytes": 290172,
+      "format": "png",
+      "channels": 4,
+      "alpha": true,
+      "bitDepth": 8,
+      "colourSpace": "srgb",
+      "reducedColours": null,
+      "sha256": "898150be962d42d991fbeaf26768c2cd63d17f11a25b53372e3424be368482ae"
+    }
+  ]
+}

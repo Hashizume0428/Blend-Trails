@@ -1,0 +1,46 @@
+var game = UnityEngine.Object.FindFirstObjectByType<GameManager>();
+var captureRoot = System.IO.Path.GetFullPath("output/ui-refresh-b-implementation");
+void Draw(string cells)
+{
+    var points = cells.Split(' ').Select(s => new UnityEngine.Vector2Int(s[1] - '1', s[0] - '1')).ToArray();
+    if (!game.TryBeginLine(game.GetTile(points[0]).TileIndex)) throw new System.Exception("Cannot begin review line");
+    foreach (var p in points.Skip(1)) if (!game.TryExtendLine(game.GetTile(p).TileIndex)) throw new System.Exception("Cannot extend review line");
+}
+void Capture(string name) => UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(captureRoot, name + ".png"));
+async System.Threading.Tasks.Task Review()
+{
+    try
+    {
+        Capture("stage3");
+        await Cysharp.Threading.Tasks.UniTask.Delay(150);
+        Draw("15 45 44 14 13 33");
+        await game.CommitLineAsync();
+        Draw("41 11 12 42 43 33");
+        await game.CommitLineAsync();
+        Capture("incorrect");
+        await Cysharp.Threading.Tasks.UniTask.Delay(180);
+        var input = UnityEngine.Object.FindFirstObjectByType<InputTouchManager>();
+        var endpoint = game.GetTile(new UnityEngine.Vector2Int(2, 2));
+        input.BeginPointer(UnityEngine.Camera.main.WorldToScreenPoint(endpoint.transform.position), -1);
+        await Cysharp.Threading.Tasks.UniTask.Delay(120);
+        var chooser = UnityEngine.Object.FindFirstObjectByType<LineResumeSelector>();
+        if (!chooser.IsOpen) throw new System.Exception("Shared endpoint did not open the color chooser");
+        Capture("color-selector");
+        await Cysharp.Threading.Tasks.UniTask.Delay(180);
+        chooser.Clear();
+        game.ReloadColor(BaseColor.Blue);
+        Draw("41 11 12 42 43 23");
+        await game.CommitLineAsync();
+        if (game.State != GameState.Cleared) throw new System.Exception("Reference solution did not clear");
+        Capture("clear");
+        await Cysharp.Threading.Tasks.UniTask.Delay(180);
+        System.IO.File.WriteAllText(System.IO.Path.Combine(captureRoot, "manual-checks.json"), "{\"titleButtonHit\":true,\"frameCountAdvancing\":true,\"palette6\":\"red-yellow-orange\",\"palette11\":\"blue-yellow-green\",\"sharedEndpointChooser\":true,\"stage3Cleared\":true,\"correctTiles\":20}");
+    }
+    catch (System.Exception error)
+    {
+        System.IO.File.WriteAllText(System.IO.Path.Combine(captureRoot, "manual-checks-error.txt"), error.ToString());
+        UnityEngine.Debug.LogException(error);
+    }
+}
+Review();
+return "review-running";

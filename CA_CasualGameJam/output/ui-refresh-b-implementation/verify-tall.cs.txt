@@ -1,0 +1,45 @@
+var editorAssembly = typeof(UnityEditor.Editor).Assembly;
+var gameViewType = editorAssembly.GetType("UnityEditor.GameView");
+var view = UnityEditor.EditorWindow.GetWindow(gameViewType);
+var flags = System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance;
+var selected = gameViewType.GetProperty("selectedSizeIndex", flags);
+int previous = (int)selected.GetValue(view);
+var sizesType = editorAssembly.GetType("UnityEditor.GameViewSizes");
+var sizes = typeof(UnityEditor.ScriptableSingleton<>).MakeGenericType(sizesType).GetProperty("instance").GetValue(null);
+var groupEnum = editorAssembly.GetType("UnityEditor.GameViewSizeGroupType");
+var group = sizesType.GetMethod("GetGroup").Invoke(sizes, new[] { System.Enum.Parse(groupEnum, UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.Android ? "Android" : "Standalone") });
+var fixedSize = System.Activator.CreateInstance(editorAssembly.GetType("UnityEditor.GameViewSize"), new object[] { System.Enum.ToObject(editorAssembly.GetType("UnityEditor.GameViewSizeType"), 1), 941, 2039, "B UI Review Tall" });
+group.GetType().GetMethod("AddCustomSize").Invoke(group, new[] { fixedSize });
+int total = (int)group.GetType().GetMethod("GetBuiltinCount").Invoke(group, null) + (int)group.GetType().GetMethod("GetCustomCount").Invoke(group, null);
+selected.SetValue(view, total - 1);
+view.Repaint();
+async System.Threading.Tasks.Task Check()
+{
+    try
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Stage11");
+        await Cysharp.Threading.Tasks.UniTask.Delay(400);
+        UnityEngine.Canvas.ForceUpdateCanvases();
+        var game = UnityEngine.Object.FindFirstObjectByType<GameManager>();
+        foreach (var tile in game.TilesList)
+            if (!UnityEngine.Screen.safeArea.Contains(UnityEngine.Camera.main.WorldToScreenPoint(tile.transform.position))) throw new System.Exception("Tile outside tall Safe Area");
+        foreach (string name in new[] { "HomeButton", "ReloadAll", "ReloadBlue", "ReloadRed" })
+        {
+            var button = UnityEngine.GameObject.Find(name).GetComponent<UnityEngine.UI.Button>();
+            var rect = (UnityEngine.RectTransform)button.transform;
+            var corners = new UnityEngine.Vector3[4]; rect.GetWorldCorners(corners);
+            foreach (var corner in corners) if (!UnityEngine.Screen.safeArea.Contains(UnityEngine.RectTransformUtility.WorldToScreenPoint(null, corner))) throw new System.Exception(name + " outside tall Safe Area");
+        }
+        UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.GetFullPath("output/ui-refresh-b-implementation/stage11-tall.png"));
+        await Cysharp.Threading.Tasks.UniTask.Delay(300);
+        System.IO.File.WriteAllText(System.IO.Path.GetFullPath("output/ui-refresh-b-implementation/tall-checks.json"), "{\"width\":941,\"height\":2039,\"allTileCentersInsideSafeArea\":true,\"allFourControlRectsInsideSafeArea\":true}");
+    }
+    catch (System.Exception error)
+    {
+        System.IO.File.WriteAllText(System.IO.Path.GetFullPath("output/ui-refresh-b-implementation/tall-checks-error.txt"), error.ToString());
+        UnityEngine.Debug.LogException(error);
+    }
+    finally { selected.SetValue(view, previous); view.Repaint(); }
+}
+Check();
+return "tall-check-running";

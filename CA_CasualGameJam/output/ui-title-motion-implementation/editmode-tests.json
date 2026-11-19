@@ -1,0 +1,364 @@
+{
+  "success": true,
+  "command": "command",
+  "data": {
+    "command": "test status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 1.83,
+      "summary": {
+        "total": 48,
+        "passed": 48,
+        "failed": 0,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "PuzzleInteractionSceneTests.AllSixtyStagesHaveOneCenteredClearActionAndTheFailureClipAndEndpointChooser",
+          "Status": "Passed",
+          "Duration": 1.3932393,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleInteractionSceneTests.FailureClipIsShortAndPreloadedForImmediatePlayback",
+          "Status": "Passed",
+          "Duration": 0.0027447,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.EmptyBoardIsNeverClear",
+          "Status": "Passed",
+          "Duration": 0.0005768,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.IncorrectRequiredColorStillDisplaysItsActualMixedColor",
+          "Status": "Passed",
+          "Duration": 0.0024532,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.MixingANormalTileMakesItIncorrectUntilOneColorIsReloaded",
+          "Status": "Passed",
+          "Duration": 0.0005756,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.NormalTilesRequireOnlyRedOrBlue(None,False)",
+          "Status": "Passed",
+          "Duration": 0.0004943,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.NormalTilesRequireOnlyRedOrBlue(Red,True)",
+          "Status": "Passed",
+          "Duration": 0.0001358,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.NormalTilesRequireOnlyRedOrBlue(Blue,True)",
+          "Status": "Passed",
+          "Duration": 8.34E-05,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.NormalTilesRequireOnlyRedOrBlue(Purple,False)",
+          "Status": "Passed",
+          "Duration": 6.8E-05,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.NormalTilesRequireOnlyRedOrBlue(Yellow,False)",
+          "Status": "Passed",
+          "Duration": 8.27E-05,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.NormalTilesRequireOnlyRedOrBlue(Green,False)",
+          "Status": "Passed",
+          "Duration": 7.07E-05,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.NormalTilesRequireOnlyRedOrBlue(Orange,False)",
+          "Status": "Passed",
+          "Duration": 7.41E-05,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.NormalTilesRequireOnlyRedOrBlue(Red, Green,False)",
+          "Status": "Passed",
+          "Duration": 6.52E-05,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.NormalTilesRequireOnlyRedOrBlue(8,False)",
+          "Status": "Passed",
+          "Duration": 6.19E-05,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.PathAllowsOnlyAdjacentUnusedTilesOrImmediateBacktracking",
+          "Status": "Passed",
+          "Duration": 0.0013079,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.RedBanChecksFinishedColor(None,False)",
+          "Status": "Passed",
+          "Duration": 0.0012845,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.RedBanChecksFinishedColor(Red,False)",
+          "Status": "Passed",
+          "Duration": 0.0004672,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.RedBanChecksFinishedColor(Blue,True)",
+          "Status": "Passed",
+          "Duration": 0.0004252,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.RedBanChecksFinishedColor(Purple,True)",
+          "Status": "Passed",
+          "Duration": 0.0002803,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.RedBanChecksFinishedColor(Orange,True)",
+          "Status": "Passed",
+          "Duration": 0.0003223,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.ReloadingMixReturnsToRemainingSingleColor",
+          "Status": "Passed",
+          "Duration": 0.0022133,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.RemovingOneIngredientReevaluatesBansAndFaceColor",
+          "Status": "Passed",
+          "Duration": 0.0023994,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.RequiredColorMatchesExactlyAndIgnoresOrder",
+          "Status": "Passed",
+          "Duration": 0.0017803,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "PuzzleRulesTests.ThreeColorsAndUnknownColorsAreRejected",
+          "Status": "Passed",
+          "Duration": 0.0004305,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageCatalogTests.FirstExtraDrawExcludesTheLastEightNormalPuzzlesAndAllTutorials",
+          "Status": "Passed",
+          "Duration": 0.002036,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageCatalogTests.SixtyPuzzlesMapToScenesAndDisplayNumbersHaveThreeKinds",
+          "Status": "Passed",
+          "Duration": 0.0014231,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.ApplyingPalettesRepeatedlyAlwaysUsesTheOriginalPuzzleConditions",
+          "Status": "Passed",
+          "Duration": 0.0038142,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(1,Red,Blue)",
+          "Status": "Passed",
+          "Duration": 0.0013138,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(5,Red,Blue)",
+          "Status": "Passed",
+          "Duration": 0.0004556,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(6,Red,Yellow)",
+          "Status": "Passed",
+          "Duration": 0.000393,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(10,Red,Yellow)",
+          "Status": "Passed",
+          "Duration": 0.0003269,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(11,Blue,Yellow)",
+          "Status": "Passed",
+          "Duration": 0.0003243,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(15,Blue,Yellow)",
+          "Status": "Passed",
+          "Duration": 0.0002744,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(16,Red,Blue)",
+          "Status": "Passed",
+          "Duration": 0.0003676,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(20,Red,Blue)",
+          "Status": "Passed",
+          "Duration": 0.0002529,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(21,Red,Yellow)",
+          "Status": "Passed",
+          "Duration": 0.0002479,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(25,Red,Yellow)",
+          "Status": "Passed",
+          "Duration": 0.0002403,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(26,Blue,Yellow)",
+          "Status": "Passed",
+          "Duration": 0.0002676,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(30,Blue,Yellow)",
+          "Status": "Passed",
+          "Duration": 0.0002429,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(31,Red,Blue)",
+          "Status": "Passed",
+          "Duration": 0.0002289,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(35,Red,Blue)",
+          "Status": "Passed",
+          "Duration": 0.0002374,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(36,Red,Yellow)",
+          "Status": "Passed",
+          "Duration": 0.0002408,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(40,Red,Yellow)",
+          "Status": "Passed",
+          "Duration": 0.0002518,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(41,Blue,Yellow)",
+          "Status": "Passed",
+          "Duration": 0.0003369,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.DisplayNumbersRotateEveryFiveStages(int.MaxValue,Red,Yellow)",
+          "Status": "Passed",
+          "Duration": 0.0003115,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.NormalCellsAcceptOnlyTheTwoActiveSingleColors(1,Red,Blue,Purple)",
+          "Status": "Passed",
+          "Duration": 0.0023203,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.NormalCellsAcceptOnlyTheTwoActiveSingleColors(6,Red,Yellow,Orange)",
+          "Status": "Passed",
+          "Duration": 0.0003643,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "StageColorPaletteTests.NormalCellsAcceptOnlyTheTwoActiveSingleColors(11,Blue,Yellow,Green)",
+          "Status": "Passed",
+          "Duration": 0.0002292,
+          "Message": null,
+          "StackTrace": null
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

@@ -1,0 +1,1002 @@
+[
+  {
+    "file": "frames/frame-0000.png",
+    "elapsed": 0.14553519999935816,
+    "pose": 0.05,
+    "frame": 7829,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 0.0,
+    "logoScale": 0.6999999
+  },
+  {
+    "file": "frames/frame-0001.png",
+    "elapsed": 0.21379439999873284,
+    "pose": 0.1,
+    "frame": 7830,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 0.229745448,
+    "logoScale": 0.732714236
+  },
+  {
+    "file": "frames/frame-0002.png",
+    "elapsed": 0.27782319999823812,
+    "pose": 0.15,
+    "frame": 7831,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 0.6446037,
+    "logoScale": 0.8049681
+  },
+  {
+    "file": "frames/frame-0003.png",
+    "elapsed": 0.33346129999881668,
+    "pose": 0.207906112,
+    "frame": 7834,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 0.8981146,
+    "logoScale": 0.872842431
+  },
+  {
+    "file": "frames/frame-0004.png",
+    "elapsed": 0.3890901999984635,
+    "pose": 0.263211429,
+    "frame": 7836,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 0.986752033,
+    "logoScale": 0.9233819
+  },
+  {
+    "file": "frames/frame-0005.png",
+    "elapsed": 0.44294249999984459,
+    "pose": 0.313211441,
+    "frame": 7837,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 0.99997735,
+    "logoScale": 0.9583633
+  },
+  {
+    "file": "frames/frame-0006.png",
+    "elapsed": 0.49319549999927403,
+    "pose": 0.363211453,
+    "frame": 7838,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 0.98435235
+  },
+  {
+    "file": "frames/frame-0007.png",
+    "elapsed": 0.54925479999837989,
+    "pose": 0.419845849,
+    "frame": 7840,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.00436378
+  },
+  {
+    "file": "frames/frame-0008.png",
+    "elapsed": 0.60284349999892584,
+    "pose": 0.473585159,
+    "frame": 7842,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.01553774
+  },
+  {
+    "file": "frames/frame-0009.png",
+    "elapsed": 0.65607739999904879,
+    "pose": 0.523585141,
+    "frame": 7843,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.02036238
+  },
+  {
+    "file": "frames/frame-0010.png",
+    "elapsed": 0.71221669999977166,
+    "pose": 0.573585153,
+    "frame": 7844,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.02098262
+  },
+  {
+    "file": "frames/frame-0011.png",
+    "elapsed": 0.77377989999877173,
+    "pose": 0.623585165,
+    "frame": 7845,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.01853609
+  },
+  {
+    "file": "frames/frame-0012.png",
+    "elapsed": 0.83817079999971611,
+    "pose": 0.6735852,
+    "frame": 7846,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.01416087
+  },
+  {
+    "file": "frames/frame-0013.png",
+    "elapsed": 0.897419599999921,
+    "pose": 0.7235852,
+    "frame": 7847,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.00899494
+  },
+  {
+    "file": "frames/frame-0014.png",
+    "elapsed": 0.9548118999991857,
+    "pose": 0.7735852,
+    "frame": 7848,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.004176
+  },
+  {
+    "file": "frames/frame-0015.png",
+    "elapsed": 1.0119190999994316,
+    "pose": 0.8235852,
+    "frame": 7849,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.00084209
+  },
+  {
+    "file": "frames/frame-0016.png",
+    "elapsed": 1.0706329999993613,
+    "pose": 0.8735852,
+    "frame": 7850,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0017.png",
+    "elapsed": 1.1259345999988,
+    "pose": 0.923585236,
+    "frame": 7851,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0018.png",
+    "elapsed": 1.1875423999990744,
+    "pose": 0.973585248,
+    "frame": 7852,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0019.png",
+    "elapsed": 1.2404188999989856,
+    "pose": 1.0235852,
+    "frame": 7853,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0020.png",
+    "elapsed": 1.3019400999983191,
+    "pose": 1.07358515,
+    "frame": 7854,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0021.png",
+    "elapsed": 1.3572807000000466,
+    "pose": 1.1235851,
+    "frame": 7855,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0022.png",
+    "elapsed": 1.415506399998776,
+    "pose": 1.173585,
+    "frame": 7856,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0023.png",
+    "elapsed": 1.4739971999988484,
+    "pose": 1.223585,
+    "frame": 7857,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0024.png",
+    "elapsed": 1.5364383999985876,
+    "pose": 1.273585,
+    "frame": 7858,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0025.png",
+    "elapsed": 1.5949423999991268,
+    "pose": 1.32358491,
+    "frame": 7859,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0026.png",
+    "elapsed": 1.6498324999993201,
+    "pose": 1.37358487,
+    "frame": 7860,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0027.png",
+    "elapsed": 1.7068824999987555,
+    "pose": 1.42358482,
+    "frame": 7861,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0028.png",
+    "elapsed": 1.7657480999987456,
+    "pose": 1.47358477,
+    "frame": 7862,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0029.png",
+    "elapsed": 1.8248528999993141,
+    "pose": 1.52358472,
+    "frame": 7863,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0030.png",
+    "elapsed": 1.8814029999994091,
+    "pose": 1.57358468,
+    "frame": 7864,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0031.png",
+    "elapsed": 1.932768999999098,
+    "pose": 1.62358463,
+    "frame": 7865,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0032.png",
+    "elapsed": 1.9982077999993635,
+    "pose": 1.67358458,
+    "frame": 7866,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0033.png",
+    "elapsed": 2.0570356999996875,
+    "pose": 1.72358453,
+    "frame": 7867,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0034.png",
+    "elapsed": 2.1152705999993486,
+    "pose": 1.77358449,
+    "frame": 7868,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0035.png",
+    "elapsed": 2.1731731999989279,
+    "pose": 1.82358444,
+    "frame": 7869,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0036.png",
+    "elapsed": 2.2302905999986251,
+    "pose": 1.87358439,
+    "frame": 7870,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0037.png",
+    "elapsed": 2.2910832999987178,
+    "pose": 1.92358434,
+    "frame": 7871,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0038.png",
+    "elapsed": 2.3515817999996216,
+    "pose": 1.97358429,
+    "frame": 7872,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0039.png",
+    "elapsed": 2.4192016999986663,
+    "pose": 2.02358437,
+    "frame": 7873,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0040.png",
+    "elapsed": 2.4767955999996047,
+    "pose": 2.07358432,
+    "frame": 7874,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0041.png",
+    "elapsed": 2.537866299999223,
+    "pose": 2.12358427,
+    "frame": 7875,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0042.png",
+    "elapsed": 2.5939922999987175,
+    "pose": 2.17358422,
+    "frame": 7876,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0043.png",
+    "elapsed": 2.6538027999995393,
+    "pose": 2.22358418,
+    "frame": 7877,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0044.png",
+    "elapsed": 2.7211313999996491,
+    "pose": 2.27358413,
+    "frame": 7878,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0045.png",
+    "elapsed": 2.7809525999982725,
+    "pose": 2.323584,
+    "frame": 7879,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0046.png",
+    "elapsed": 2.8377265999988595,
+    "pose": 2.373584,
+    "frame": 7880,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0047.png",
+    "elapsed": 2.9035579999999754,
+    "pose": 2.423584,
+    "frame": 7881,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0048.png",
+    "elapsed": 2.95951149999928,
+    "pose": 2.473584,
+    "frame": 7882,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0049.png",
+    "elapsed": 3.0130761000000348,
+    "pose": 2.523584,
+    "frame": 7883,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0050.png",
+    "elapsed": 3.064278199999535,
+    "pose": 2.57358384,
+    "frame": 7884,
+    "ready": false,
+    "interactable": false,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0051.png",
+    "elapsed": 3.1214917999986938,
+    "pose": 2.62358379,
+    "frame": 7885,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0052.png",
+    "elapsed": 3.1872047999986535,
+    "pose": 2.69052768,
+    "frame": 7886,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0053.png",
+    "elapsed": 3.2524046999988059,
+    "pose": 2.75496125,
+    "frame": 7887,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0054.png",
+    "elapsed": 3.3071687999999995,
+    "pose": 2.80955148,
+    "frame": 7888,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0055.png",
+    "elapsed": 3.3642257999999856,
+    "pose": 2.86579943,
+    "frame": 7889,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0056.png",
+    "elapsed": 3.4244431999995868,
+    "pose": 2.92651486,
+    "frame": 7890,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0057.png",
+    "elapsed": 3.4825047999984236,
+    "pose": 2.98506618,
+    "frame": 7891,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0058.png",
+    "elapsed": 3.5491076999987854,
+    "pose": 3.04941368,
+    "frame": 7892,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0059.png",
+    "elapsed": 3.6060221999996429,
+    "pose": 3.10912824,
+    "frame": 7893,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0060.png",
+    "elapsed": 3.6666482999989967,
+    "pose": 3.169557,
+    "frame": 7894,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0061.png",
+    "elapsed": 3.7271957999982988,
+    "pose": 3.22936749,
+    "frame": 7895,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0062.png",
+    "elapsed": 3.7801935999996203,
+    "pose": 3.28382063,
+    "frame": 7896,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0063.png",
+    "elapsed": 3.8407141999996384,
+    "pose": 3.34335852,
+    "frame": 7897,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0064.png",
+    "elapsed": 3.9087361999991117,
+    "pose": 3.410548,
+    "frame": 7898,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0065.png",
+    "elapsed": 3.9769617999991169,
+    "pose": 3.47734857,
+    "frame": 7899,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0066.png",
+    "elapsed": 4.0353629999990517,
+    "pose": 3.53846,
+    "frame": 7900,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0067.png",
+    "elapsed": 4.0918777999995655,
+    "pose": 3.5951035,
+    "frame": 7901,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0068.png",
+    "elapsed": 4.1503408999997191,
+    "pose": 3.652681,
+    "frame": 7902,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0069.png",
+    "elapsed": 4.2070761999984825,
+    "pose": 3.710525,
+    "frame": 7903,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0070.png",
+    "elapsed": 4.2641608999983873,
+    "pose": 3.76732016,
+    "frame": 7904,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0071.png",
+    "elapsed": 4.3288786999983131,
+    "pose": 3.831081,
+    "frame": 7905,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0072.png",
+    "elapsed": 4.3851587999997719,
+    "pose": 3.88806152,
+    "frame": 7906,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0073.png",
+    "elapsed": 4.438483299998552,
+    "pose": 3.94202876,
+    "frame": 7907,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0074.png",
+    "elapsed": 4.4957375999983924,
+    "pose": 3.99928451,
+    "frame": 7908,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0075.png",
+    "elapsed": 4.5531805999999051,
+    "pose": 4.055724,
+    "frame": 7909,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0076.png",
+    "elapsed": 4.61773169999833,
+    "pose": 4.11911345,
+    "frame": 7910,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0077.png",
+    "elapsed": 4.6794026999996277,
+    "pose": 4.18237448,
+    "frame": 7911,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0078.png",
+    "elapsed": 4.7338290999996389,
+    "pose": 4.23689651,
+    "frame": 7912,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0079.png",
+    "elapsed": 4.7908855999994557,
+    "pose": 4.29289055,
+    "frame": 7913,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0080.png",
+    "elapsed": 4.8566673999994237,
+    "pose": 4.35710669,
+    "frame": 7914,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0081.png",
+    "elapsed": 4.92218629999843,
+    "pose": 4.423074,
+    "frame": 7915,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0082.png",
+    "elapsed": 4.9853076999988843,
+    "pose": 4.487357,
+    "frame": 7916,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0083.png",
+    "elapsed": 5.0398319999985688,
+    "pose": 4.543392,
+    "frame": 7917,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0084.png",
+    "elapsed": 5.1102476999985811,
+    "pose": 4.61189938,
+    "frame": 7918,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0085.png",
+    "elapsed": 5.1679891999992833,
+    "pose": 4.67093754,
+    "frame": 7919,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0086.png",
+    "elapsed": 5.23616199999924,
+    "pose": 4.73783064,
+    "frame": 7920,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0087.png",
+    "elapsed": 5.2883992999995826,
+    "pose": 4.791523,
+    "frame": 7921,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0088.png",
+    "elapsed": 5.3408970999989833,
+    "pose": 4.84457541,
+    "frame": 7922,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0089.png",
+    "elapsed": 5.4001931999991939,
+    "pose": 4.90250063,
+    "frame": 7923,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0090.png",
+    "elapsed": 5.4549661999990349,
+    "pose": 4.958153,
+    "frame": 7924,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0091.png",
+    "elapsed": 5.5114698999987013,
+    "pose": 5.01490068,
+    "frame": 7925,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0092.png",
+    "elapsed": 5.5626439999996364,
+    "pose": 5.0659337,
+    "frame": 7926,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0093.png",
+    "elapsed": 5.6227397999991808,
+    "pose": 5.12581158,
+    "frame": 7927,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0094.png",
+    "elapsed": 5.6856734999983018,
+    "pose": 5.187202,
+    "frame": 7928,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0095.png",
+    "elapsed": 5.73578389999966,
+    "pose": 5.23912859,
+    "frame": 7929,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0096.png",
+    "elapsed": 5.7934794999982842,
+    "pose": 5.29566336,
+    "frame": 7930,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0097.png",
+    "elapsed": 5.8482876999987639,
+    "pose": 5.35149431,
+    "frame": 7931,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0098.png",
+    "elapsed": 5.9048392999993666,
+    "pose": 5.40800238,
+    "frame": 7933,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  },
+  {
+    "file": "frames/frame-0099.png",
+    "elapsed": 5.9550352999995084,
+    "pose": 5.4592104,
+    "frame": 7935,
+    "ready": true,
+    "interactable": true,
+    "logoAlpha": 1.0,
+    "logoScale": 1.0
+  }
+]

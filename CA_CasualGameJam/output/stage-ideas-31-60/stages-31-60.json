@@ -1,0 +1,6318 @@
+{
+  "schema_version": 2,
+  "kind": "stage_proposals",
+  "implemented_in_game": true,
+  "proposal_ids": "31-60, matching authored puzzle IDs in StageCatalog",
+  "coordinate_system": "All coordinates are [row, column], 1-based, from the top-left.",
+  "palette_roles": "red=first authored color; blue=second authored color; purple=their mix. Map roles through StageColorPalette when implementing.",
+  "rules": [
+    "Cover all 20 cells.",
+    "Each color is one non-self-revisiting orthogonal path from its own start.",
+    "Normal cells, including unmarked starts, must be exactly one base color.",
+    "Required red/blue cells must be exactly that single color; purple cells require both.",
+    "The intersection of the two paths must equal the purple required cells exactly.",
+    "Do not enter the other color start. No forbidden cells are used.",
+    "A verified example solution is supplied; uniqueness is not claimed."
+  ],
+  "stages": [
+    {
+      "id": 31,
+      "name": "二つの待ち合わせ",
+      "concept": "離れた二つの合流点を結び、間の通常マスを単色で埋め分ける。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級",
+      "starts": {
+        "red": [
+          4,
+          1
+        ],
+        "blue": [
+          1,
+          5
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            2,
+            5
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "blue": [
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "purple": [
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 11,
+        "blue_cells": 11,
+        "shared_cells": 2,
+        "purple_regions": 2,
+        "red_turns": 5,
+        "blue_turns": 5
+      },
+      "design_target": {
+        "turns_per_color": 5,
+        "feasible_pairs_considered": 14
+      }
+    },
+    {
+      "id": 32,
+      "name": "小さな連絡橋",
+      "concept": "短い共有路と独立した合流点を回収し、端の取り残しを防ぐ。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級",
+      "starts": {
+        "red": [
+          3,
+          3
+        ],
+        "blue": [
+          3,
+          2
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            4
+          ]
+        ],
+        "purple": [
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "blue": [
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 12,
+        "blue_cells": 11,
+        "shared_cells": 3,
+        "purple_regions": 2,
+        "red_turns": 5,
+        "blue_turns": 5
+      },
+      "design_target": {
+        "turns_per_color": 5,
+        "feasible_pairs_considered": 14
+      }
+    },
+    {
+      "id": 33,
+      "name": "二組の通り道",
+      "concept": "二つに分かれた共有部分を、異なる単色の回り道でつなぐ。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級",
+      "starts": {
+        "red": [
+          3,
+          2
+        ],
+        "blue": [
+          1,
+          4
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            1,
+            3
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 12,
+        "blue_cells": 12,
+        "shared_cells": 4,
+        "purple_regions": 2,
+        "red_turns": 6,
+        "blue_turns": 5
+      },
+      "design_target": {
+        "turns_per_color": 5,
+        "feasible_pairs_considered": 14
+      }
+    },
+    {
+      "id": 34,
+      "name": "曲がり角の受け渡し",
+      "concept": "つながった三つの混色マスを使い、折り返す側を考える。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級",
+      "starts": {
+        "red": [
+          3,
+          4
+        ],
+        "blue": [
+          1,
+          1
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            1,
+            2
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 11,
+        "blue_cells": 12,
+        "shared_cells": 3,
+        "purple_regions": 1,
+        "red_turns": 6,
+        "blue_turns": 6
+      },
+      "design_target": {
+        "turns_per_color": 6,
+        "feasible_pairs_considered": 14
+      }
+    },
+    {
+      "id": 35,
+      "name": "ずれた合流地点",
+      "concept": "共有部分の前後で進む向きを変え、単色の領域を確保する。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級",
+      "starts": {
+        "red": [
+          2,
+          5
+        ],
+        "blue": [
+          1,
+          1
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            4
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 13,
+        "blue_cells": 11,
+        "shared_cells": 4,
+        "purple_regions": 2,
+        "red_turns": 6,
+        "blue_turns": 6
+      },
+      "design_target": {
+        "turns_per_color": 6,
+        "feasible_pairs_considered": 14
+      }
+    },
+    {
+      "id": 36,
+      "name": "三つの合流点",
+      "concept": "独立した三つの混色マスを両色で訪ね、空白を残さずつなぐ。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級",
+      "starts": {
+        "red": [
+          2,
+          2
+        ],
+        "blue": [
+          2,
+          1
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            5
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "purple": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        "blue": [
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 11,
+        "blue_cells": 12,
+        "shared_cells": 3,
+        "purple_regions": 3,
+        "red_turns": 6,
+        "blue_turns": 7
+      },
+      "design_target": {
+        "turns_per_color": 6,
+        "feasible_pairs_considered": 14
+      }
+    },
+    {
+      "id": 37,
+      "name": "四マスの連絡路",
+      "concept": "ひと続きの共有路を使い、入口と出口を分担する。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級",
+      "starts": {
+        "red": [
+          4,
+          1
+        ],
+        "blue": [
+          2,
+          5
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "blue": [
+          [
+            2,
+            1
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "purple": [
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "blue": [
+          [
+            2,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 10,
+        "blue_cells": 14,
+        "shared_cells": 4,
+        "purple_regions": 1,
+        "red_turns": 6,
+        "blue_turns": 6
+      },
+      "design_target": {
+        "turns_per_color": 6,
+        "feasible_pairs_considered": 17
+      }
+    },
+    {
+      "id": 38,
+      "name": "ふたつの中継所",
+      "concept": "二つの共有領域の間を、重ならない単色の線で結ぶ。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級",
+      "starts": {
+        "red": [
+          3,
+          5
+        ],
+        "blue": [
+          4,
+          5
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            1
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 11,
+        "blue_cells": 13,
+        "shared_cells": 4,
+        "purple_regions": 2,
+        "red_turns": 6,
+        "blue_turns": 6
+      },
+      "design_target": {
+        "turns_per_color": 6,
+        "feasible_pairs_considered": 14
+      }
+    },
+    {
+      "id": 39,
+      "name": "飛び石を巡る道",
+      "concept": "三つに分かれた混色の目印を回り、通常マスへの重なりを避ける。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級",
+      "starts": {
+        "red": [
+          1,
+          1
+        ],
+        "blue": [
+          1,
+          2
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            2,
+            2
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "blue": [
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "purple": [
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            3
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 12,
+        "blue_cells": 12,
+        "shared_cells": 4,
+        "purple_regions": 3,
+        "red_turns": 7,
+        "blue_turns": 7
+      },
+      "design_target": {
+        "turns_per_color": 7,
+        "feasible_pairs_considered": 14
+      }
+    },
+    {
+      "id": 40,
+      "name": "五つの共有マス",
+      "concept": "二つの共有領域と外側の単色マスを、折り返しで回収する。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級",
+      "starts": {
+        "red": [
+          4,
+          4
+        ],
+        "blue": [
+          1,
+          1
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "blue": [
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "purple": [
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 11,
+        "blue_cells": 14,
+        "shared_cells": 5,
+        "purple_regions": 2,
+        "red_turns": 7,
+        "blue_turns": 7
+      },
+      "design_target": {
+        "turns_per_color": 7,
+        "feasible_pairs_considered": 14
+      }
+    },
+    {
+      "id": 41,
+      "name": "長い合流路",
+      "concept": "五つの共有マスを両色でたどり、単色の脇道を埋める。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級〜上級",
+      "starts": {
+        "red": [
+          4,
+          4
+        ],
+        "blue": [
+          4,
+          5
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            4
+          ]
+        ],
+        "blue": [
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 13,
+        "blue_cells": 12,
+        "shared_cells": 5,
+        "purple_regions": 1,
+        "red_turns": 7,
+        "blue_turns": 7
+      },
+      "design_target": {
+        "turns_per_color": 7,
+        "feasible_pairs_considered": 17
+      }
+    },
+    {
+      "id": 42,
+      "name": "三方向の受け渡し",
+      "concept": "三つの共有領域を訪ねる順番と、単色で抜ける方向を考える。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級〜上級",
+      "starts": {
+        "red": [
+          2,
+          3
+        ],
+        "blue": [
+          4,
+          5
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            5
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        "blue": [
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 12,
+        "blue_cells": 13,
+        "shared_cells": 5,
+        "purple_regions": 3,
+        "red_turns": 7,
+        "blue_turns": 7
+      },
+      "design_target": {
+        "turns_per_color": 7,
+        "feasible_pairs_considered": 29
+      }
+    },
+    {
+      "id": 43,
+      "name": "二つの共有ブロック",
+      "concept": "二つに分かれた混色部分を共有し、残りの領域を塗り分ける。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級〜上級",
+      "starts": {
+        "red": [
+          2,
+          3
+        ],
+        "blue": [
+          1,
+          1
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            5
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "purple": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            1
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 13,
+        "blue_cells": 13,
+        "shared_cells": 6,
+        "purple_regions": 2,
+        "red_turns": 7,
+        "blue_turns": 7
+      },
+      "design_target": {
+        "turns_per_color": 7,
+        "feasible_pairs_considered": 16
+      }
+    },
+    {
+      "id": 44,
+      "name": "四点を巡る折り返し",
+      "concept": "三つに分かれた四つの共有マスを、一筆ずつの線で巡る。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級〜上級",
+      "starts": {
+        "red": [
+          4,
+          4
+        ],
+        "blue": [
+          1,
+          2
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            1,
+            3
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "blue": [
+          [
+            2,
+            4
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "purple": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 13,
+        "blue_cells": 11,
+        "shared_cells": 4,
+        "purple_regions": 3,
+        "red_turns": 7,
+        "blue_turns": 7
+      },
+      "design_target": {
+        "turns_per_color": 7,
+        "feasible_pairs_considered": 14
+      }
+    },
+    {
+      "id": 45,
+      "name": "折り返しの回廊",
+      "concept": "ひと続きの共有領域を通り、外周の単色マスも回収する。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級〜上級",
+      "starts": {
+        "red": [
+          2,
+          4
+        ],
+        "blue": [
+          1,
+          5
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            1,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 13,
+        "blue_cells": 13,
+        "shared_cells": 6,
+        "purple_regions": 1,
+        "red_turns": 9,
+        "blue_turns": 8
+      },
+      "design_target": {
+        "turns_per_color": 8,
+        "feasible_pairs_considered": 21
+      }
+    },
+    {
+      "id": 46,
+      "name": "三つの中継領域",
+      "concept": "三つに分かれた混色領域の間で、単色の担当を切り替える。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級〜上級",
+      "starts": {
+        "red": [
+          3,
+          1
+        ],
+        "blue": [
+          1,
+          5
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            2,
+            5
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 11,
+        "blue_cells": 15,
+        "shared_cells": 6,
+        "purple_regions": 3,
+        "red_turns": 8,
+        "blue_turns": 8
+      },
+      "design_target": {
+        "turns_per_color": 8,
+        "feasible_pairs_considered": 50
+      }
+    },
+    {
+      "id": 47,
+      "name": "五点の受け渡し",
+      "concept": "小さな共有領域を順にたどり、つなぐ線の重複を避ける。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級〜上級",
+      "starts": {
+        "red": [
+          1,
+          5
+        ],
+        "blue": [
+          1,
+          1
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "blue": [
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "purple": [
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 13,
+        "blue_cells": 12,
+        "shared_cells": 5,
+        "purple_regions": 3,
+        "red_turns": 8,
+        "blue_turns": 8
+      },
+      "design_target": {
+        "turns_per_color": 8,
+        "feasible_pairs_considered": 65
+      }
+    },
+    {
+      "id": 48,
+      "name": "広がる共有路",
+      "concept": "二つの共有領域を使いつつ、狭い単色部分を取り残さない。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級〜上級",
+      "starts": {
+        "red": [
+          4,
+          3
+        ],
+        "blue": [
+          1,
+          5
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            1,
+            4
+          ]
+        ],
+        "blue": [
+          [
+            4,
+            4
+          ]
+        ],
+        "purple": [
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 14,
+        "blue_cells": 13,
+        "shared_cells": 7,
+        "purple_regions": 2,
+        "red_turns": 8,
+        "blue_turns": 8
+      },
+      "design_target": {
+        "turns_per_color": 8,
+        "feasible_pairs_considered": 27
+      }
+    },
+    {
+      "id": 49,
+      "name": "分かれた連絡路",
+      "concept": "共有路を抜ける向きを変え、両方の線に折り返しを作る。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級〜上級",
+      "starts": {
+        "red": [
+          4,
+          2
+        ],
+        "blue": [
+          1,
+          3
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "blue": [
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 14,
+        "blue_cells": 12,
+        "shared_cells": 6,
+        "purple_regions": 2,
+        "red_turns": 9,
+        "blue_turns": 8
+      },
+      "design_target": {
+        "turns_per_color": 8,
+        "feasible_pairs_considered": 35
+      }
+    },
+    {
+      "id": 50,
+      "name": "合流と離脱",
+      "concept": "三つの共有領域で合流と離脱を繰り返し、盤面を埋め切る。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "中級〜上級",
+      "starts": {
+        "red": [
+          3,
+          1
+        ],
+        "blue": [
+          4,
+          1
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            3,
+            5
+          ]
+        ],
+        "blue": [
+          [
+            2,
+            4
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ]
+        ],
+        "blue": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 12,
+        "blue_cells": 15,
+        "shared_cells": 7,
+        "purple_regions": 3,
+        "red_turns": 8,
+        "blue_turns": 8
+      },
+      "design_target": {
+        "turns_per_color": 8,
+        "feasible_pairs_considered": 14
+      }
+    },
+    {
+      "id": 51,
+      "name": "大きな共有回廊",
+      "concept": "広い共有領域と残る単色領域を、一筆ずつで両立させる。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "上級",
+      "starts": {
+        "red": [
+          4,
+          2
+        ],
+        "blue": [
+          4,
+          1
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            3,
+            2
+          ]
+        ],
+        "blue": [
+          [
+            4,
+            4
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            1
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          1
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 13,
+        "blue_cells": 15,
+        "shared_cells": 8,
+        "purple_regions": 1,
+        "red_turns": 8,
+        "blue_turns": 8
+      },
+      "design_target": {
+        "turns_per_color": 8,
+        "feasible_pairs_considered": 34
+      }
+    },
+    {
+      "id": 52,
+      "name": "六点の連携",
+      "concept": "三つの共有領域を通る順番と、線の折り返しを組み合わせる。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "上級",
+      "starts": {
+        "red": [
+          1,
+          5
+        ],
+        "blue": [
+          4,
+          1
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            4
+          ],
+          [
+            3,
+            4
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "blue": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 13,
+        "blue_cells": 13,
+        "shared_cells": 6,
+        "purple_regions": 3,
+        "red_turns": 8,
+        "blue_turns": 8
+      },
+      "design_target": {
+        "turns_per_color": 8,
+        "feasible_pairs_considered": 65
+      }
+    },
+    {
+      "id": 53,
+      "name": "ふたつの混色ループ",
+      "concept": "二つの混色領域を巡り、単色の線で別々の回り道を作る。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "上級",
+      "starts": {
+        "red": [
+          2,
+          2
+        ],
+        "blue": [
+          3,
+          5
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            4,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            1
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 13,
+        "blue_cells": 15,
+        "shared_cells": 8,
+        "purple_regions": 2,
+        "red_turns": 9,
+        "blue_turns": 9
+      },
+      "design_target": {
+        "turns_per_color": 9,
+        "feasible_pairs_considered": 14
+      }
+    },
+    {
+      "id": 54,
+      "name": "散らばる七つの目印",
+      "concept": "分散した七つの共有マスを回収し、細い単色部分を守る。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "上級",
+      "starts": {
+        "red": [
+          3,
+          4
+        ],
+        "blue": [
+          1,
+          2
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            1,
+            3
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            5
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 11,
+        "blue_cells": 16,
+        "shared_cells": 7,
+        "purple_regions": 3,
+        "red_turns": 9,
+        "blue_turns": 9
+      },
+      "design_target": {
+        "turns_per_color": 9,
+        "feasible_pairs_considered": 38
+      }
+    },
+    {
+      "id": 55,
+      "name": "三領域の大回り",
+      "concept": "三つの混色領域をつなぎ、盤面の端まで大きく折り返す。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "上級",
+      "starts": {
+        "red": [
+          1,
+          5
+        ],
+        "blue": [
+          1,
+          4
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            3,
+            2
+          ]
+        ],
+        "blue": [
+          [
+            3,
+            5
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 13,
+        "blue_cells": 15,
+        "shared_cells": 8,
+        "purple_regions": 3,
+        "red_turns": 9,
+        "blue_turns": 9
+      },
+      "design_target": {
+        "turns_per_color": 9,
+        "feasible_pairs_considered": 65
+      }
+    },
+    {
+      "id": 56,
+      "name": "交互の受け渡し",
+      "concept": "二つの共有領域を何度も曲がりながら通り、単色枠を守る。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "上級",
+      "starts": {
+        "red": [
+          4,
+          2
+        ],
+        "blue": [
+          4,
+          1
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            4,
+            5
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            1
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "blue": [
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 14,
+        "blue_cells": 13,
+        "shared_cells": 7,
+        "purple_regions": 2,
+        "red_turns": 9,
+        "blue_turns": 9
+      },
+      "design_target": {
+        "turns_per_color": 9,
+        "feasible_pairs_considered": 65
+      }
+    },
+    {
+      "id": 57,
+      "name": "細道と共有広場",
+      "concept": "広い混色部分と細い単色の通り道を、両方の線で使い分ける。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "上級",
+      "starts": {
+        "red": [
+          2,
+          1
+        ],
+        "blue": [
+          1,
+          1
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            1,
+            5
+          ]
+        ],
+        "blue": [
+          [
+            3,
+            2
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 15,
+        "blue_cells": 13,
+        "shared_cells": 8,
+        "purple_regions": 2,
+        "red_turns": 9,
+        "blue_turns": 9
+      },
+      "design_target": {
+        "turns_per_color": 9,
+        "feasible_pairs_considered": 65
+      }
+    },
+    {
+      "id": 58,
+      "name": "八点の共有ゲート",
+      "concept": "三つの共有領域をつなぐ単色の経路を、最後まで確保する。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "上級",
+      "starts": {
+        "red": [
+          1,
+          3
+        ],
+        "blue": [
+          1,
+          5
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            4,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            2
+          ]
+        ],
+        "purple": [
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 14,
+        "blue_cells": 14,
+        "shared_cells": 8,
+        "purple_regions": 3,
+        "red_turns": 9,
+        "blue_turns": 9
+      },
+      "design_target": {
+        "turns_per_color": 9,
+        "feasible_pairs_considered": 65
+      }
+    },
+    {
+      "id": 59,
+      "name": "長い共有の折り返し",
+      "concept": "つながった八つの共有マスと単色の脇道を、折り返して埋める。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "上級",
+      "starts": {
+        "red": [
+          1,
+          2
+        ],
+        "blue": [
+          4,
+          1
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            1,
+            5
+          ]
+        ],
+        "blue": [
+          [
+            4,
+            5
+          ]
+        ],
+        "purple": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "blue": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 14,
+        "blue_cells": 14,
+        "shared_cells": 8,
+        "purple_regions": 1,
+        "red_turns": 10,
+        "blue_turns": 10
+      },
+      "design_target": {
+        "turns_per_color": 10,
+        "feasible_pairs_considered": 65
+      }
+    },
+    {
+      "id": 60,
+      "name": "三十問目の総合路",
+      "concept": "三つの共有領域・単色枠・外周の回収を組み合わせる総合問題。",
+      "board": {
+        "rows": 4,
+        "columns": 5
+      },
+      "difficulty": "上級",
+      "starts": {
+        "red": [
+          2,
+          3
+        ],
+        "blue": [
+          1,
+          1
+        ]
+      },
+      "required_cells": {
+        "red": [
+          [
+            3,
+            3
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            4
+          ]
+        ],
+        "purple": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ]
+        ]
+      },
+      "shared_cells": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "forbidden_cells": [],
+      "solution": {
+        "red": [
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            4,
+            5
+          ]
+        ],
+        "blue": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ]
+        ]
+      },
+      "metrics": {
+        "red_cells": 15,
+        "blue_cells": 13,
+        "shared_cells": 8,
+        "purple_regions": 3,
+        "red_turns": 10,
+        "blue_turns": 9
+      },
+      "design_target": {
+        "turns_per_color": 10,
+        "feasible_pairs_considered": 65
+      }
+    }
+  ],
+  "implementation": {
+    "date": "2026-10-25",
+    "scene_range": [
+      31,
+      60
+    ],
+    "stage_catalog_count": 60,
+    "first_extra_stage": 61
+  }
+}

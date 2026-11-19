@@ -1,0 +1,34 @@
+async System.Threading.Tasks.Task Capture()
+{
+    try
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(StageCatalog.SceneName(3));
+        if(UnityEngine.EventSystems.EventSystem.current!=null)UnityEngine.EventSystems.EventSystem.current.enabled=false;
+        var input=UnityEngine.Object.FindFirstObjectByType<InputTouchManager>();if(input!=null)input.enabled=false;
+        await Cysharp.Threading.Tasks.UniTask.Delay(400);
+        var game=UnityEngine.Object.FindFirstObjectByType<GameManager>();
+        foreach(string cells in new[]{"15 45 44 14 13 33","41 11 12 42 43 23"})
+        {
+            var points=cells.Split(' ').Select(s=>new UnityEngine.Vector2Int(s[1]-'1',s[0]-'1')).ToArray();
+            if(!game.TryBeginLine(game.GetTile(points[0]).TileIndex))throw new System.Exception("Cannot start line");
+            foreach(var point in points.Skip(1))if(!game.TryExtendLine(game.GetTile(point).TileIndex))throw new System.Exception("Cannot extend line");
+            await game.CommitLineAsync();
+        }
+        await Cysharp.Threading.Tasks.UniTask.Delay(250);
+        var title=UnityEngine.GameObject.Find("ToonClearTitle").transform;
+        string root=System.IO.Path.GetFullPath(System.IO.Path.Combine(UnityEngine.Application.dataPath,"../output/ui-polish"));
+        float deadline=UnityEngine.Time.unscaledTime+2;
+        while(title.localScale.x<1.035f){if(UnityEngine.Time.unscaledTime>deadline)throw new System.Exception("Pulse did not expand");await Cysharp.Threading.Tasks.UniTask.Yield();}
+        float large=title.localScale.x;
+        UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(root,"clear-large.png"));
+        await Cysharp.Threading.Tasks.UniTask.Delay(350);
+        deadline=UnityEngine.Time.unscaledTime+2;
+        while(title.localScale.x>.965f){if(UnityEngine.Time.unscaledTime>deadline)throw new System.Exception("Pulse did not shrink");await Cysharp.Threading.Tasks.UniTask.Yield();}
+        float small=title.localScale.x;
+        UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(root,"clear-small.png"));
+        await Cysharp.Threading.Tasks.UniTask.Delay(350);
+        System.IO.File.WriteAllText(System.IO.Path.Combine(root,"pulse-check.json"),Newtonsoft.Json.JsonConvert.SerializeObject(new{largeScale=large,smallScale=small,nextButton=UnityEngine.GameObject.Find("NextStageButton").GetComponent<UnityEngine.UI.Button>().interactable}));
+    }
+    catch(System.Exception error){System.IO.File.WriteAllText(System.IO.Path.GetFullPath(System.IO.Path.Combine(UnityEngine.Application.dataPath,"../output/ui-polish/pulse-error.txt")),error.ToString());}
+}
+Capture();return "Capturing steady-state clear pulse";

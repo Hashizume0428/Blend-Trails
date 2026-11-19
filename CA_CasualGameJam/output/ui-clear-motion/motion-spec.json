@@ -1,0 +1,84 @@
+{
+  "title": "Blend Trails — クリア演出案",
+  "format": {
+    "width": 720,
+    "height": 1280,
+    "fps": 60,
+    "seconds": 8,
+    "codec": "H.264",
+    "audio": false
+  },
+  "reference": {
+    "file": "Screenrecorder-2026-10-24-17-28-21-912.mp4",
+    "analyzedSeconds": [
+      18,
+      23
+    ],
+    "observations": [
+      "クリアバッジの弾む登場",
+      "背景を暗くして祝福を強調",
+      "紙吹雪を残して結果画面へ遷移",
+      "結果画面の要素と次ステージボタンが順に登場"
+    ]
+  },
+  "timeline": [
+    {
+      "seconds": [
+        0,
+        0.6
+      ],
+      "motion": "完成盤面の小さな弾みと光のスイープ"
+    },
+    {
+      "seconds": [
+        0.6,
+        1.1
+      ],
+      "motion": "赤と青が集まり、混色チェックがバウンスして登場"
+    },
+    {
+      "seconds": [
+        1.07,
+        1.72
+      ],
+      "motion": "STAGE CLEAR!を一文字ずつ弾ませ、紙吹雪を放射"
+    },
+    {
+      "seconds": [
+        1.98,
+        2.78
+      ],
+      "motion": "バッジと見出しを上部へ移動。クリーム色カードを表示し、完成盤面を60%へ縮小"
+    },
+    {
+      "seconds": [
+        2.48,
+        2.88
+      ],
+      "motion": "現在ステージとメッセージがフェードイン"
+    },
+    {
+      "seconds": [
+        2.82,
+        3.18
+      ],
+      "motion": "次ステージのSTAGE 4ボタンが弾んで登場。3.2秒で操作可能にする想定"
+    },
+    {
+      "seconds": [
+        3.18,
+        8
+      ],
+      "motion": "見出しの拡大縮小、バッジの微小な上下動、星のきらめき。ボタンを一度光らせ、矢印を軽く動かす"
+    }
+  ],
+  "constraints": {
+    "gameCodeChanged": false,
+    "progressChanged": false,
+    "homeButton": false,
+    "solvedBoard": true,
+    "nextStageNumber": 4,
+    "foreignMascotOrScoreAdded": false
+  },
+  "assets": "既存のToonBold PNG・Lilita Oneフォント・Stage3の正解盤面を使った動画モックアップ。Unity実装前。"
+}

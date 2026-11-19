@@ -1,0 +1,70 @@
+{
+  "status": "passed",
+  "reference": "IMG_0899.PNG",
+  "board": {
+    "columns": 5,
+    "rows": 4,
+    "redStart": [
+      1,
+      1
+    ],
+    "blueStart": [
+      4,
+      5
+    ],
+    "redFrames": [
+      [
+        1,
+        5
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "blueFrames": [
+      [
+        3,
+        4
+      ],
+      [
+        4,
+        1
+      ]
+    ]
+  },
+  "tests": {
+    "editMode": {
+      "total": 48,
+      "passed": 48,
+      "failed": 0,
+      "skipped": 0,
+      "inconclusive": 0
+    },
+    "tutorial": {
+      "total": 7,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "inconclusive": 0
+    },
+    "navigation": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "inconclusive": 0
+    },
+    "totalPassed": 56
+  },
+  "manual": {
+    "correctTiles": 20,
+    "nextStage": 2,
+    "guideVerified": true
+  },
+  "sceneChanges": [
+    "C:\\GitHub\\CGJ_8\\CA_CasualGameJam\\Assets\\Scenes\\SampleScene.unity"
+  ],
+  "otherScenesUnchanged": true,
+  "originalProgressRestored": true
+}

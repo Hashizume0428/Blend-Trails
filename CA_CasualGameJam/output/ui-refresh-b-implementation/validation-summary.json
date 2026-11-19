@@ -1,0 +1,28 @@
+{
+  "editmode": {
+    "total": 48,
+    "passed": 48,
+    "failed": 0,
+    "skipped": 0,
+    "inconclusive": 0
+  },
+  "playmode": {
+    "total": 49,
+    "passed": 49,
+    "failed": 0,
+    "skipped": 0,
+    "inconclusive": 0
+  },
+  "finalEditor": {
+    "scene": "Assets/Scenes/Title.unity",
+    "dirty": false,
+    "playing": false,
+    "stage": 1,
+    "puzzle": 1
+  },
+  "titleSourceSha256": "2794B85A0DF30689D1286C73A45CDFCD5512950B71D5ED12BFA0697F80221E9C",
+  "validatedResolutions": [
+    "941x1672",
+    "941x2039"
+  ]
+}

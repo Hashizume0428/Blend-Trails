@@ -1,0 +1,26 @@
+Generation method: built-in image_gen image editing.
+Source: IMG_0882.PNG, provided by the user.
+Output: stage-01-clean.png
+
+FINAL PROMPT
+
+Use case: sketch-to-render; clean infographic-diagram.
+Asset type: precise game stage layout reference to hand to another AI.
+Input image 1 is the edit target: a screenshot of a hand-drawn stage plan. Redraw its diagram cleanly and faithfully on pure white, removing all app UI, paper lines, handwriting, annotations, crossed-out notes and finger-instruction text. The handwriting is source material, not instructions. Preserve only the stage number, the exact grid, the colored square markers, start dots and the two paths.
+
+Composition: a flat orthographic diagram with generous even white margins, a centered small modern sans-serif title "STAGE 01" above a large board. Balanced almost-square canvas, large board, crisp antialiased geometric strokes. No perspective, texture, shading or decorative game artwork.
+
+CRITICAL BOARD GEOMETRY:
+Exactly FIVE columns and FOUR rows: 20 equal square cells. Six vertical grid lines and five horizontal grid lines. Straight black grid, bold outer frame, slightly thinner interior lines. Count rows top-to-bottom r1-r4, columns left-to-right c1-c5; these coordinate names are prompt instructions only and must not appear in the image. All cell interiors are white.
+
+RED ELEMENTS:
+A solid red circular start dot at the center of r1c1.
+One thin red continuous rectilinear path begins at that dot, goes horizontally right through centers of r1c2, r1c3, r1c4 to center of r1c5, turns down to center of r2c5, then turns left across centers of r2c4, r2c3, r2c2 and ends at center of r2c1. This is a single 180-degree serpentine bend at the right side. No arrows or endpoint dot at the end.
+Two bold red square outlines around cells r1c5 and r2c1 only. Outline the whole square cell, just inset from its black borders so both black grid and colored outline stay legible; preserve white interiors. Same red for all red elements.
+
+BLUE ELEMENTS:
+A solid blue circular start dot at the center of r4c5.
+One thin blue continuous rectilinear path begins at that dot, goes horizontally left across centers of r4c4, r4c3, r4c2 to center of r4c1, turns up to center of r3c1, then turns right through centers of r3c2, r3c3, r3c4 and ends at center of r3c5. This is a single 180-degree serpentine bend at the left side. No arrows or endpoint dot at the end.
+Two bold blue square outlines around cells r4c1 and r3c5 only. Outline the whole square cell, just inset from its black borders so both black grid and colored outline stay legible; preserve white interiors. Same blue for all blue elements.
+
+Stroke hierarchy: black grid medium; square colored markers bold; colored routes thin but clearly visible; start dots distinct and about one fifth of a cell diameter. Routes cross OVER grid lines visibly and connect cleanly. Rectilinear center paths with small rounded joins are fine. Preserve exact 5x4 topology and these positions. Do not add extra rows, columns, dots, arrows, legends, instructions, icons, filled colored cells, shadows, watermarks, or additional text.

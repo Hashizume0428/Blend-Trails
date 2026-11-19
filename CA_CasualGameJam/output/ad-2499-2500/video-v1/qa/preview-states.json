@@ -1,0 +1,211 @@
+[
+  {
+    "time": 0,
+    "board": "A",
+    "count": 480,
+    "view": {
+      "x": -4610.5,
+      "y": -5345.5,
+      "pitch": 163
+    },
+    "phase": "close-swipe"
+  },
+  {
+    "time": 1.3,
+    "board": "A",
+    "count": 481.3,
+    "view": {
+      "x": -4610.5,
+      "y": -5345.5,
+      "pitch": 163
+    },
+    "phase": "close-swipe"
+  },
+  {
+    "time": 3.7,
+    "board": "A",
+    "count": 483.7,
+    "view": {
+      "x": -4610.5,
+      "y": -5345.5,
+      "pitch": 163
+    },
+    "phase": "close-swipe"
+  },
+  {
+    "time": 5.1,
+    "board": "A",
+    "count": 602.8,
+    "view": {
+      "pitch": 51.557305796910704,
+      "x": -855.9039941965086,
+      "y": -852.6442731810623
+    },
+    "phase": "zoom-out"
+  },
+  {
+    "time": 10,
+    "board": "A",
+    "count": 1477.7777777777778,
+    "view": {
+      "x": 150,
+      "y": 435,
+      "pitch": 22
+    },
+    "phase": "fill"
+  },
+  {
+    "time": 15.5,
+    "board": "A",
+    "count": 2462.5,
+    "view": {
+      "x": 150,
+      "y": 435,
+      "pitch": 22
+    },
+    "phase": "fill"
+  },
+  {
+    "time": 17.25,
+    "board": "A",
+    "count": 2500,
+    "view": {
+      "x": 150,
+      "y": 435,
+      "pitch": 22
+    },
+    "phase": "perfect"
+  },
+  {
+    "time": 18.2,
+    "board": "A",
+    "count": 2500,
+    "view": {
+      "x": 150,
+      "y": 435,
+      "pitch": 22
+    },
+    "phase": "perfect"
+  },
+  {
+    "time": 19.4,
+    "board": "B",
+    "count": 33.51121076233152,
+    "view": {
+      "x": 150,
+      "y": 435,
+      "pitch": 22
+    },
+    "phase": "fill-new-board"
+  },
+  {
+    "time": 24,
+    "board": "B",
+    "count": 1061.1883408071749,
+    "view": {
+      "x": 150,
+      "y": 435,
+      "pitch": 22
+    },
+    "phase": "fill-new-board"
+  },
+  {
+    "time": 30.9,
+    "board": "B",
+    "count": 2499,
+    "view": {
+      "x": 150,
+      "y": 435,
+      "pitch": 22
+    },
+    "phase": "2499-stop"
+  },
+  {
+    "time": 32.9,
+    "board": "B",
+    "count": 2499,
+    "view": {
+      "pitch": 63.19360221262122,
+      "x": -906.4215908000215,
+      "y": -627.4063251782019
+    },
+    "phase": "zoom-to-hole"
+  },
+  {
+    "time": 34.5,
+    "board": "B",
+    "count": 2499,
+    "view": {
+      "pitch": 152.99999999999997,
+      "x": -3201.499999999999,
+      "y": -2927.499999999999
+    },
+    "phase": "reveal-hole"
+  },
+  {
+    "time": 35.7,
+    "board": "B",
+    "count": 2492.4117647058824,
+    "view": {
+      "pitch": 152.99999999999997,
+      "x": -3201.499999999999,
+      "y": -2927.499999999999
+    },
+    "phase": "rewind"
+  },
+  {
+    "time": 37.5,
+    "board": "B",
+    "count": 2493,
+    "view": {
+      "pitch": 152.99999999999997,
+      "x": -3201.499999999999,
+      "y": -2927.499999999999
+    },
+    "phase": "wrong-turn"
+  },
+  {
+    "time": 38,
+    "board": "B",
+    "count": 2494,
+    "view": {
+      "pitch": 152.99999999999997,
+      "x": -3201.499999999999,
+      "y": -2927.499999999999
+    },
+    "phase": "wrong-turn"
+  },
+  {
+    "time": 39.9,
+    "board": "B",
+    "count": 2499,
+    "view": {
+      "pitch": 152.99999999999997,
+      "x": -3201.499999999999,
+      "y": -2927.499999999999
+    },
+    "phase": "missed-again"
+  },
+  {
+    "time": 41.7,
+    "board": "B",
+    "count": 2499,
+    "view": {
+      "pitch": 130,
+      "x": -2615,
+      "y": -2432
+    },
+    "phase": "cta"
+  },
+  {
+    "time": 44.5,
+    "board": "B",
+    "count": 2499,
+    "view": {
+      "pitch": 130,
+      "x": -2615,
+      "y": -2432
+    },
+    "phase": "cta"
+  }
+]

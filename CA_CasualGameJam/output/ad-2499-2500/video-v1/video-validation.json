@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "width": 1400,
+  "height": 1800,
+  "durationSeconds": 45,
+  "fps": 30,
+  "decodedFrames": 1350,
+  "videoCodec": "H.264 High",
+  "pixelFormat": "yuv420p",
+  "audioCodec": "AAC",
+  "audioSampleRate": 48000,
+  "audioChannels": 2,
+  "audioLoudnessLUFS": -17.05,
+  "audioTruePeakDbTP": -1.27,
+  "faststart": true,
+  "bytes": 20212759,
+  "sha256": "f748b252cdf608fdceff9290149afd68258ae85b61ae88a24368eece7e69f268",
+  "holeSamples": [
+    {
+      "file": "decoded-hole.png",
+      "x": 700,
+      "y": 974,
+      "rgb": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "decoded-cta.png",
+      "x": 700,
+      "y": 883,
+      "rgb": [
+        255,
+        255,
+        255
+      ]
+    }
+  ],
+  "decodeErrors": 0,
+  "source": "Canvas animation of exact 50×50 board data, existing approved art, shared image_gen hand sprite, original synthesized music and sound effects."
+}

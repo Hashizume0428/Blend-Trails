@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "source": "Unity GameView render target, real-time sampling",
+  "seconds": 12,
+  "width": 720,
+  "height": 1280,
+  "fps": 30,
+  "decodedFrames": 360,
+  "capturedFrames": 183,
+  "firstReadySeconds": 2.5868477821350098,
+  "decodeErrors": 0,
+  "audio": false,
+  "bytes": 3055588
+}

@@ -1,0 +1,175 @@
+{
+  "success": true,
+  "command": "command",
+  "data": {
+    "command": "script run",
+    "parameters": {
+      "file": ".utmp/StageOneReview.cs",
+      "entry": "StageOneReview.VerifyAndCapture"
+    },
+    "result": {
+      "diagnostics": [],
+      "compileMs": 218,
+      "executeMs": 5215,
+      "assemblyName": "PipelineRunScript_StageOneReview_5729055bc57d4f2fb0be09e2db864bd6",
+      "success": true,
+      "result": {
+        "state": "Cleared",
+        "correctTiles": 20,
+        "nextStage": 2,
+        "cells": [
+          {
+            "row": 1,
+            "column": 1,
+            "required": "None",
+            "start": true,
+            "startColor": "Red"
+          },
+          {
+            "row": 1,
+            "column": 2,
+            "required": "None",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 1,
+            "column": 3,
+            "required": "None",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 1,
+            "column": 4,
+            "required": "None",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 1,
+            "column": 5,
+            "required": "Red",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 2,
+            "column": 1,
+            "required": "None",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 2,
+            "column": 2,
+            "required": "Red",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 2,
+            "column": 3,
+            "required": "None",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 2,
+            "column": 4,
+            "required": "None",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 2,
+            "column": 5,
+            "required": "None",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 3,
+            "column": 1,
+            "required": "None",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 3,
+            "column": 2,
+            "required": "None",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 3,
+            "column": 3,
+            "required": "None",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 3,
+            "column": 4,
+            "required": "Blue",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 3,
+            "column": 5,
+            "required": "None",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 4,
+            "column": 1,
+            "required": "Blue",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 4,
+            "column": 2,
+            "required": "None",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 4,
+            "column": 3,
+            "required": "None",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 4,
+            "column": 4,
+            "required": "None",
+            "start": false,
+            "startColor": null
+          },
+          {
+            "row": 4,
+            "column": 5,
+            "required": "None",
+            "start": true,
+            "startColor": "Blue"
+          }
+        ],
+        "guideVerified": true,
+        "redRoute": "11 12 13 14 15 25 24 23 22 21",
+        "blueRoute": "45 44 43 42 41 31 32 33 34 35"
+      }
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

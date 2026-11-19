@@ -1,0 +1,14 @@
+{
+  "status": "selected",
+  "selectedAt": "2026-10-24",
+  "timezone": "Asia/Tokyo",
+  "styleId": "02-2d-toon-bold",
+  "name": "2D B / Toon Bold",
+  "displayName": "2D B：ポップ（青空・太い輪郭線）",
+  "screens": {
+    "title": "title-clear/02-2d-toon-bold-title.png",
+    "stage": "02-2d-toon-bold.png",
+    "clear": "title-clear/02-2d-toon-bold-clear.png"
+  },
+  "reference": "SELECTED.md"
+}

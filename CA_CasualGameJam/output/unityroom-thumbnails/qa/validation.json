@@ -1,0 +1,56 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "file": "01-mix-colors-512.gif",
+      "fullDecode": "passed",
+      "frames": 72,
+      "bytes": 118642
+    },
+    {
+      "file": "01-mix-colors-256.gif",
+      "fullDecode": "passed",
+      "frames": 72,
+      "bytes": 76981
+    },
+    {
+      "file": "02-trace-and-clear-512.gif",
+      "fullDecode": "passed",
+      "frames": 96,
+      "bytes": 174281
+    },
+    {
+      "file": "02-trace-and-clear-256.gif",
+      "fullDecode": "passed",
+      "frames": 96,
+      "bytes": 105255
+    },
+    {
+      "file": "03-one-tile-left-512.gif",
+      "fullDecode": "passed",
+      "frames": 72,
+      "bytes": 143733
+    },
+    {
+      "file": "03-one-tile-left-256.gif",
+      "fullDecode": "passed",
+      "frames": 72,
+      "bytes": 78150
+    },
+    {
+      "file": "04-logo-motion-512.gif",
+      "fullDecode": "passed",
+      "frames": 72,
+      "bytes": 982894
+    },
+    {
+      "file": "04-logo-motion-256.gif",
+      "fullDecode": "passed",
+      "frames": 72,
+      "bytes": 296094
+    }
+  ],
+  "dimensionsAndTiming": "Validated against manifest during export",
+  "loop": "All exports have infinite GIF loop flag",
+  "preview": "Decoded images inspected at 512px / 128px and six points in each sequence"
+}

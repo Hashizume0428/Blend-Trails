@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-25",
+  "timezone": "Asia/Tokyo",
+  "purpose": "Review concepts; not implemented in Unity",
+  "entries": [
+    {
+      "id": "01-title",
+      "file": "01-title.png",
+      "title": "01 タイトル",
+      "short": "TITLE",
+      "group": "main",
+      "note": "COLOR TRACEのロゴと混色モチーフ。現在のステージへ進むボタンを1つ配置。STAGE 3は表示例。",
+      "width": 941,
+      "height": 1672,
+      "bytes": 1428623,
+      "sha256": "bd3f69a9571a08d0bfbaa6d7f3585e4218bf07bb89db91c5d848d53a35a40673"
+    },
+    {
+      "id": "02-gameplay",
+      "file": "02-gameplay.png",
+      "title": "02 通常プレイ",
+      "short": "GAMEPLAY",
+      "group": "main",
+      "note": "5列×4行の盤面。指定色は四角い枠で表示し、混色ガイドとALL・青・赤のリセットを配置。",
+      "width": 941,
+      "height": 1672,
+      "bytes": 1345276,
+      "sha256": "b77d1e0d321a39901a77746976b578eac99cf32572ef91c3cdab1c96bb10d0fa"
+    },
+    {
+      "id": "06-clear",
+      "file": "06-clear.png",
+      "title": "06 クリア",
+      "short": "CLEAR",
+      "group": "main",
+      "note": "完成盤面を60%へ縮小し、紙吹雪で達成を表現。中央のSTAGE 4ボタン1つで次へ進む。HOMEは配置しない。",
+      "width": 941,
+      "height": 1672,
+      "bytes": 1364682,
+      "sha256": "9283fe40c1d3ef55fc6400b8c8b71181b4ccd66cc5faff42d798edf548e7e74f"
+    },
+    {
+      "id": "03-tutorial",
+      "file": "03-tutorial.png",
+      "title": "03 チュートリアル",
+      "short": "TUTORIAL",
+      "group": "state",
+      "note": "Stage1だけに指と点線のガイドを重ねる。説明文を追加せず、操作方向を視覚で伝える。赤の案内時の表示例。",
+      "width": 941,
+      "height": 1672,
+      "bytes": 1364221,
+      "sha256": "51c9101c26a9a20fd6c10ac845e8f4db80dd111a4524f88d5cead1084dee1090"
+    },
+    {
+      "id": "04-incorrect",
+      "file": "04-incorrect.png",
+      "title": "04 不正解表示",
+      "short": "INCORRECT",
+      "group": "state",
+      "note": "誤りのあるマスだけ、現在色と指定枠の透明度を2秒間点滅。線と着色を保持して修正を続ける。画像は点滅途中の静止画。SEと振動は画像には含まれない。",
+      "width": 941,
+      "height": 1672,
+      "bytes": 1432266,
+      "sha256": "f6a402bd28486764967f25cc32431d8e4a04d9621f050cce1701c13ec19c4453"
+    },
+    {
+      "id": "05-resume-color",
+      "file": "05-resume-color.png",
+      "title": "05 線の再開・色選択",
+      "short": "SELECT COLOR",
+      "group": "state",
+      "note": "2色の終点が同じマスにあるとき、再開する色を選ぶ小さなカードを表示。色を選んだ後、終点から改めてドラッグする。",
+      "width": 941,
+      "height": 1672,
+      "bytes": 1458747,
+      "sha256": "b683fdae7689e34cb5c7c0719574dd974f4bfaee7bba9e125fa448499eb8df18"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "success": true,
+  "command": "command test status",
+  "data": {
+    "command": "test status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 38.7,
+      "summary": {
+        "total": 5,
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "ClearPresentationTests.AnimatedBadgeUsesTheActiveYellowPalettes",
+          "Status": "Passed",
+          "Duration": 9.4370368,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "ClearPresentationTests.BadgeAndBoardFadeCancelWithoutChangingColorsOrLeavingGlyphsHidden",
+          "Status": "Passed",
+          "Duration": 11.2853165,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "ClearPresentationTests.ConfettiPrecedesShrinkingAndSolvedBoardKeepsColorsAndLinesWithStageActions",
+          "Status": "Passed",
+          "Duration": 9.1866917,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "ClearPresentationTests.DisablingPresentationCancelsTheOldTaskAndRestoresItsVisualState",
+          "Status": "Passed",
+          "Duration": 5.4966783,
+          "Message": null,
+          "StackTrace": null
+        },
+        {
+          "FullName": "ClearPresentationTests.RestartDuringShrinkingCancelsPresentationAndRestoresThePlayableBoard",
+          "Status": "Passed",
+          "Duration": 3.2147577,
+          "Message": null,
+          "StackTrace": null
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

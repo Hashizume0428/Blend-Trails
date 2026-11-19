@@ -1,0 +1,26 @@
+{
+  "A": {
+    "empty": 0,
+    "mixed": 2,
+    "invalid": 0
+  },
+  "BFirst": {
+    "empty": 1,
+    "mixed": 0,
+    "invalid": 0
+  },
+  "BReset": {
+    "empty": 11,
+    "mixed": 0,
+    "invalid": 0
+  },
+  "BRepeat": {
+    "empty": 1,
+    "mixed": 0,
+    "invalid": 0
+  },
+  "hole": [
+    4,
+    1
+  ]
+}

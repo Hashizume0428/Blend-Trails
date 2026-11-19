@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1280" viewBox="0 0 1400 1280">
+<rect width="100%" height="100%" fill="white"/>
+<title>STAGE 44 — 四点を巡る折り返し</title>
+<g font-family="Yu Gothic,Arial,sans-serif" text-anchor="middle">
+<text x="700" y="112" font-size="62" font-weight="700" fill="#171923">STAGE 44</text>
+<text x="700" y="168" font-size="32" fill="#171923">四点を巡る折り返し</text>
+<text x="1256" y="62" text-anchor="end" font-size="23" fill="#626B7B">問題図</text>
+<text x="252.0" y="218" font-size="23" fill="#78808D">1</text>
+<text x="476.0" y="218" font-size="23" fill="#78808D">2</text>
+<text x="700.0" y="218" font-size="23" fill="#78808D">3</text>
+<text x="924.0" y="218" font-size="23" fill="#78808D">4</text>
+<text x="1148.0" y="218" font-size="23" fill="#78808D">5</text>
+<text x="108" y="360.0" font-size="23" fill="#78808D">1</text>
+<text x="108" y="584.0" font-size="23" fill="#78808D">2</text>
+<text x="108" y="808.0" font-size="23" fill="#78808D">3</text>
+<text x="108" y="1032.0" font-size="23" fill="#78808D">4</text>
+</g>
+<path d="M140,240V1136" stroke="#171923" stroke-width="12"/>
+<path d="M364,240V1136" stroke="#171923" stroke-width="7"/>
+<path d="M588,240V1136" stroke="#171923" stroke-width="7"/>
+<path d="M812,240V1136" stroke="#171923" stroke-width="7"/>
+<path d="M1036,240V1136" stroke="#171923" stroke-width="7"/>
+<path d="M1260,240V1136" stroke="#171923" stroke-width="12"/>
+<path d="M140,240H1260" stroke="#171923" stroke-width="12"/>
+<path d="M140,464H1260" stroke="#171923" stroke-width="7"/>
+<path d="M140,688H1260" stroke="#171923" stroke-width="7"/>
+<path d="M140,912H1260" stroke="#171923" stroke-width="7"/>
+<path d="M140,1136H1260" stroke="#171923" stroke-width="12"/>
+<rect x="605" y="257" width="190" height="190" fill="none" stroke="#ED2330" stroke-width="8"/>
+<rect x="381" y="705" width="190" height="190" fill="none" stroke="#ED2330" stroke-width="8"/>
+<rect x="829" y="481" width="190" height="190" fill="none" stroke="#087BF5" stroke-width="8"/>
+<rect x="605" y="929" width="190" height="190" fill="none" stroke="#087BF5" stroke-width="8"/>
+<rect x="157" y="481" width="190" height="190" fill="none" stroke="#8D2FA8" stroke-width="8"/>
+<rect x="381" y="481" width="190" height="190" fill="none" stroke="#8D2FA8" stroke-width="8"/>
+<rect x="1053" y="481" width="190" height="190" fill="none" stroke="#8D2FA8" stroke-width="8"/>
+<rect x="605" y="705" width="190" height="190" fill="none" stroke="#8D2FA8" stroke-width="8"/>
+<circle cx="915" cy="1015" r="27" fill="#ED2330"/>
+<circle cx="485" cy="361" r="27" fill="#087BF5"/>
+<text x="700" y="1200" text-anchor="middle" font-family="Yu Gothic,sans-serif" font-size="25" fill="#626B7B">通常マス＝単色のみ ｜ 紫枠＝赤＋青 ｜ 全20マスを埋める</text>
+</svg>

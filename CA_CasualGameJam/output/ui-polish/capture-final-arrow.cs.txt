@@ -1,0 +1,25 @@
+async System.Threading.Tasks.Task Capture()
+{
+    try
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(StageCatalog.SceneName(3));
+        if(UnityEngine.EventSystems.EventSystem.current!=null)UnityEngine.EventSystems.EventSystem.current.enabled=false;
+        var input=UnityEngine.Object.FindFirstObjectByType<InputTouchManager>();if(input!=null)input.enabled=false;
+        await Cysharp.Threading.Tasks.UniTask.Delay(400);
+        var game=UnityEngine.Object.FindFirstObjectByType<GameManager>();
+        foreach(string cells in new[]{"15 45 44 14 13 33","41 11 12 42 43 33"})
+        {
+            var points=cells.Split(' ').Select(s=>new UnityEngine.Vector2Int(s[1]-'1',s[0]-'1')).ToArray();
+            if(!game.TryBeginLine(game.GetTile(points[0]).TileIndex))throw new System.Exception("Cannot start line");
+            foreach(var point in points.Skip(1))if(!game.TryExtendLine(game.GetTile(point).TileIndex))throw new System.Exception("Cannot extend line");
+            await game.CommitLineAsync();
+        }
+        await Cysharp.Threading.Tasks.UniTask.Delay(250);
+        string root=System.IO.Path.GetFullPath(System.IO.Path.Combine(UnityEngine.Application.dataPath,"../output/ui-polish"));
+        UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(root,"reset-buttons.png"));
+        await Cysharp.Threading.Tasks.UniTask.Delay(350);
+        System.IO.File.WriteAllText(System.IO.Path.Combine(root,"arrow-check.json"),Newtonsoft.Json.JsonConvert.SerializeObject(new{textureWidth=ToonSkinAssets.Current.ResetIcon.texture.width,textureHeight=ToonSkinAssets.Current.ResetIcon.texture.height,iconWidth=UnityEngine.GameObject.Find("ReloadAll").transform.Find("ToonResetIcon").GetComponent<UnityEngine.RectTransform>().rect.width,sprite=UnityEditor.AssetDatabase.GetAssetPath(ToonSkinAssets.Current.ResetIcon)}));
+    }
+    catch(System.Exception error){System.IO.File.WriteAllText(System.IO.Path.GetFullPath(System.IO.Path.Combine(UnityEngine.Application.dataPath,"../output/ui-polish/arrow-error.txt")),error.ToString());}
+}
+Capture();return "Capturing final reset arrow";

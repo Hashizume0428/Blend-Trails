@@ -1,0 +1,110 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>追加ステージ案31〜60</title><style>
+*{box-sizing:border-box}body{margin:0;background:#eef1f6;color:#171923;font-family:system-ui,"Yu Gothic",sans-serif}main{max-width:1540px;margin:auto;padding:42px 24px 72px}h1{font-size:34px;letter-spacing:.02em;margin:0 0 16px}p{line-height:1.8}a{color:#195caa;text-underline-offset:3px}.intro{max-width:1000px}.meta{color:#626b7b;font-size:14px}.downloads{display:flex;gap:20px;flex-wrap:wrap;margin:24px 0}.toolbar{position:sticky;top:0;z-index:1;background:#eef1f6f5;border-bottom:1px solid #d2d8e3;padding:16px 0;display:flex;gap:20px;flex-wrap:wrap;align-items:center}.group{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.group-label{font-size:14px;color:#626b7b;margin-right:4px}button{font:inherit;font-size:14px;padding:9px 15px;border:1px solid #b5bdca;border-radius:7px;background:white;cursor:pointer}button[aria-pressed=true]{background:#1b2435;color:white;border-color:#1b2435}button:focus-visible,a:focus-visible{outline:3px solid #087bf5;outline-offset:4px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:24px}article{border:1px solid #dde2ea;border-radius:12px;overflow:hidden;background:white}article[hidden]{display:none}.image-link{display:block}img{display:block;width:100%;height:auto}.description{padding:0 22px 24px}h2{font-size:20px;margin:6px 0 10px}.eyebrow{font-size:12px;color:#626b7b;letter-spacing:.12em}.links{display:flex;gap:12px;flex-wrap:wrap;font-size:14px}.foot{margin-top:32px;color:#626b7b;font-size:14px}.status{font-size:14px;color:#626b7b;margin-left:auto}@media(max-width:1100px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:650px){main{padding:24px 12px 48px}h1{font-size:27px}.grid{grid-template-columns:1fr}.toolbar{gap:12px}button{padding:9px 11px}.status{margin-left:0}}
+</style><main><h1>追加ステージ案31〜60</h1>
+<p class="intro">5列×4行の新規30案です。通常マスは単色のみ、混色できるのは紫枠だけ。全案に解答例を用意し、20マスの被覆・色条件・経路と重複を自動検証しています。</p>
+<p class="meta">問題31〜60としてゲームに実装済みです。Stage61以降は問題5〜60を再利用します。図は赤・青の役割で統一し、既存の色替え仕様にも対応できるデータを添えています。</p>
+<nav class="downloads" aria-label="資料"><a href="stages-31-60.json" download>全30案のJSON</a><a href="README.md">設計メモ</a><a href="stages-31-40-overview.png">一覧31〜40</a><a href="stages-41-50-overview.png">一覧41〜50</a><a href="stages-51-60-overview.png">一覧51〜60</a></nav>
+<div class="toolbar"><div class="group" role="group" aria-label="図の表示"><span class="group-label">表示</span><button data-mode="puzzle" aria-pressed="true">問題図</button><button data-mode="clean" aria-pressed="false">解答例</button></div><div class="group" role="group" aria-label="案の範囲"><span class="group-label">範囲</span><button data-group-filter="all" aria-pressed="true">全30案</button><button data-group-filter="0" aria-pressed="false">31〜40</button><button data-group-filter="1" aria-pressed="false">41〜50</button><button data-group-filter="2" aria-pressed="false">51〜60</button></div><span class="status" aria-live="polite">30案を表示</span></div>
+<section class="grid" aria-label="ステージ案"><article data-group="0"><a class="image-link" href="stage-31-puzzle.png"><img src="stage-31-puzzle.png" data-stage="31" alt="案31 二つの待ち合わせの問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 31</span><h2>二つの待ち合わせ</h2><p>離れた二つの合流点を結び、間の通常マスを単色で埋め分ける。</p><p class="meta">中級目安 · 紫2マス · 曲がり数 5 / 5</p>
+<div class="links"><a href="stage-31-puzzle.png" download>問題PNG</a><a href="stage-31-clean.png" download>解答PNG</a><a href="stage-31-puzzle.svg" download>問題SVG</a><a href="stage-31-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="0"><a class="image-link" href="stage-32-puzzle.png"><img src="stage-32-puzzle.png" data-stage="32" alt="案32 小さな連絡橋の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 32</span><h2>小さな連絡橋</h2><p>短い共有路と独立した合流点を回収し、端の取り残しを防ぐ。</p><p class="meta">中級目安 · 紫3マス · 曲がり数 5 / 5</p>
+<div class="links"><a href="stage-32-puzzle.png" download>問題PNG</a><a href="stage-32-clean.png" download>解答PNG</a><a href="stage-32-puzzle.svg" download>問題SVG</a><a href="stage-32-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="0"><a class="image-link" href="stage-33-puzzle.png"><img src="stage-33-puzzle.png" data-stage="33" alt="案33 二組の通り道の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 33</span><h2>二組の通り道</h2><p>二つに分かれた共有部分を、異なる単色の回り道でつなぐ。</p><p class="meta">中級目安 · 紫4マス · 曲がり数 6 / 5</p>
+<div class="links"><a href="stage-33-puzzle.png" download>問題PNG</a><a href="stage-33-clean.png" download>解答PNG</a><a href="stage-33-puzzle.svg" download>問題SVG</a><a href="stage-33-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="0"><a class="image-link" href="stage-34-puzzle.png"><img src="stage-34-puzzle.png" data-stage="34" alt="案34 曲がり角の受け渡しの問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 34</span><h2>曲がり角の受け渡し</h2><p>つながった三つの混色マスを使い、折り返す側を考える。</p><p class="meta">中級目安 · 紫3マス · 曲がり数 6 / 6</p>
+<div class="links"><a href="stage-34-puzzle.png" download>問題PNG</a><a href="stage-34-clean.png" download>解答PNG</a><a href="stage-34-puzzle.svg" download>問題SVG</a><a href="stage-34-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="0"><a class="image-link" href="stage-35-puzzle.png"><img src="stage-35-puzzle.png" data-stage="35" alt="案35 ずれた合流地点の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 35</span><h2>ずれた合流地点</h2><p>共有部分の前後で進む向きを変え、単色の領域を確保する。</p><p class="meta">中級目安 · 紫4マス · 曲がり数 6 / 6</p>
+<div class="links"><a href="stage-35-puzzle.png" download>問題PNG</a><a href="stage-35-clean.png" download>解答PNG</a><a href="stage-35-puzzle.svg" download>問題SVG</a><a href="stage-35-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="0"><a class="image-link" href="stage-36-puzzle.png"><img src="stage-36-puzzle.png" data-stage="36" alt="案36 三つの合流点の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 36</span><h2>三つの合流点</h2><p>独立した三つの混色マスを両色で訪ね、空白を残さずつなぐ。</p><p class="meta">中級目安 · 紫3マス · 曲がり数 6 / 7</p>
+<div class="links"><a href="stage-36-puzzle.png" download>問題PNG</a><a href="stage-36-clean.png" download>解答PNG</a><a href="stage-36-puzzle.svg" download>問題SVG</a><a href="stage-36-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="0"><a class="image-link" href="stage-37-puzzle.png"><img src="stage-37-puzzle.png" data-stage="37" alt="案37 四マスの連絡路の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 37</span><h2>四マスの連絡路</h2><p>ひと続きの共有路を使い、入口と出口を分担する。</p><p class="meta">中級目安 · 紫4マス · 曲がり数 6 / 6</p>
+<div class="links"><a href="stage-37-puzzle.png" download>問題PNG</a><a href="stage-37-clean.png" download>解答PNG</a><a href="stage-37-puzzle.svg" download>問題SVG</a><a href="stage-37-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="0"><a class="image-link" href="stage-38-puzzle.png"><img src="stage-38-puzzle.png" data-stage="38" alt="案38 ふたつの中継所の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 38</span><h2>ふたつの中継所</h2><p>二つの共有領域の間を、重ならない単色の線で結ぶ。</p><p class="meta">中級目安 · 紫4マス · 曲がり数 6 / 6</p>
+<div class="links"><a href="stage-38-puzzle.png" download>問題PNG</a><a href="stage-38-clean.png" download>解答PNG</a><a href="stage-38-puzzle.svg" download>問題SVG</a><a href="stage-38-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="0"><a class="image-link" href="stage-39-puzzle.png"><img src="stage-39-puzzle.png" data-stage="39" alt="案39 飛び石を巡る道の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 39</span><h2>飛び石を巡る道</h2><p>三つに分かれた混色の目印を回り、通常マスへの重なりを避ける。</p><p class="meta">中級目安 · 紫4マス · 曲がり数 7 / 7</p>
+<div class="links"><a href="stage-39-puzzle.png" download>問題PNG</a><a href="stage-39-clean.png" download>解答PNG</a><a href="stage-39-puzzle.svg" download>問題SVG</a><a href="stage-39-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="0"><a class="image-link" href="stage-40-puzzle.png"><img src="stage-40-puzzle.png" data-stage="40" alt="案40 五つの共有マスの問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 40</span><h2>五つの共有マス</h2><p>二つの共有領域と外側の単色マスを、折り返しで回収する。</p><p class="meta">中級目安 · 紫5マス · 曲がり数 7 / 7</p>
+<div class="links"><a href="stage-40-puzzle.png" download>問題PNG</a><a href="stage-40-clean.png" download>解答PNG</a><a href="stage-40-puzzle.svg" download>問題SVG</a><a href="stage-40-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="1"><a class="image-link" href="stage-41-puzzle.png"><img src="stage-41-puzzle.png" data-stage="41" alt="案41 長い合流路の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 41</span><h2>長い合流路</h2><p>五つの共有マスを両色でたどり、単色の脇道を埋める。</p><p class="meta">中級〜上級目安 · 紫5マス · 曲がり数 7 / 7</p>
+<div class="links"><a href="stage-41-puzzle.png" download>問題PNG</a><a href="stage-41-clean.png" download>解答PNG</a><a href="stage-41-puzzle.svg" download>問題SVG</a><a href="stage-41-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="1"><a class="image-link" href="stage-42-puzzle.png"><img src="stage-42-puzzle.png" data-stage="42" alt="案42 三方向の受け渡しの問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 42</span><h2>三方向の受け渡し</h2><p>三つの共有領域を訪ねる順番と、単色で抜ける方向を考える。</p><p class="meta">中級〜上級目安 · 紫5マス · 曲がり数 7 / 7</p>
+<div class="links"><a href="stage-42-puzzle.png" download>問題PNG</a><a href="stage-42-clean.png" download>解答PNG</a><a href="stage-42-puzzle.svg" download>問題SVG</a><a href="stage-42-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="1"><a class="image-link" href="stage-43-puzzle.png"><img src="stage-43-puzzle.png" data-stage="43" alt="案43 二つの共有ブロックの問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 43</span><h2>二つの共有ブロック</h2><p>二つに分かれた混色部分を共有し、残りの領域を塗り分ける。</p><p class="meta">中級〜上級目安 · 紫6マス · 曲がり数 7 / 7</p>
+<div class="links"><a href="stage-43-puzzle.png" download>問題PNG</a><a href="stage-43-clean.png" download>解答PNG</a><a href="stage-43-puzzle.svg" download>問題SVG</a><a href="stage-43-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="1"><a class="image-link" href="stage-44-puzzle.png"><img src="stage-44-puzzle.png" data-stage="44" alt="案44 四点を巡る折り返しの問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 44</span><h2>四点を巡る折り返し</h2><p>三つに分かれた四つの共有マスを、一筆ずつの線で巡る。</p><p class="meta">中級〜上級目安 · 紫4マス · 曲がり数 7 / 7</p>
+<div class="links"><a href="stage-44-puzzle.png" download>問題PNG</a><a href="stage-44-clean.png" download>解答PNG</a><a href="stage-44-puzzle.svg" download>問題SVG</a><a href="stage-44-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="1"><a class="image-link" href="stage-45-puzzle.png"><img src="stage-45-puzzle.png" data-stage="45" alt="案45 折り返しの回廊の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 45</span><h2>折り返しの回廊</h2><p>ひと続きの共有領域を通り、外周の単色マスも回収する。</p><p class="meta">中級〜上級目安 · 紫6マス · 曲がり数 9 / 8</p>
+<div class="links"><a href="stage-45-puzzle.png" download>問題PNG</a><a href="stage-45-clean.png" download>解答PNG</a><a href="stage-45-puzzle.svg" download>問題SVG</a><a href="stage-45-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="1"><a class="image-link" href="stage-46-puzzle.png"><img src="stage-46-puzzle.png" data-stage="46" alt="案46 三つの中継領域の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 46</span><h2>三つの中継領域</h2><p>三つに分かれた混色領域の間で、単色の担当を切り替える。</p><p class="meta">中級〜上級目安 · 紫6マス · 曲がり数 8 / 8</p>
+<div class="links"><a href="stage-46-puzzle.png" download>問題PNG</a><a href="stage-46-clean.png" download>解答PNG</a><a href="stage-46-puzzle.svg" download>問題SVG</a><a href="stage-46-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="1"><a class="image-link" href="stage-47-puzzle.png"><img src="stage-47-puzzle.png" data-stage="47" alt="案47 五点の受け渡しの問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 47</span><h2>五点の受け渡し</h2><p>小さな共有領域を順にたどり、つなぐ線の重複を避ける。</p><p class="meta">中級〜上級目安 · 紫5マス · 曲がり数 8 / 8</p>
+<div class="links"><a href="stage-47-puzzle.png" download>問題PNG</a><a href="stage-47-clean.png" download>解答PNG</a><a href="stage-47-puzzle.svg" download>問題SVG</a><a href="stage-47-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="1"><a class="image-link" href="stage-48-puzzle.png"><img src="stage-48-puzzle.png" data-stage="48" alt="案48 広がる共有路の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 48</span><h2>広がる共有路</h2><p>二つの共有領域を使いつつ、狭い単色部分を取り残さない。</p><p class="meta">中級〜上級目安 · 紫7マス · 曲がり数 8 / 8</p>
+<div class="links"><a href="stage-48-puzzle.png" download>問題PNG</a><a href="stage-48-clean.png" download>解答PNG</a><a href="stage-48-puzzle.svg" download>問題SVG</a><a href="stage-48-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="1"><a class="image-link" href="stage-49-puzzle.png"><img src="stage-49-puzzle.png" data-stage="49" alt="案49 分かれた連絡路の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 49</span><h2>分かれた連絡路</h2><p>共有路を抜ける向きを変え、両方の線に折り返しを作る。</p><p class="meta">中級〜上級目安 · 紫6マス · 曲がり数 9 / 8</p>
+<div class="links"><a href="stage-49-puzzle.png" download>問題PNG</a><a href="stage-49-clean.png" download>解答PNG</a><a href="stage-49-puzzle.svg" download>問題SVG</a><a href="stage-49-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="1"><a class="image-link" href="stage-50-puzzle.png"><img src="stage-50-puzzle.png" data-stage="50" alt="案50 合流と離脱の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 50</span><h2>合流と離脱</h2><p>三つの共有領域で合流と離脱を繰り返し、盤面を埋め切る。</p><p class="meta">中級〜上級目安 · 紫7マス · 曲がり数 8 / 8</p>
+<div class="links"><a href="stage-50-puzzle.png" download>問題PNG</a><a href="stage-50-clean.png" download>解答PNG</a><a href="stage-50-puzzle.svg" download>問題SVG</a><a href="stage-50-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="2"><a class="image-link" href="stage-51-puzzle.png"><img src="stage-51-puzzle.png" data-stage="51" alt="案51 大きな共有回廊の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 51</span><h2>大きな共有回廊</h2><p>広い共有領域と残る単色領域を、一筆ずつで両立させる。</p><p class="meta">上級目安 · 紫8マス · 曲がり数 8 / 8</p>
+<div class="links"><a href="stage-51-puzzle.png" download>問題PNG</a><a href="stage-51-clean.png" download>解答PNG</a><a href="stage-51-puzzle.svg" download>問題SVG</a><a href="stage-51-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="2"><a class="image-link" href="stage-52-puzzle.png"><img src="stage-52-puzzle.png" data-stage="52" alt="案52 六点の連携の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 52</span><h2>六点の連携</h2><p>三つの共有領域を通る順番と、線の折り返しを組み合わせる。</p><p class="meta">上級目安 · 紫6マス · 曲がり数 8 / 8</p>
+<div class="links"><a href="stage-52-puzzle.png" download>問題PNG</a><a href="stage-52-clean.png" download>解答PNG</a><a href="stage-52-puzzle.svg" download>問題SVG</a><a href="stage-52-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="2"><a class="image-link" href="stage-53-puzzle.png"><img src="stage-53-puzzle.png" data-stage="53" alt="案53 ふたつの混色ループの問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 53</span><h2>ふたつの混色ループ</h2><p>二つの混色領域を巡り、単色の線で別々の回り道を作る。</p><p class="meta">上級目安 · 紫8マス · 曲がり数 9 / 9</p>
+<div class="links"><a href="stage-53-puzzle.png" download>問題PNG</a><a href="stage-53-clean.png" download>解答PNG</a><a href="stage-53-puzzle.svg" download>問題SVG</a><a href="stage-53-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="2"><a class="image-link" href="stage-54-puzzle.png"><img src="stage-54-puzzle.png" data-stage="54" alt="案54 散らばる七つの目印の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 54</span><h2>散らばる七つの目印</h2><p>分散した七つの共有マスを回収し、細い単色部分を守る。</p><p class="meta">上級目安 · 紫7マス · 曲がり数 9 / 9</p>
+<div class="links"><a href="stage-54-puzzle.png" download>問題PNG</a><a href="stage-54-clean.png" download>解答PNG</a><a href="stage-54-puzzle.svg" download>問題SVG</a><a href="stage-54-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="2"><a class="image-link" href="stage-55-puzzle.png"><img src="stage-55-puzzle.png" data-stage="55" alt="案55 三領域の大回りの問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 55</span><h2>三領域の大回り</h2><p>三つの混色領域をつなぎ、盤面の端まで大きく折り返す。</p><p class="meta">上級目安 · 紫8マス · 曲がり数 9 / 9</p>
+<div class="links"><a href="stage-55-puzzle.png" download>問題PNG</a><a href="stage-55-clean.png" download>解答PNG</a><a href="stage-55-puzzle.svg" download>問題SVG</a><a href="stage-55-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="2"><a class="image-link" href="stage-56-puzzle.png"><img src="stage-56-puzzle.png" data-stage="56" alt="案56 交互の受け渡しの問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 56</span><h2>交互の受け渡し</h2><p>二つの共有領域を何度も曲がりながら通り、単色枠を守る。</p><p class="meta">上級目安 · 紫7マス · 曲がり数 9 / 9</p>
+<div class="links"><a href="stage-56-puzzle.png" download>問題PNG</a><a href="stage-56-clean.png" download>解答PNG</a><a href="stage-56-puzzle.svg" download>問題SVG</a><a href="stage-56-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="2"><a class="image-link" href="stage-57-puzzle.png"><img src="stage-57-puzzle.png" data-stage="57" alt="案57 細道と共有広場の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 57</span><h2>細道と共有広場</h2><p>広い混色部分と細い単色の通り道を、両方の線で使い分ける。</p><p class="meta">上級目安 · 紫8マス · 曲がり数 9 / 9</p>
+<div class="links"><a href="stage-57-puzzle.png" download>問題PNG</a><a href="stage-57-clean.png" download>解答PNG</a><a href="stage-57-puzzle.svg" download>問題SVG</a><a href="stage-57-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="2"><a class="image-link" href="stage-58-puzzle.png"><img src="stage-58-puzzle.png" data-stage="58" alt="案58 八点の共有ゲートの問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 58</span><h2>八点の共有ゲート</h2><p>三つの共有領域をつなぐ単色の経路を、最後まで確保する。</p><p class="meta">上級目安 · 紫8マス · 曲がり数 9 / 9</p>
+<div class="links"><a href="stage-58-puzzle.png" download>問題PNG</a><a href="stage-58-clean.png" download>解答PNG</a><a href="stage-58-puzzle.svg" download>問題SVG</a><a href="stage-58-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="2"><a class="image-link" href="stage-59-puzzle.png"><img src="stage-59-puzzle.png" data-stage="59" alt="案59 長い共有の折り返しの問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 59</span><h2>長い共有の折り返し</h2><p>つながった八つの共有マスと単色の脇道を、折り返して埋める。</p><p class="meta">上級目安 · 紫8マス · 曲がり数 10 / 10</p>
+<div class="links"><a href="stage-59-puzzle.png" download>問題PNG</a><a href="stage-59-clean.png" download>解答PNG</a><a href="stage-59-puzzle.svg" download>問題SVG</a><a href="stage-59-clean.svg" download>解答SVG</a></div></div></article>
+<article data-group="2"><a class="image-link" href="stage-60-puzzle.png"><img src="stage-60-puzzle.png" data-stage="60" alt="案60 三十問目の総合路の問題図" loading="lazy" width="1400" height="1280"></a>
+<div class="description"><span class="eyebrow">PROPOSAL 60</span><h2>三十問目の総合路</h2><p>三つの共有領域・単色枠・外周の回収を組み合わせる総合問題。</p><p class="meta">上級目安 · 紫8マス · 曲がり数 10 / 9</p>
+<div class="links"><a href="stage-60-puzzle.png" download>問題PNG</a><a href="stage-60-clean.png" download>解答PNG</a><a href="stage-60-puzzle.svg" download>問題SVG</a><a href="stage-60-clean.svg" download>解答SVG</a></div></div></article></section>
+<p class="foot">禁止マスなし。既存問題1〜30と新規30案の間で、反転や2色の入れ替えだけの重複はありません。難易度は設計上の目安で、唯一解・実機での難易度は未検証です。</p>
+</main><script>
+for(const button of document.querySelectorAll('[data-mode]'))button.addEventListener('click',()=>{
+ for(const other of document.querySelectorAll('[data-mode]'))other.setAttribute('aria-pressed',String(other===button));
+ for(const img of document.querySelectorAll('img[data-stage]')){const src=`stage-${img.dataset.stage}-${button.dataset.mode}.png`;img.src=src;img.closest('a').href=src;img.alt=`案${img.dataset.stage}の${button.dataset.mode==='clean'?'解答例':'問題図'}`;}
+});
+for(const button of document.querySelectorAll('[data-group-filter]'))button.addEventListener('click',()=>{
+ for(const other of document.querySelectorAll('[data-group-filter]'))other.setAttribute('aria-pressed',String(other===button));
+ let count=0;for(const card of document.querySelectorAll('article[data-group]')){card.hidden=button.dataset.groupFilter!=='all'&&card.dataset.group!==button.dataset.groupFilter;if(!card.hidden)count++;}
+ document.querySelector('.status').textContent=`${count}案を表示`;
+});
+</script></html>

@@ -1,0 +1,31 @@
+{
+  "success": true,
+  "command": "command script eval",
+  "data": {
+    "command": "script eval",
+    "parameters": {
+      "code": "StageProgress.ResetSession(); return new { stage=StageProgress.CurrentStageNumber, puzzle=StageProgress.CurrentPuzzleId, recentHistory=StageProgress.RecentPuzzleIds.Count, saved=UnityEngine.PlayerPrefs.GetString(\"ColorPuzzle.StageProgress.v2\"), legacyStage=UnityEngine.PlayerPrefs.GetInt(\"ColorPuzzle.CurrentStageNumber\"), playing=UnityEditor.EditorApplication.isPlaying, scene=UnityEngine.SceneManagement.SceneManager.GetActiveScene().path };"
+    },
+    "result": {
+      "output": null,
+      "diagnostics": [],
+      "success": true,
+      "result": {
+        "stage": 1,
+        "puzzle": 1,
+        "recentHistory": 0,
+        "saved": "{\"stageNumber\":1,\"puzzleId\":1,\"recentPuzzleIds\":[]}",
+        "legacyStage": 1,
+        "playing": false,
+        "scene": "Assets/Scenes/Title.unity"
+      }
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

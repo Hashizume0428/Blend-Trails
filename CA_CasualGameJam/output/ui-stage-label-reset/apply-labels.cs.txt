@@ -1,0 +1,25 @@
+if (UnityEditor.EditorApplication.isPlaying || UnityEngine.SceneManagement.SceneManager.GetActiveScene().isDirty)
+    throw new System.InvalidOperationException("Stop play mode and save the scene before updating labels.");
+string original = UnityEngine.SceneManagement.SceneManager.GetActiveScene().path;
+int count = 0;
+try
+{
+    for (int number = 1; number <= StageCatalog.Count; number++)
+    {
+        var scene = UnityEditor.SceneManagement.EditorSceneManager.OpenScene(StageCatalog.ScenePath(number));
+        var hud = UnityEngine.Object.FindFirstObjectByType<GameHud>();
+        var settings = new UnityEditor.SerializedObject(hud);
+        var label = settings.FindProperty("_nextStageLabel").objectReferenceValue as TMPro.TMP_Text;
+        if (label == null) throw new System.InvalidOperationException("Missing next-stage label: " + scene.path);
+        label.text = "Stage" + (number + 1);
+        UnityEditor.EditorUtility.SetDirty(label);
+        UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(scene);
+        if (!UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene)) throw new System.IO.IOException(scene.path);
+        count++;
+    }
+}
+finally
+{
+    UnityEditor.SceneManagement.EditorSceneManager.OpenScene(original);
+}
+return new { updatedScenes = count, stage = StageProgress.CurrentStageNumber, history = StageProgress.RecentPuzzleIds.Count };

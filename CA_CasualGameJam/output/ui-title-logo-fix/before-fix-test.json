@@ -1,0 +1,35 @@
+{
+  "success": true,
+  "command": "command",
+  "data": {
+    "command": "test status",
+    "parameters": {},
+    "result": {
+      "status": "completed",
+      "duration": 1.83,
+      "summary": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1,
+        "skipped": 0,
+        "inconclusive": 0
+      },
+      "results": [
+        {
+          "FullName": "TitlePresentationTests.SceneLoadingDelayDoesNotConsumeTheLogoEntrance",
+          "Status": "Failed",
+          "Duration": 1.7872684,
+          "Message": "  Loading time must not skip the logo entrance.\r\n  Expected: less than 0.0799999982f\r\n  But was:  1.6008445f\r\n",
+          "StackTrace": "at TitlePresentationTests+<SceneLoadingDelayDoesNotConsumeTheLogoEntrance>d__5.MoveNext () [0x0008b] in C:\\GitHub\\CGJ_8\\CA_CasualGameJam\\Assets\\Tests\\PlayMode\\TitlePresentationTests.cs:34\r\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@bd7f943e9647\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:44\r\n"
+        }
+      ]
+    },
+    "target": {
+      "host": "127.0.0.1",
+      "port": 7800,
+      "projectPath": "C:\\GitHub\\CGJ_8\\CA_CasualGameJam"
+    }
+  },
+  "errors": [],
+  "warnings": []
+}

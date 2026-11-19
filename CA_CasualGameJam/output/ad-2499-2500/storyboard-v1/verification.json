@@ -1,0 +1,103 @@
+{
+  "frameCount": 8,
+  "dimensions": [
+    {
+      "file": "01-fill-every-tile.png",
+      "width": 1400,
+      "height": 1800
+    },
+    {
+      "file": "02-keep-going.png",
+      "width": 1400,
+      "height": 1800
+    },
+    {
+      "file": "03-last-column.png",
+      "width": 1400,
+      "height": 1800
+    },
+    {
+      "file": "04-perfect.png",
+      "width": 1400,
+      "height": 1800
+    },
+    {
+      "file": "05-2499-stop.png",
+      "width": 1400,
+      "height": 1800
+    },
+    {
+      "file": "06-one-white-tile.png",
+      "width": 1400,
+      "height": 1800
+    },
+    {
+      "file": "07-wrong-turn-again.png",
+      "width": 1400,
+      "height": 1800
+    },
+    {
+      "file": "08-play-now.png",
+      "width": 1400,
+      "height": 1800
+    }
+  ],
+  "routes": [
+    {
+      "name": "routeA",
+      "cells": 2500,
+      "unique": 2500,
+      "adjacent": true
+    },
+    {
+      "name": "routeB",
+      "cells": 2500,
+      "unique": 2500,
+      "adjacent": true
+    }
+  ],
+  "holePixels": [
+    {
+      "file": "05-2499-stop.png",
+      "x": 711,
+      "y": 996,
+      "rgb": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "06-one-white-tile.png",
+      "x": 700,
+      "y": 974,
+      "rgb": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "07-wrong-turn-again.png",
+      "x": 700,
+      "y": 974,
+      "rgb": [
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "file": "08-play-now.png",
+      "x": 700,
+      "y": 883,
+      "rgb": [
+        255,
+        255,
+        255
+      ]
+    }
+  ],
+  "handAlpha": true,
+  "status": "passed"
+}

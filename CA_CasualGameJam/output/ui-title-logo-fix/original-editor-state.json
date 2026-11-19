@@ -1,0 +1,14 @@
+{
+  "playing": false,
+  "scenes": [
+    {
+      "path": "Assets/Scenes/Title.unity",
+      "dirty": false
+    }
+  ],
+  "background": true,
+  "hadProgress": true,
+  "progress": 5,
+  "hadState": true,
+  "state": "{\"stageNumber\":5,\"puzzleId\":5,\"recentPuzzleIds\":[]}"
+}

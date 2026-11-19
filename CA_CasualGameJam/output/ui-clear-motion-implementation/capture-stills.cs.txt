@@ -1,0 +1,33 @@
+async System.Threading.Tasks.Task Capture()
+{
+    string root=System.IO.Path.GetFullPath("output/ui-clear-motion-implementation");
+    try
+    {
+        if(UnityEngine.EventSystems.EventSystem.current!=null)UnityEngine.EventSystems.EventSystem.current.enabled=false;
+        var input=UnityEngine.Object.FindFirstObjectByType<InputTouchManager>();if(input!=null)input.enabled=false;
+        await Cysharp.Threading.Tasks.UniTask.Delay(300);
+        var game=UnityEngine.Object.FindFirstObjectByType<GameManager>();
+        var presentation=UnityEngine.Object.FindFirstObjectByType<StageClearPresentation>();
+        foreach(string cells in new[]{"15 45 44 14 13 33","41 11 12 42 43 23"})
+        {
+            var points=cells.Split(' ').Select(s=>new UnityEngine.Vector2Int(s[1]-'1',s[0]-'1')).ToArray();
+            if(!game.TryBeginLine(game.GetTile(points[0]).TileIndex))throw new System.Exception("Cannot begin line");
+            foreach(var point in points.Skip(1))if(!game.TryExtendLine(game.GetTile(point).TileIndex))throw new System.Exception("Cannot extend line");
+            if(cells[0]=='1')await game.CommitLineAsync();
+        }
+        var clear=game.CommitLineAsync();
+        while(!presentation.IsPlaying)await Cysharp.Threading.Tasks.UniTask.Yield();
+        var samples=new System.Collections.Generic.List<object>();
+        foreach(float time in new[]{.25f,.85f,1.4f,2.2f,2.65f,3.25f,4.1f,6.1f})
+        {
+            while(presentation.ElapsedSeconds<time)await Cysharp.Threading.Tasks.UniTask.Yield();
+            UnityEngine.ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(root,"native-"+time.ToString("F2",System.Globalization.CultureInfo.InvariantCulture)+".png"));
+            samples.Add(new{target=time,actual=presentation.ElapsedSeconds,frame=UnityEngine.Time.frameCount,ready=presentation.IsPresented});
+            await Cysharp.Threading.Tasks.UniTask.Delay(100);
+        }
+        await clear;
+        System.IO.File.WriteAllText(System.IO.Path.Combine(root,"stills-result.json"),Newtonsoft.Json.JsonConvert.SerializeObject(new{samples,state=game.State.ToString(),correct=game.CorrectTileCount,next=UnityEngine.GameObject.Find("NextStageButton").GetComponent<UnityEngine.UI.Button>().interactable}));
+    }
+    catch(System.Exception error){System.IO.File.WriteAllText(System.IO.Path.Combine(root,"capture-error.txt"),error.ToString());}
+}
+Capture();return "Capturing native Unity clear motion";

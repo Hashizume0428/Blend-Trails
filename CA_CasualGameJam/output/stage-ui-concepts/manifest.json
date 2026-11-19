@@ -1,0 +1,46 @@
+[
+  {
+    "id": "01-2d-clean-pop",
+    "name": "2D A — Clean Pop",
+    "filename": "01-2d-clean-pop.png",
+    "source": "C:\\Users\\robor\\.codex\\generated_images\\01a16d3a-53e6-7972-b84f-2a6504eb4b90\\exec-866bee6c-1b6f-4534-83c1-90b22f8883e0.png",
+    "prompt": "01-2d-clean-pop-prompt.txt",
+    "refinement": "01-2d-clean-pop-refinement.txt",
+    "method": "built-in image_gen",
+    "date": "2026-10-24",
+    "purpose": "stage gameplay UI concepts"
+  },
+  {
+    "id": "02-2d-toon-bold",
+    "name": "2D B — Toon Bold",
+    "filename": "02-2d-toon-bold.png",
+    "source": "C:\\Users\\robor\\.codex\\generated_images\\01a16d3a-53e6-7972-b84f-2a6504eb4b90\\exec-51252ead-4376-40b8-a09d-5c94963d12bb.png",
+    "prompt": "02-2d-toon-bold-prompt.txt",
+    "refinement": "02-2d-toon-bold-refinement.txt",
+    "method": "built-in image_gen",
+    "date": "2026-10-24",
+    "purpose": "stage gameplay UI concepts"
+  },
+  {
+    "id": "03-3d-jelly-gloss",
+    "name": "3D A — Jelly Gloss",
+    "filename": "03-3d-jelly-gloss.png",
+    "source": "C:\\Users\\robor\\.codex\\generated_images\\01a16d3a-53e6-7972-b84f-2a6504eb4b90\\exec-f37bf38c-1f80-45d3-8bd2-ed4e6f02bd75.png",
+    "prompt": "03-3d-jelly-gloss-prompt.txt",
+    "refinement": "03-3d-jelly-gloss-refinement.txt",
+    "method": "built-in image_gen",
+    "date": "2026-10-24",
+    "purpose": "stage gameplay UI concepts"
+  },
+  {
+    "id": "04-3d-soft-toy",
+    "name": "3D B — Soft Toy",
+    "filename": "04-3d-soft-toy.png",
+    "source": "C:\\Users\\robor\\.codex\\generated_images\\01a16d3a-53e6-7972-b84f-2a6504eb4b90\\exec-a933d578-02b0-435d-a35e-46c80f4092a9.png",
+    "prompt": "04-3d-soft-toy-prompt.txt",
+    "refinement": null,
+    "method": "built-in image_gen",
+    "date": "2026-10-24",
+    "purpose": "stage gameplay UI concepts"
+  }
+]

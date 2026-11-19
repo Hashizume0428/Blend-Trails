@@ -1,0 +1,41 @@
+async System.Threading.Tasks.Task RecordFast()
+{
+    string root=System.IO.Path.GetFullPath("output/ui-clear-motion-implementation");
+    try
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Stage03");
+        if(UnityEngine.EventSystems.EventSystem.current!=null)UnityEngine.EventSystems.EventSystem.current.enabled=false;
+        var input=UnityEngine.Object.FindFirstObjectByType<InputTouchManager>();if(input!=null)input.enabled=false;
+        await Cysharp.Threading.Tasks.UniTask.Delay(350);
+        var game=UnityEngine.Object.FindFirstObjectByType<GameManager>();
+        var presentation=UnityEngine.Object.FindFirstObjectByType<StageClearPresentation>();
+        foreach(string cells in new[]{"15 45 44 14 13 33","41 11 12 42 43 23"})
+        {
+            var points=cells.Split(' ').Select(s=>new UnityEngine.Vector2Int(s[1]-'1',s[0]-'1')).ToArray();
+            if(!game.TryBeginLine(game.GetTile(points[0]).TileIndex))throw new System.Exception("Cannot begin");
+            foreach(var point in points.Skip(1))if(!game.TryExtendLine(game.GetTile(point).TileIndex))throw new System.Exception("Cannot extend");
+            if(cells[0]=='1')await game.CommitLineAsync();
+        }
+        var clear=game.CommitLineAsync();while(!presentation.IsPlaying)await Cysharp.Threading.Tasks.UniTask.Yield();
+        System.IO.Directory.CreateDirectory(System.IO.Path.Combine(root,"frames-jpg"));
+        var samples=new System.Collections.Generic.List<object>();
+        int index=0;
+        while(presentation.ElapsedSeconds<8)
+        {
+            await UnityEngine.Awaitable.EndOfFrameAsync();
+            float elapsed=presentation.ElapsedSeconds;
+            string file="frames-jpg/frame-"+index.ToString("D4")+".jpg";
+            var texture=UnityEngine.ScreenCapture.CaptureScreenshotAsTexture();
+            var bytes=UnityEngine.ImageConversion.EncodeToJPG(texture,95);
+            UnityEngine.Object.Destroy(texture);
+            System.IO.File.WriteAllBytes(System.IO.Path.Combine(root,file),bytes);
+            samples.Add(new{file,elapsed,frame=UnityEngine.Time.frameCount,ready=UnityEngine.GameObject.Find("NextStageButton").GetComponent<UnityEngine.UI.Button>().interactable});
+            index++;
+        }
+        await clear;
+        System.IO.File.WriteAllText(System.IO.Path.Combine(root,"video-samples.json"),Newtonsoft.Json.JsonConvert.SerializeObject(samples));
+        System.IO.File.WriteAllText(System.IO.Path.Combine(root,"fast-record-complete.json"),Newtonsoft.Json.JsonConvert.SerializeObject(new{frames=index,source="Unity ScreenCaptureAsTexture at end of frame"}));
+    }
+    catch(System.Exception error){System.IO.File.WriteAllText(System.IO.Path.Combine(root,"fast-record-error.txt"),error.ToString());}
+}
+RecordFast();return "Recording GPU-composited Unity frames";
